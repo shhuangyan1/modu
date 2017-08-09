@@ -56,33 +56,33 @@
             <div class="result_content">
                 <table class="list_tab">
                     <tr>
-                        <th class="tc" width="5%"><input type="checkbox" name=""></th>
-                        <th class="tc">排序</th>
+                      <!--   <th class="tc" width="5%"><input type="checkbox" name=""></th>
+                        <th class="tc">排序</th> -->
                         <th class="tc">ID</th>
                         <th>标题</th>
-                        <th>审核状态</th>
+                    
                         <th>点击</th>
                         <th>发布人</th>
                         <th>更新时间</th>
-                        <th>评论</th>
+                   <!--      <th>评论</th> -->
                         <th>操作</th>
                     </tr>
                     
                     @foreach($data as $v)
                     <tr>
-                        <td class="tc"><input type="checkbox" name="id[]" value="59"></td>
+                       <!--  <td class="tc"><input type="checkbox" name="id[]" value="59"></td>
                         <td class="tc">
                             <input type="text" name="ord[]" value="0">
-                        </td>
+                        </td> -->
                         <td class="tc">{{$v->id}}</td>
                         <td>
                             <a href="#">{{$v->title}}</a>
                         </td>
-                        <td>0</td>
-                        <td>2</td>
+                       
+                        <td>{{$v->view}}</td>
                         <td>{{$v->author}}</td>
                         <td>2014-03-15 21:11:01</td>
-                        <td></td>
+                <!--         <td></td> -->
                         <td>
                             <a href="{{url('admin/article/'.$v->id.'/edit')}}">修改</a>
                             <a href="javascript:;" onclick="delarticle({{$v->id}})">删除</a>

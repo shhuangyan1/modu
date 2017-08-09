@@ -19,8 +19,8 @@ class LoginController extends Controller{
 			if(strtoupper($input['code'])!=$getcode){
 				return back()->with('msg','验证码错误');
 			}
-
-			$user=User::first();
+echo 123;
+			$user=User::first();//echo Crypt::encrypt(123456);
 			if($user->username != $input['username'] ||  $input['password']!= Crypt::decrypt($user->admin_pwd)){
 				return back()->with('msg','用户名或者密码错误');
 			}
