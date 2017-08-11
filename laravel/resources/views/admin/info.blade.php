@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<link rel="stylesheet" href="style/css/ch-ui.admin.css">
+    <title>信息首页</title>
+    <link rel="stylesheet" href="style/css/ch-ui.admin.css">
 	<link rel="stylesheet" href="style/font/css/font-awesome.min.css">
 </head>
 <body>

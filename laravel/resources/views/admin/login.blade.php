@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+	<title>掌上魔都</title>
+
 	<link rel="stylesheet" href="{{asset('admin/style/css/ch-ui.admin.css')}}">
 	<link rel="stylesheet" href="{{asset('admin/style/font/css/font-awesome.min.css')}}">
-	{{--<link rel="stylesheet" href="/resources/views/admin/style/font/css/font-awesome.min.css">--}}
 </head>
 <body style="background:#F3F3F4;">
 	<div class="login_box">

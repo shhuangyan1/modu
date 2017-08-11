@@ -47,8 +47,7 @@ p {
 .blue {
 	color: blue;
 }
-
-/*textarea,input[type="text"],input[type="password"],input[type="datetime"],input[type="datetime-local"],input[type="date"],input[type="month"],input[type="time"],input[type="week"],input[type="number"],input[type="email"],input[type="url"],input[type="search"],input[type="tel"],input[type="color"],.uneditable-input {
+textarea,input[type="text"],input[type="password"],input[type="datetime"],input[type="datetime-local"],input[type="date"],input[type="month"],input[type="time"],input[type="week"],input[type="number"],input[type="email"],input[type="url"],input[type="search"],input[type="tel"],input[type="color"],.uneditable-input {
 	background-color: #fff;
 	border: 1px solid #ccc;
 	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
@@ -59,17 +58,17 @@ p {
 	-o-transition: border linear .2s,box-shadow linear .2s;
 	transition: border linear .2s,box-shadow linear .2s;
 	border-radius: 3px
-}*/
+}
 
-/*textarea:focus,input[type="text"]:focus,input[type="password"]:focus,input[type="datetime"]:focus,input[type="datetime-local"]:focus,input[type="date"]:focus,input[type="month"]:focus,input[type="time"]:focus,input[type="week"]:focus,input[type="number"]:focus,input[type="email"]:focus,input[type="url"]:focus,input[type="search"]:focus,input[type="tel"]:focus,input[type="color"]:focus,.uneditable-input:focus {
+textarea:focus,input[type="text"]:focus,input[type="password"]:focus,input[type="datetime"]:focus,input[type="datetime-local"]:focus,input[type="date"]:focus,input[type="month"]:focus,input[type="time"]:focus,input[type="week"]:focus,input[type="number"]:focus,input[type="email"]:focus,input[type="url"]:focus,input[type="search"]:focus,input[type="tel"]:focus,input[type="color"]:focus,.uneditable-input:focus {
 	border-color: rgba(82,168,236,0.8);
 	outline: 0;
 	outline: thin dotted \9;
 	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6);
 	-moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6);
 	box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6)
-}*/
-textarea,input{
+}
+#publish-article textarea, #publish-article input{
 	border: none;
 	box-shadow: none;
 	outline: none;
@@ -173,7 +172,9 @@ input[type='button'].back:hover {
 	clear: both;
 	overflow: hidden;
 }
-
+.hide{
+	display: none;
+}
 .red {
 	color: #d9534f
 }
@@ -389,6 +390,10 @@ input[type='button'].back:hover {
 
 .menu_box ul li {
 	border: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 .menu_box ul li h3 {
@@ -439,11 +444,15 @@ input[type='button'].back:hover {
 }
 
 .menu_box ul li ul.sub_menu li.on {
-	color: #1963aa
+	color: #1963aa;
+	background-color: #f1f1f1;
+}
+.menu_box ul li ul.sub_menu li:hover{
+	background-color: #f1f1f1;
 }
 
 .menu_box ul li ul.sub_menu li.on a {
-	color: #1963aa
+	color: #1963aa;
 }
 
 .menu_box ul li ul.sub_menu li.on a i {
@@ -540,7 +549,8 @@ input[type='button'].back:hover {
 }
 
 .result_content ul li span {
-	font-size: 15px
+	font-size: 15px;
+	padding: 6px 12px;
 }
 
 .result_content ul li span a {
@@ -606,7 +616,7 @@ table.add_tab tr td span i {
 .new_article section.no-border{
 	border-bottom: 1px solid #fff;
 }
-.new_article section label{
+.new_article section label, .category-list{
 	vertical-align: middle;
 	margin: 5px;
 	display: inline-block;
@@ -631,6 +641,8 @@ table.add_tab tr td span i {
 	height: auto;
 	padding: 8px 35px;
 	margin-right: 52px;
+	width: 250px;
+	font: bold 14px "Microsoft Yahei";
 }
 .new_article .title{
 	width: 100%;
@@ -667,6 +679,10 @@ table.add_tab tr td span i {
 }
 .add-cover:hover .tab{
 	background: rgba(0,0,0,0.4);
+}
+.new_article .img-preview img{
+	height: 120px;
+	width: 188px;
 }
 .tab_title {
 	height: 35px;
@@ -751,8 +767,9 @@ table.list_tab tr input {
 table.list_tab tr th {
 	font-weight: normal;
 	font-size: 14px;
-	text-align: left;
-	background: #eee
+	background: #eee;
+	white-space: nowrap;
+	text-align: center;
 }
 
 table.list_tab tr td,table.list_tab tr th {
@@ -766,8 +783,8 @@ table.list_tab tr td.tc,table.list_tab tr th.tc {
 }
 
 table.list_tab tr td a {
+	display: inline-block;
 	margin-right: 10px;
-	float: left
 }
 
 table.list_tab tr td input[type='text'] {
@@ -963,3 +980,12 @@ table.inner_list tr td input {
 	height: 20px;
 	padding: 0 3px
 }
+
+.tooltips{ border-width: 1px; border-style: solid; position: absolute; display: none;  opacity: 0; filter:alpha( opacity = 0) ; z-index: 999;}
+.tooltips p.content{ padding: 5px; }
+.tooltips .triangle-front,.tooltips .triangle-back{ width: 0; height: 0; overflow: hidden; border-width: 8px; border-style: solid; position: absolute; border-color: transparent ; top: 100%; left: 50%; margin-left: -8px;}
+.tooltips .triangle-back{ margin-top: -1px;}
+
+.tooltipsred{ border-color: red; background-color: pink; color: #000;}
+.tooltipsred .triangle-front{ border-top-color: red;}
+.tooltipsred .triangle-back{ border-top-color: pink;}

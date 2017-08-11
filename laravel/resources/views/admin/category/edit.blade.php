@@ -2,70 +2,77 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-    
-	<link rel="stylesheet" href="{{asset('admin/style/css/ch-ui.admin.css')}}">
-<!--     <link rel="stylesheet" href="style/font/css/font-awesome.min.css"> -->
-	<link rel="stylesheet" href="{{asset('admin/style/font/css/font-awesome.min.css')}}">
+    <title>编辑分类</title>
+
+    <link rel="stylesheet" href="{{asset('admin/style/css/ch-ui.admin.css')}}">
+    <link rel="stylesheet" href="{{asset('admin/style/font/css/font-awesome.min.css')}}">
+    <script src="{{asset('lirary/uploadify/jquery1.11.3.min.js')}}" type="text/javascript"></script>
+    <script type="text/javascript" src="{{asset('js/util.js')}}"></script>
+
+    <style>
+        .result_wrap section{
+            margin: 25px;
+        }
+        .result_wrap .title{
+            margin: 5px;
+        }
+    </style>
 </head>
 <body>
     <!--面包屑导航 开始-->
     <div class="crumb_warp">
         <!--<i class="fa fa-bell"></i> 欢迎使用登陆网站后台，建站的首选工具。-->
-        <i class="fa fa-home"></i> <a href="#">首页</a> &raquo; <a href="#">商品管理</a> &raquo; 添加商品
+        <i class="fa fa-home"></i> <a href="#">首页</a> &raquo; <a href="#">分类管理</a> &raquo; <a href="#">分类列表</a> &raquo; 编辑分类
     </div>
     <!--面包屑导航 结束-->
 
-	<!--结果集标题与导航组件 开始-->
-	<div class="result_wrap">
-        <div class="result_title">
-            <h3>快捷操作</h3>
-        </div>
-        <div class="result_content">
-            <div class="short_wrap">
-                <a href="#"><i class="fa fa-plus"></i>新增文章</a>
-                <a href="#"><i class="fa fa-recycle"></i>批量删除</a>
-                <a href="#"><i class="fa fa-refresh"></i>更新排序</a>
-            </div>
-        </div>
-    </div>
-    <!--结果集标题与导航组件 结束-->
     
     <div class="result_wrap">
-        <form action="{{url('admin/category')}}" method="post">
-            {{csrf_field()}}
-            <table class="add_tab">
-                <tbody>
-
-                <tr>
-                    <th width="120"><i class="require">*</i>父级分类：</th>
-                    <td>
-                        <select name="cat_pid">
-                            <option value="0">==顶级分类==</option>
-                            @foreach($data as $d)
-                                <option value="{{$d->id}}">{{$d->cat_name}}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th><i class="require">*</i>分类名称：</th>
-                    <td>
-                        <input type="text" name="cat_name">
-                        <span><i class="fa fa-exclamation-circle yellow"></i>分类名称必须填写</span>
-                    </td>
-                </tr>
-
-                    <tr>
-                        <th></th>
-                        <td>
-                            <input type="submit" value="提交">
-                            <input type="button" class="back" onclick="history.go(-1)" value="返回">
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <form action="#" method="post" onsubmit="return add_category();">
+            <section CLASS="clear">
+                <p class="title">已有分类：</p>
+                {{csrf_field()}}
+                @foreach($data as $d)
+                <label class="category-list">
+                    <span class="label-cat" data-value="{{$d->id}}">{{$d->cat_name}}</span>
+                </label>
+                @endforeach
+            </section>
+            <section>
+                <p class="title">分类名称：</p>
+                <input type="text" class="cat_name" name="cat_name" value="{{$info->cat_name}}" placeholder="输入新的文章分类名称">
+                <input type="hidden" name="cat_id" value="{{$info->cat_name}}">
+            </section>
+            <section>
+                <input type="submit" value="提交修改">
+                <input type="button" class="back" onclick="history.go(-1)" value="取消并返回">
+            </section>
         </form>
     </div>
+    <script>
+        var category = [];
+        $(function () {
 
+            $.each($(".category-list"),function (i, v) {
+                category.push(v.innerText);
+            })
+            console.log(category)
+
+        })
+        function add_category() {
+            var name = $(".cat_name").val().trim();
+            var name_bl = false;
+            if(name.length > 0){
+                name_bl = category.indexOf(name) >= 0 ? false : true;
+                if(!name_bl){
+                    $(".cat_name").showTips("分类名已存在")
+                }
+            }else{
+                $(".cat_name").showTips("请填写分类名")
+            }
+
+            return name_bl;
+        }
+    </script>
 </body>
 </html>

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+	<title>掌上魔都</title>
 	<link rel="stylesheet" href="style/css/ch-ui.admin.css">
 	<link rel="stylesheet" href="style/font/css/font-awesome.min.css">
 		

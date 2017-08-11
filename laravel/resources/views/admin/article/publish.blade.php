@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+    <title>发布文章</title>
+
     <link rel="stylesheet" href="{{asset('admin/style/css/ch-ui.admin.css')}}">
     <link rel="stylesheet" href="{{asset('admin/style/font/css/font-awesome.min.css')}}">
     <script src="{{asset('lirary/uploadify/jquery1.11.3.min.js')}}" type="text/javascript"></script>
@@ -11,9 +13,9 @@
     <script type="text/javascript" charset="utf-8" src="{{asset('lirary/ueditor2/ueditor.config.js')}}"></script>
     <script type="text/javascript" charset="utf-8" src="{{asset('lirary/ueditor2/ueditor.all.js')}}"></script>
     <script type="text/javascript" src="{{asset('lirary/ueditor2/lang/zh-cn/zh-cn.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/util.js')}}"></script>
 
     <script type="text/javascript" src="{{asset('js/publish.js')}}"></script>
-
     <style>
         .edui-default{line-height: 28px;}
         div.edui-combox-body,div.edui-button-body,div.edui-splitbutton-body
@@ -36,12 +38,12 @@
 
     <!--结果集标题与导航组件 结束-->
     
-    <div class="result_wrap">
+    <div id="publish-article" class="result_wrap">
         <form action="{{url('admin/article')}}" method="post"  enctype="multipart/form-data" onsubmit="return publish_article();">
             {{csrf_field()}}
 
             <div class="new_article">
-                <section class="clear">
+                <section class="type clear">
                     @foreach($data as $v)
                     <label>
                         <span class="label-cat" data-value="{{$v->id}}">{{$v->_cat_name}}</span>
@@ -63,14 +65,18 @@
                 <section>
                     <input id="file_upload" name="image" type="file" accept="image/*" style="display: none;">
                     <p>封面 大图片建议尺寸：900像素 * 500像素</p>
-                    <div class="add-cover">
+                    <div class="add-cover add-img">
                         <i class="fa fa-photo"></i>
                         <div class="tab">封面图片</div>
                     </div>
+                    <div class="add-cover hide img-preview">
+                        <img src="#"  alt="封面图片" />
+                        <div class="tab">点击更换封面图片</div>
+                    </div>
                 </section>
                 <section class="no-border submit">
-                    <input type="submit" value="提交">
-                    <input type="button" class="back" onclick="history.go(-1)" value="返回">
+                    <input type="submit" value="确认发布">
+                    <input class="hide" type="button" value="预览">
                 </section>
             </div>
 
