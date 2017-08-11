@@ -46,10 +46,12 @@ class CategoryController extends Controller{
 		public function edit($id){
 			$info=Category::find($id);//dd($info);
 			$data=Category::where('cat_pid',0)->get();
-			return  view('admin.category.edit',compact('field','data'));
+			return  view('admin.category.edit',compact('info','data'));
 		}
 
-		public function update(){
+		public function update($id){
+			$input = input::except('_token','_method');
+			$info = Category::where('id',$id)->update($input);
 
 		}
 

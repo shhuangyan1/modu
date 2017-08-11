@@ -19,6 +19,7 @@ Route::get('/', function () {
 Route::any('admin/login','Admin\LoginController@login');
 Route::get('code','Admin\LoginController@code');
 Route::get('jiekou','Admin\LoginController@jiekou');
+Route::get('admin/confirm','Admin\ArticleController@confirm');
 
 Route::group(['middleware' => ['web','admin.login'],'prefix'=>'admin','namespace'=>'Admin'], function () {
 
@@ -28,5 +29,8 @@ Route::group(['middleware' => ['web','admin.login'],'prefix'=>'admin','namespace
 
     Route::resource('category','CategoryController');
     Route::resource('article','ArticleController');
+    Route::resource('topic','TopicController');
+    Route::resource('activity','ActivityController');
+    Route::resource('manager','ManagerController');
     Route::get('upload','ArticleController@upload');
 });

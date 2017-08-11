@@ -113,6 +113,10 @@ Class ArticleController extends Controller{
 			return $filepath;
 		}
 	}
+
+	public function confirm(){
+		return view('admin.article.confirm');
+	}
 }
 
 
