@@ -611,6 +611,18 @@ table.add_tab tr td span i {
 	margin: 5px;
 	display: inline-block;
 	float: left;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	border: 1px solid #d5e1f2;
+}
+.new_article .label-active{
+	border: 1px solid #428bca;
+	background-color: #428bca;
+	color: #fff;
+	font-weight: bold;
 }
 .new_article .submit{
 	text-align: center;
@@ -628,8 +640,9 @@ table.add_tab tr td span i {
 .label-cat{
 	display: inline-block;
 	padding: 4px 8px;
-	border: 1px solid #d5e1f2;
+
 }
+
 .add-cover {
 	height: 120px;
 	width: 188px;
