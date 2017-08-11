@@ -27,7 +27,7 @@ class TopicController extends Controller
      */
     public function create()
     {
-        return view('admin.activity.new');
+        return view('admin.topic.new');
     }
 
     /**
