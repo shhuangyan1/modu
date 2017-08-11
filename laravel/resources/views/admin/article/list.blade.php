@@ -23,7 +23,7 @@
                 <tr>
                     <th width="120">选择分类:</th>
                     <td>
-                        <select onchange="javascript:location.href=this.value;">
+                        <select>
                             <option value="">全部</option>
                             <option value="http://www.baidu.com">百度</option>
                             <option value="http://www.sina.com">新浪</option>

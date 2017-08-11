@@ -9,7 +9,7 @@
 <body style="background:#F3F3F4;">
 	<div class="login_box">
 		<h1></h1>
-		<h2>欢迎使用管理平台</h2>
+		<h2>掌上魔都 后台管理</h2>
 		<div class="form">
 			@if (session('msg'))
 			<p style="color:red">{{session('msg')}}</p>
@@ -31,7 +31,7 @@
 						<img src="{{url('code')}}" alt="验证码图片" onclick="this.src='{{url('code')}}?'+Math.random()">
 					</li>
 					<li>
-						<input type="submit" value="立即登陆"/>
+						<input type="submit" value="立即登录"/>
 					</li>
 				</ul>
 			</form>

@@ -55,8 +55,6 @@
             <div class="result_content">
                 <table class="list_tab">
                     <tr>
-                      
-                       
                         <th class="tc">ID</th>
                         <th>分类名称</th>
                         <th>更新时间</th>
