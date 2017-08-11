@@ -45,17 +45,19 @@ Class ArticleController extends Controller{
        
 
 		$input=Input::except('_token');
+		$author = session('user.attributes.username');
 		$rule = [
 			'title'=>'required',
-			'author'=>'required',
+			'from'=>'required',
 		];
 		$message = [
 			'title.required' => '标题不能为空!',
-			'author.required'=>'作者不能为空!',
+			'from.required'=>'来源不能为空!',
 		];
 		$validate = Validator::make($input,$rule,$message);
 		if($validate->passes()){
 			$input['image']=$filePath;
+			$input['author']=$author;
 			//dd($input);exit;
 			$result = Article::create($input);
 			if($result){
