@@ -1,3 +1,4 @@
-!/laravel/vendor/*
+/laravel/.env
 /.idea/
 /modu.iml
+!/laravel/public/*

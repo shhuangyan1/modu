@@ -174,6 +174,11 @@ div.edui-box {
     -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
 }
+.edui-default .edui-editor-toolbarboxouter{
+    background: none;
+    box-shadow: none;
+    border: none;
+}
 
 .edui-default .edui-editor-toolbarboxinner {
     padding: 2px;
@@ -212,7 +217,7 @@ div.edui-box {
 
 .edui-default .edui-editor-bottomContainer td {
     white-space: nowrap;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #e7e7eb;
     line-height: 20px;
     font-size: 12px;
     font-family: Arial, Helvetica, Tahoma, Verdana, Sans-Serif;
@@ -1908,4 +1913,23 @@ div.edui-box {
 }
 .edui-default  .edui-pastecontainer .edui-button  .edui-state-hover .edui-plaintxticon{
     background-position: -72px -34px;
+}
+
+
+/**/
+.
+#myEditor .edui-editor-toolbarboxouter{
+    border: none;
+    background-color: #fff;!important;
+    background-image: none;!important;
+
+}
+
+#myEditor #edui1_toolbarbox{
+    border: none;
+    background-color: #fff;!important;
+    background-image: none;!important;
+}
+#myEditor #edui1{
+    border: none;
 }

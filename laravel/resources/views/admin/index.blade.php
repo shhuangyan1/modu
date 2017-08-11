@@ -69,13 +69,6 @@
                 </ul>
             </li>
             <li>
-            	<h3><i class="fa fa-fw fa-cog"></i>系统设置</h3>
-                <ul class="sub_menu">
-                    <li><a href="javascript:;" target="main">网站配置</a></li>
-                    <li><a href="javascript:;" target="main">备份还原</a></li>
-                </ul>
-            </li>
-            <li>
             	<h3><i class="fa fa-fw fa-thumb-tack"></i>工具导航</h3>
                 <ul class="sub_menu">
                     <li><a href="http://www.yeahzan.com/fa/facss.html" target="main">图标调用</a></li>
