@@ -28,8 +28,8 @@
 
     
     <div class="result_wrap">
-        <form action="{{url('admin/category/'.$info->id.'/edit')}}" method="post" onsubmit="return add_category();">
-            <input type="hidden" name="_method" value="input">
+        <form action="{{url('admin/category/'.$info->id)}}" method="post" onsubmit="return add_category();">
+            <input type="hidden" name="_method" value="put">
             {{csrf_field()}}
             <section CLASS="clear">
                 <p class="title">已有分类：</p>

@@ -8,6 +8,8 @@
 		
 	<script type="text/javascript" src="style/js/jquery.js"></script>
     <script type="text/javascript" src="style/js/ch-ui.admin.js"></script>
+	<script type="text/javascript" src="{{asset('js/util.js')}}"></script>
+
 </head>
 <body>
 	<!--头部 开始-->
@@ -75,7 +77,6 @@
                     <li><a href="http://www.yeahzan.com/fa/facss.html" target="main">图标调用</a></li>
                     <li><a href="http://hemin.cn/jq/cheatsheet.html" target="main">Jquery手册</a></li>
                     <li><a href="http://tool.c7sky.com/webcolor/" target="main">配色板</a></li>
-                    <li><a href="element.html" target="main"></i>其他组件</a></li>
 					<!--<i class="fa fa-fw fa-tags">-->
                 </ul>
             </li>

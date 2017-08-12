@@ -18,6 +18,47 @@
     <i class="fa fa-home"></i> <a href="#">首页</a> &raquo; <a href="#">活动管理</a> &raquo; 活动列表
 </div>
 <!--面包屑导航 结束-->
+<div class="search_wrap">
+    <form action="" method="post">
+        <table class="search_tab">
+            <tr>
+                <th width="70">关键字：</th>
+                <td><input type="text" name="keywords" placeholder="搜索活动名称关键字"></td>
+                <td><input type="submit" name="sub" value="查询"></td>
+            </tr>
+        </table>
+    </form>
+</div>
 
+<div class="result_wrap">
+    <div class="result_content">
+        <table class="list_tab">
+            <thead>
+            <tr>
+                <th>活动名称</th>
+                <th>参与人数</th>
+                <th>发布时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <a href="#">活动名称</a>
+                </td>
+                <td class="tc">220人</td>
+                <td class="tc">2017-02-15</td>
+                <td class="tc">
+                    <a href="javascript:;">取消活动</a>
+                </td>
+            </tr>
+
+            </tbody>
+
+        </table>
+        <div class="page_list">
+        </div>
+    </div>
+</div>
 </body>
 </html>

@@ -7,6 +7,8 @@
 	<link rel="stylesheet" href="style/font/css/font-awesome.min.css">
     <script type="text/javascript" src="style/js/jquery.js"></script>
     <script type="text/javascript" src="style/js/ch-ui.admin.js"></script>
+
+
 </head>
 <body>
     <!--面包屑导航 开始-->
@@ -16,7 +18,7 @@
     <!--面包屑导航 结束-->
 
     <!--搜索结果页面 列表 开始-->
-    <form action="#" method="post">
+    <form  method="post">
         <div class="result_wrap">
             <div class="result_content">
                 <table class="list_tab">

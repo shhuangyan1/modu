@@ -15,8 +15,8 @@
         <div class="result_content">
             <div class="short_wrap">
                 <a href="{{url('admin/article/create')}}"><i class="fa fa-plus"></i>发布文章</a>
-                <a href="{{url('admin/article/create')}}"><i class="fa fa-plus"></i>新增话题</a>
-                <a href="{{url('admin/article/create')}}"><i class="fa fa-plus"></i>发布活动</a>
+                <a href="{{url('admin/topic/create')}}"><i class="fa fa-plus"></i>新增话题</a>
+                <a href="{{url('admin/activity/create')}}"><i class="fa fa-plus"></i>发布活动</a>
             </div>
         </div>
     </div>

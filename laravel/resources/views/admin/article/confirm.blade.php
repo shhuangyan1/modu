@@ -44,6 +44,7 @@
                     <td class="tc"></td>
                     <td class="tc">
                         <a href="javascript:;">同意删除</a>
+                        <a href="javascript:;">继续展示</a>
                     </td>
                 </tr>
                 </tbody>
