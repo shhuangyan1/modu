@@ -53,6 +53,7 @@ class CategoryController extends Controller{
 			$input = input::except('_token','_method');
 			$info = Category::where('id',$id)->update($input);
 
+
 		}
 
 		public function destory(){

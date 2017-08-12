@@ -25,22 +25,24 @@ Class ArticleController extends Controller{
 
 	//获取表单提交过来的数据(post方法)
 	public function store(Request $request){
-		//$request = $request::all(); //注意先先取全，得到的是数组 
-		// $input=input::all();
-		// dd($input);
+
 		$file = $request->file('image');
+		$filePath='';
 		//dd($file);
-		$allowed_extensions = ["png", "jpg", "gif"];
-        if ($file->getClientOriginalExtension() && !in_array($file->getClientOriginalExtension(), $allowed_extensions)) {
-            return ['error' => 'You may only upload png, jpg or gif.'];
-        }
+		if($file){
+			$allowed_extensions = ["png", "jpg", "gif"];
+			if ($file->getClientOriginalExtension() && !in_array($file->getClientOriginalExtension(), $allowed_extensions)) {
+				return ['error' => 'You may only upload png, jpg or gif.'];
+			}
 
-        $destinationPath = 'storage/uploads/'; //public 文件夹下面建 storage/uploads 文件夹
-        $extension = $file->getClientOriginalExtension();
-        $fileName = str_random(10).'.'.$extension;
-        $file->move($destinationPath, $fileName);
+			$destinationPath = 'storage/uploads/'; //public 文件夹下面建 storage/uploads 文件夹
+			$extension = $file->getClientOriginalExtension();
+			$fileName = str_random(10).'.'.$extension;
+			$file->move($destinationPath, $fileName);
 
-        $filePath = asset($destinationPath.$fileName);
+			$filePath = asset($destinationPath.$fileName);
+		}
+
         //echo $filePath;
        
 
@@ -56,7 +58,10 @@ Class ArticleController extends Controller{
 		];
 		$validate = Validator::make($input,$rule,$message);
 		if($validate->passes()){
-			$input['image']=$filePath;
+			if($filePath){
+				$input['image']=$filePath;
+			}
+
 			$input['author']=$author;
 			//dd($input);exit;
 			$result = Article::create($input);
