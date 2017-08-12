@@ -51,8 +51,13 @@ class CategoryController extends Controller{
 
 		public function update($id){
 			$input = input::except('_token','_method');
+			//dd($input);
 			$info = Category::where('id',$id)->update($input);
-
+			if($info){
+				return view('admin/category');
+			}else{
+				return back()->with('error','更新错误!');
+			}
 
 		}
 
