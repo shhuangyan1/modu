@@ -616,7 +616,7 @@ table.add_tab tr td span i {
 .new_article section.no-border{
 	border-bottom: 1px solid #fff;
 }
-.new_article section label, .category-list{
+.new_article section.type label, .category-list{
 	vertical-align: middle;
 	margin: 5px;
 	display: inline-block;
@@ -680,6 +680,15 @@ table.add_tab tr td span i {
 .add-cover:hover .tab{
 	background: rgba(0,0,0,0.4);
 }
+.add-cover .tab span{
+	display: inline-block;
+	text-align: center;
+	width: 50%;
+	float: left;
+}
+.add-cover .tab span:hover{
+	background: rgba(0,0,0,0.6);
+}
 .new_article .img-preview img{
 	height: 120px;
 	width: 188px;
@@ -706,6 +715,75 @@ table.add_tab tr td span i {
 	position: relative;
 	border-bottom: 1px solid #fff
 }
+
+.upload-img-box{
+	width: 340px;
+	float: left;
+}
+
+.compose-box{
+	float: left;
+}
+.compose-box label{
+	background-color: #fff;
+	margin: 0 15px 0 0;
+	float: left;
+	border: 1px solid #e7e7eb;
+	cursor: pointer;
+}
+.compose-box input{
+	display: none;
+}
+.compose-box .cmp{
+	width: 200px;
+	height: 100px;
+}
+.compose-box .cmp p{
+	color: #aaa;
+	height: 30px;
+	line-height: 30px;
+	padding-left: 5px;
+	margin: 0;
+}
+.compose-box .cmp .cmp-img{
+	font-size: 30px;
+	color: #ccc;
+	text-align: center;
+	height: 70px;
+	background-color: #f0f0f0;
+	line-height: 70px;
+}
+.compose-box .single p{
+	width: 135px;
+	float: left;
+}
+.compose-box .single .single-img{
+	height: 100px;
+	width: 60px;
+	float: left;
+	line-height: 100px;
+}
+.compose-box .disabled{
+	border-color: #f1f1f1;
+}
+.compose-box .disabled p{
+	color: #cdcdcd;
+}
+.compose-box .disabled .cmp-img{
+	color: #cdcdcd;
+}
+.compose-box .on{
+	border-color: #00a0e9;
+}
+.compose-box .on p{
+	color: #00a0e9;
+}
+.compose-box .on .cmp-img{
+	color: #00a0e9;
+}
+
+
+
 
 .tab_content {
 	display: none;

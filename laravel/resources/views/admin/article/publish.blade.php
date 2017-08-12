@@ -59,19 +59,43 @@
                     <!--<span><i class="fa fa-exclamation-circle red"></i></span>-->
                 </section>
 
-                <section class="no-border">
-                    <script type="text/plain" id="myEditor" name="content" style="width:100%;height:240px;min-width: 800px;"></script>
+                <section class="no-border" id="editor-box">
                 </section>
-                <section>
-                    <input id="file_upload" name="image" type="file" accept="image/*" style="display: none;">
-                    <p>封面 大图片建议尺寸：900像素 * 500像素</p>
-                    <div class="add-cover add-img">
-                        <i class="fa fa-photo"></i>
-                        <div class="tab">封面图片</div>
+                <section class="clear">
+                    <div class="upload-img-box">
+                        <input id="file_upload" name="image" type="file" accept="image/*" style="display: none;">
+                        <p>封面大图片建议尺寸：900px * 500px</p>
+                        <div class="add-cover add-img">
+                            <i class="fa fa-photo"></i>
+                            <div class="tab">封面图片</div>
+                        </div>
+                        <div class="add-cover hide img-preview">
+                            <img src="#"  alt="封面图片" />
+                            <div class="tab">
+                                <span class="tab-upload">更换</span>
+                                <span class="tab-delete">删除</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="add-cover hide img-preview">
-                        <img src="#"  alt="封面图片" />
-                        <div class="tab">点击更换封面图片</div>
+                 <!-- 排版选择 -->
+                    <div class="compose-box">
+                        <p>排版选择</p>
+                        <div class="clear">
+                        <label class="disabled">
+                            <input type="radio" id="poster-input" name="compose" value="1" disabled>
+                            <div class="cmp poster">
+                                <p>文章标题</p>
+                                <div class="cmp-img poster-img"><i class="fa fa-photo"></i></div>
+                            </div>
+                        </label>
+                        <label class="on">
+                            <input type="radio" id="single-input" name="compose" value="2" checked>
+                            <div class="cmp single">
+                                <p>文章标题</p>
+                                <div class="cmp-img single-img"><i class="fa fa-photo"></i></div>
+                            </div>
+                        </label>
+                        </div>
                     </div>
                 </section>
                 <section class="no-border submit">
@@ -87,6 +111,8 @@
 </body>
 
 <script type="text/javascript">
+    $("#editor-box").html('<script type="text/plain" id="myEditor" name="content" style="width:100%;height:240px;min-width: 800px;"><\/script>')
+
     //实例化编辑器
     //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
      var ue = UE.getEditor('myEditor',{

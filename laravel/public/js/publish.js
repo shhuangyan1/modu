@@ -9,8 +9,17 @@ $(function () {
             $("#file_upload").click();
         })
 
-        $(".img-preview").on("click",function () {
+        $(".tab-upload").on("click",function () {
             $("#file_upload").click();
+        })
+        $(".tab-delete").on("click",function () {
+            $("#file_upload").val("");
+            $(".img-preview img").attr("src","#");
+            $(".img-preview").addClass("hide");
+            $(".add-img").removeClass("hide");
+            $("#single-input").parent().click();
+            $("#poster-input").attr("disabled","disabled")
+            $("#poster-input").parent().addClass("disabled")
         })
 
         $("#file_upload").on("change",function () {
@@ -25,8 +34,11 @@ $(function () {
             }
             fileReader.onload = function(e){
                 $(".img-preview img").attr("src",e.target.result);
-               $(".img-preview").removeClass("hide");
+                $(".img-preview").removeClass("hide");
                 $(".add-img").addClass("hide")
+                $("#poster-input").removeAttr("disabled").click()
+                $("#poster-input").parent().addClass("on").removeClass("disabled").siblings().removeClass("on")
+                // $("#single-input").attr("disabled",true)
             }
             try{
                 console.log("准备读取-")
@@ -34,6 +46,13 @@ $(function () {
                 console.log('读取。。。')
             }catch (Exception){
                 console.log(Exception.name +":"+ Exception.message);
+            }
+        })
+
+
+        $(".compose-box label").on("click",function () {
+            if(!$(this).hasClass("disabled")){
+                $(this).addClass("on").siblings().removeClass("on")
             }
         })
     }

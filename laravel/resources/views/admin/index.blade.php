@@ -37,7 +37,7 @@
 				<ul class="sub_menu">
 					<li><a href="{{url('admin/article/create')}}" target="main">发布文章</a></li>
 					<li><a href="{{url('admin/article')}}" target="main">文章列表</a></li>
-					<li><a href="{{url('newfile')}}" target="main">删除确认</a></li>
+					<li><a href="{{url('admin/confirm')}}" target="main">删除确认</a></li>
 				</ul>
 			</li>
 			<li>
@@ -51,22 +51,22 @@
 			<li>
             	<h3><i class="fa fa-fw fa-weixin"></i>话题管理</h3>
                 <ul class="sub_menu">
-                    <li><a href="javascript:;" target="main">新增话题</a></li>
-                    <li><a href="javascript:;" target="main">活动列表</a></li>
+                    <li><a href="{{url('admin/topic/create')}}" target="main">新增话题</a></li>
+                    <li><a href="{{url('admin/topic')}}" target="main">话题列表</a></li>
                 </ul>
             </li>
 			<li>
             	<h3><i class="fa fa-fw fa-flag"></i>活动管理</h3>
                 <ul class="sub_menu">
-                    <li><a href="javascript:;" target="main">发布活动</a></li>
-                    <li><a href="javascript:;" target="main">活动列表</a></li>
+                    <li><a href="{{url('admin/activity/create')}}" target="main">发布活动</a></li>
+                    <li><a href="{{url('admin/activity')}}" target="main">活动列表</a></li>
                 </ul>
             </li>
             <li>
             	<h3><i class="fa fa-fw fa-user"></i>管理员管理</h3>
                 <ul class="sub_menu">
-                    <li><a href="javascript:;" target="main">添加管理员</a></li>
-                    <li><a href="javascript:;" target="main">管理员列表</a></li>
+                    <li><a href="{{url('admin/manager/create')}}" target="main">添加管理员</a></li>
+                    <li><a href="{{url('admin/manager')}}" target="main">管理员列表</a></li>
                 </ul>
             </li>
             <li>

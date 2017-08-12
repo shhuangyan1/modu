@@ -61,22 +61,24 @@
                         <td>
                             <a href="#">{{$v->title}}</a>
                         </td>
-                        <td>{{$v->view}}</td>
-                        <td></td>
-                        <td>{{$v->author}}</td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:;" onclick="delarticle({{$v->id}})">删除</a>
+                        <td class="tc">{{$v->view}}</td>
+                        <td class="tc"></td>
+                        <td class="tc">{{$v->author}}</td>
+                        <td class="tc"></td>
+                        <td class="tc">
+                            <!--<a href="javascript:;" onclick="delarticle({{$v->id}})">申请删除</a>-->
+                            <a href="javascript:;">申请删除</a>
                         </td>
                     </tr>
                     @endforeach
                     </tbody>
 
                 </table>
-             <div class="page_list">
-                {{$data->links()}}
+                <div class="page_list">
+                    {{$data->links()}}
+                </div>
             </div>
-
+        </div>
     </form>
     <!--搜索结果页面 列表 结束-->
 
