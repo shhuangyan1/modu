@@ -19,5 +19,41 @@
 </div>
 <!--面包屑导航 结束-->
 
+
+<form action="#" method="post">
+
+    <div class="result_wrap">
+        <div class="result_content">
+            <table class="list_tab">
+                <thead>
+                <tr>
+                    <th>标题</th>
+                    <th>分类</th>
+                    <th>发布人</th>
+                    <th>申请时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <a href="#"></a>
+                    </td>
+                    <td class="tc"></td>
+                    <td class="tc"></td>
+                    <td class="tc"></td>
+                    <td class="tc">
+                        <a href="javascript:;">同意删除</a>
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+            <div class="page_list">
+            </div>
+        </div>
+    </div>
+</form>
+
 </body>
 </html>

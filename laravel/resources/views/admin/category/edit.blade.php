@@ -28,10 +28,12 @@
 
     
     <div class="result_wrap">
-        <form action="#" method="post" onsubmit="return add_category();">
+        <form action="{{url('admin/category/'.$info->id.'/edit')}}" method="post" onsubmit="return add_category();">
+            <input type="hidden" name="_method" value="input">
+            {{csrf_field()}}
             <section CLASS="clear">
                 <p class="title">已有分类：</p>
-                {{csrf_field()}}
+
                 @foreach($data as $d)
                 <label class="category-list">
                     <span class="label-cat" data-value="{{$d->id}}">{{$d->cat_name}}</span>
@@ -41,7 +43,7 @@
             <section>
                 <p class="title">分类名称：</p>
                 <input type="text" class="cat_name" name="cat_name" value="{{$info->cat_name}}" placeholder="输入新的文章分类名称">
-                <input type="hidden" name="cat_id" value="{{$info->cat_name}}">
+                <input type="hidden" name="id" value="{{$info->id}}">
             </section>
             <section>
                 <input type="submit" value="提交修改">
