@@ -54,7 +54,7 @@ class CategoryController extends Controller{
 			//dd($input);
 			$info = Category::where('id',$id)->update($input);
 			if($info){
-				return view('admin/category');
+				return redirect('admin/category');
 			}else{
 				return back()->with('error','更新错误!');
 			}
