@@ -1,0 +1,110 @@
+
+.md-checkbox{
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid #DADADA;
+    border-radius: 3px;
+    display: inline-block;
+    vertical-align: middle;
+    overflow: hidden;
+    position: relative;
+    margin: 2px 2px 0 0;
+}
+.md-checkbox.on{
+    border: 1px solid #428bca;
+}
+.md-checkbox input,.md-radio input{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    cursor: pointer;
+    display: block;
+    -webkit-box-sizing: border-box!important;
+    -moz-box-sizing: border-box!important;
+    box-sizing: border-box!important;
+}
+.md-checkbox i{
+    width: 30px;
+    height: 30px;
+    line-height: 28px;
+    display: inline-block;
+    float: left;
+    background-color: #fff;
+    text-align: center;
+    font-size: 20px;
+    color: #DFDFDF;
+    vertical-align: bottom;
+    margin-right: 0;
+}
+.md-checkbox.on i{
+    color: #428bca;
+}
+.md-checkbox span{
+    height: 30px;
+    line-height: 30px;
+    display: inline-block;
+    float: left;
+    padding: 0 8px;
+    background-color: #F6F6F6;
+    overflow: hidden;
+}
+.md-checkbox.on span{
+    background-color: #428bca;
+    color: #fff;
+}
+
+/*===============================*/
+.md-radio{
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    height: 28px;
+    line-height: 28px;
+    background-color: #fff;
+    border: 1px #d2d2d2 solid;
+    -webkit-appearance: none;
+    user-select: none;
+    margin: 4px 4px 0 0;
+    border-radius: 15px;
+}
+.md-radio span{
+    color: #666;
+    display: inline-block;
+    padding: 0px 8px 0px 34px;
+    font-size: 12px;
+    float: right;
+    border-radius: 15px;
+}
+.md-radio.on span{
+    float: left;
+    color: #fff;
+    padding: 0px 34px 0px 8px;
+    background-color: #428bca;
+}
+.md-radio i{
+    position: absolute;
+    top: 50%;
+    left: 3px;
+    width: 24px;
+    height: 24px;
+    margin-top: -12px;
+    display: block;
+    border-radius: 50px;
+    background-color: #d2d2d2;
+    margin-right: 0;
+}
+.md-radio.on i{
+    left: auto;
+    right: 2px!important;
+    background-color: #f0f0f0;
+}
+

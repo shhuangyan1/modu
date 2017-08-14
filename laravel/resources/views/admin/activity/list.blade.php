@@ -19,9 +19,18 @@
 </div>
 <!--面包屑导航 结束-->
 <div class="search_wrap">
-    <form action="" method="post">
+    <form action="" method="get">
+        {{csrf_field()}}
         <table class="search_tab">
             <tr>
+                <th width="120">活动状态：</th>
+                <td>
+                    <select>
+                        <option value="">--全部--</option>
+                        <option value="1">尚未开始</option>
+                        <option value="0">已经结束</option>
+                    </select>
+                </td>
                 <th width="70">关键字：</th>
                 <td><input type="text" name="keywords" placeholder="搜索活动名称关键字"></td>
                 <td><input type="submit" name="sub" value="查询"></td>
@@ -42,21 +51,23 @@
             </tr>
             </thead>
             <tbody>
+            @foreach($data as $v)
             <tr>
                 <td>
-                    <a href="#">活动名称</a>
+                    <a href="#">{{$v->title}}</a>
                 </td>
-                <td class="tc">220人</td>
-                <td class="tc">2017-02-15</td>
+                <td class="tc">{{$v->limits}}</td>
+                <td class="tc">{{$v->time}}</td>
                 <td class="tc">
                     <a href="javascript:;">取消活动</a>
                 </td>
             </tr>
-
+            @endforeach
             </tbody>
 
         </table>
         <div class="page_list">
+            {{$data->appends(Request::all())->render()}}
         </div>
     </div>
 </div>

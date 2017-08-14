@@ -27,7 +27,7 @@
         }
         #new-activity .description{
             width: 100%;
-            height: 200px;
+            height: 150px;
             font-size: 14px;
             border-bottom: 1px solid #e7e7eb;
             resize: none;
@@ -65,7 +65,8 @@
 <!--面包屑导航 结束-->
 
 <div id="new-activity" class="result_wrap section-ctrl">
-    <form action="#" name="form" onsubmit="return newTopic();">
+    <form action="{{url('admin/activity')}}" method="post" enctype="multipart/form-data" name="form" onsubmit="return newActivity();">
+        {{csrf_field()}}
         <section>
             <input type="text" class="title" name="title" placeholder="请在这里填写活动名称" maxlength="60" >
         </section>
@@ -73,10 +74,10 @@
             <textarea class="description" name="description" placeholder="请在这里填写活动描述"></textarea>
         </section>
 
-        <section class="sec clear">
+        <section class="sec clear inputs">
             <div class="sec-left">
                 <p>活动限制人数 / 人</p>
-                <input type="text" class="limit" name="limit" min="1" placeholder="请在这里填写活动限制人数" >
+                <input type="text" class="limit" name="limits" min="1" placeholder="请在这里填写活动限制人数" >
             </div>
             <div class="sec-left">
                 <p>活动开始时间</p>

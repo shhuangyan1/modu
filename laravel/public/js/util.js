@@ -47,5 +47,31 @@ window.MD = {
         bg_shadow.append($(bg_img))
 
         $("body").append(bg_shadow)
+    },
+    Form : function (elem,config) {
+        var dom = $(elem);
+        var opts = {
+            type : "checkbox"
+        }
+
+        opts = $.extend(opts, config||{});
+
+        (function () {
+            var aims = dom.find('input[type='+ opts.type +']');
+            var wrapDom = $('<div class="md-'+ opts.type +'"></div>');
+            var itype = opts.type == 'checkbox' ? 'fa-check' : ''
+
+            $.each(aims, function (i, v) {
+                var afterDom = $('<i class="fa '+ itype +'"></i><span>'+ $(v).attr("mdtext") +'</span>')
+                $(v).wrap(wrapDom).after(afterDom);
+
+                $(v).on("click",function () {
+                    $(this).parent().toggleClass("on")
+                    console.log($(this).is(":checked"))
+                })
+            })
+        })()
+
+
     }
 }

@@ -136,7 +136,7 @@ select {
 }
 
 select option {
-	padding: 3px 5px;
+	padding: 13px 5px;
 	font-size: 12px;
 	vertical-align: middle
 }
@@ -170,6 +170,9 @@ input[type='button'].back {
 
 input[type='button'].back:hover {
 	background: #e6e6e6
+}
+input.button{
+	height: 30px;
 }
 input.button.default{
 	background: #f0f0f0;

@@ -17,6 +17,7 @@
     <script type="text/javascript" src="{{asset('js/publish.js')}}"></script>
 
     <style>
+        @import "{{asset('css/mdForm.css')}}";
         .edui-default{line-height: 28px;}
         div.edui-combox-body,div.edui-button-body,div.edui-splitbutton-body
         {overflow: hidden; height:26px;}
@@ -25,6 +26,10 @@
         .uploadify{display:inline-block;}
         .uploadify-button{border:none; border-radius:5px; margin-top:8px;}
         table.add_tab tr td span.uploadify-button-text{color: #FFF; margin:0;}
+        #article_cat li{
+            float: left;
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
@@ -43,14 +48,15 @@
 
             <div class="new_article">
 
-                <section class="type clear">
+                <section class="type clear" id="article_cat">
                     <p>选择文章所属分类</p>
+                    <ul>
                     @foreach($data as $v)
-                    <label>
-                        <span class="label-cat" data-value="{{$v->id}}">{{$v->_cat_name}}</span>
-                        <input class="cat_id" type="radio" name="cat_id" value="{{$v->id}}" style="display: none;">
-                    </label>
+                    <li>
+                        <input class="cat_id" type="radio" name="cat_id" value="{{$v->id}}" mdtext="{{$v->_cat_name}}">
+                    </li>
                     @endforeach
+                    </ul>
                 </section>
                 <section>
                     <input type="text" class="title" name="title" placeholder="请在这里输入标题" maxlength="60" >
@@ -120,6 +126,7 @@
          elementPathEnabled: false
      });
 
+    MD.Form("#article_cat",{type: "radio"})
 
 </script>
 </html>
