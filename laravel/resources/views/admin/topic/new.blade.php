@@ -42,7 +42,8 @@
 </div>
 <!--面包屑导航 结束-->
 <div id="new-topic" class="result_wrap section-ctrl">
-    <form action="#" name="form" onsubmit="return newTopic();">
+    <form action="{{url('admin/topic')}}" name="form" method="post" enctype="multipart/form-data" onsubmit="return newTopic();">
+        {{csrf_field()}}
     <section>
         <input type="text" class="title" name="title" placeholder="请在这里填写话题标题" maxlength="60" >
     </section>
@@ -62,6 +63,7 @@
                     <div class="tab">更换海报</div>
                 </div>
             </div>
+
     </section>
         <section class="no-border">
             <input class="button default confirm" type="submit" value="确认发布">
