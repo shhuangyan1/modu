@@ -11,9 +11,20 @@ use Illuminate\Support\Facades\Validator;
 
 
 Class ArticleController extends Controller{
-	public function index(){
-		$data = Article::orderby('id','desc')->paginate(2);
-		return view('admin.article.list',compact('data'));
+	public function index(Request $request){
+
+		$info = (new category)->tree();
+		$title=$request->get('title');
+		$cat_id=$request->get('cat_id');
+		$data = Article::where(function($query)use($title,$cat_id){
+				if($title){
+					$query -> where('title', 'like', '%'.$title.'%');
+				}
+				if($cat_id){
+					$query ->where('cat_id', $cat_id);
+				}
+		})->orderby('id','desc')->paginate(2);
+		return view('admin.article.list',compact('data','info'));
 	}
 
 	//将添加页面所需要的数据分配到页面中
@@ -61,8 +72,8 @@ Class ArticleController extends Controller{
 			if($filePath){
 				$input['image']=$filePath;
 			}
-
 			$input['author']=$author;
+			$input['time']=time();
 			//dd($input);exit;
 			$result = Article::create($input);
 			if($result){
@@ -120,8 +131,12 @@ Class ArticleController extends Controller{
 	}
 
 	public function confirm(){
-		return view('admin.article.confirm');
+		$info = Article::where('status','1')->orderby('id','desc')->paginate(5);
+		//dd($info);
+		return view('admin.article.confirm',compact('info'));
 	}
+
+
 }
 
 

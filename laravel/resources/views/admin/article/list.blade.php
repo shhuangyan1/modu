@@ -21,18 +21,22 @@
 
 	<!--结果页快捷搜索框 开始-->
 	<div class="search_wrap">
-        <form action="" method="post">
+        <form action="" method="get">
+            {{csrf_field()}}
             <table class="search_tab">
                 <tr>
                     <th width="120">选择分类：</th>
                     <td>
-                        <select>
-                            <option value="">全部</option>
+                        <select name="cat_id">
+                            <option value="">-请选择-</option>
+                            @foreach($info as $v)
+                            <option value="{{$v->id}}">{{$v->cat_name}}</option>
+                            @endforeach
                         </select>
                     </td>
                     <th width="70">关键字：</th>
-                    <td><input type="text" name="keywords" placeholder="搜索文章标题关键字"></td>
-                    <td><input type="submit" name="sub" value="查询"></td>
+                    <td><input type="text" name="title" placeholder="搜索文章标题关键字"></td>
+                    <td><input type="submit"  value="查询"></td>
                 </tr>
             </table>
         </form>
@@ -40,7 +44,7 @@
     <!--结果页快捷搜索框 结束-->
 
     <!--搜索结果页面 列表 开始-->
-    <form action="#" method="post">
+    <form action="" method="get">
 
         <div class="result_wrap">
             <div class="result_content">
@@ -75,7 +79,8 @@
 
                 </table>
                 <div class="page_list">
-                    {{$data->links()}}
+                    {{--{{$data->links()}}--}}
+                    {{$data->appends(Request::all())->render()}}
                 </div>
             </div>
         </div>
