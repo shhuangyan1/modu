@@ -53,22 +53,20 @@ Class ArticleController extends Controller{
 
 			$filePath = asset($destinationPath.$fileName);
 		}
-
-        //echo $filePath;
-       
-
+		
 		$input=Input::except('_token');
 		$author = session('user.attributes.username');
-		$rule = [
-			'title'=>'required',
-			'from'=>'required',
-		];
-		$message = [
-			'title.required' => '标题不能为空!',
-			'from.required'=>'来源不能为空!',
-		];
-		$validate = Validator::make($input,$rule,$message);
-		if($validate->passes()){
+//		$rule = [
+//			'title'=>'required',
+//			'from'=>'required',
+//		];
+//		$message = [
+//			'title.required' => '标题不能为空!',
+//			'from.required'=>'来源不能为空!',
+//		];
+		//$validate = Validator::make($input,$rule,$message);
+		//dd(Input::all());
+		//if($validate->passes()){
 			if($filePath){
 				$input['image']=$filePath;
 			}
@@ -81,7 +79,7 @@ Class ArticleController extends Controller{
 			}else{
 				return back()->with('error','数据添加失败!');
 			}
-		}
+		//}
 		//dd($input);
 
 	}

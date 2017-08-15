@@ -67,7 +67,7 @@ class ActivityController extends Controller
             }
 
         }else{
-                
+
         }
         $data['addtime']=date('Y-m-d H:i',time());
         $info = Activity::create($data);
