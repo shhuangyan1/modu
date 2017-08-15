@@ -33,4 +33,6 @@ Route::group(['middleware' => ['web','admin.login'],'prefix'=>'admin','namespace
     Route::resource('activity','ActivityController');
     Route::resource('manager','ManagerController');
     Route::any('upload','ActivityController@uploadvideo');
+    Route::any('shenhe','ArticleController@shenhe');
+
 });

@@ -136,6 +136,19 @@ Class ArticleController extends Controller{
 		return view('admin.article.confirm',compact('info'));
 	}
 
+	public function  shenhe($id){
+		$info= Article::where('id',$id)->update(['status' => 1]);
+		if($info){
+			$data['status'] = 1000;
+			$data['msg'] = '更改成功!';
+			echo json_encode($data);
+		}else{
+			$data['status'] = 1001;
+			$data['msg'] = '更改失败!';
+			echo json_encode($data);
+		}
+	}
+
 
 }
 
