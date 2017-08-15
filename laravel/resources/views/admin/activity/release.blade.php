@@ -57,6 +57,9 @@
         .sec-opt{
             display: inline-block;
         }
+        .cl-items-box{
+            margin: 15px 50px 0;
+        }
         /*input::-webkit-outer-spin-button,*/
         /*input::-webkit-inner-spin-button {*/
             /*-webkit-appearance: none !important;*/
@@ -104,19 +107,19 @@
             </div>
             <!--上传视频-->
             <div class="upload-video-box hide">
-                <input class="video" type="text" name="video" value="">
+                <input class="video" type="hidden" name="video" value="">
                 <p>活动视频建议5分钟以内</p>
                 <div class="add-cover add-video">
                     <i class="fa fa-youtube-play"></i>
                     <div class="tab">上传活动视频</div>
                 </div>
                 <div class="video-preview hide">
-                    <video id="myVideo" width="330" height="160" src="" controls autoplay></video>
+                    <video id="myVideo" width="330" height="160" src="" controls autoplay loop></video>
                     <!--<div class="tab">更换视频</div>-->
                 </div>
             </div>
         </section>
-        <section class="no-border sec clear inputs">
+        <section class="sec clear inputs">
             <div class="sec-left">
                 <p>活动限制人数 / 人</p>
                 <input type="text" class="limit" name="limits" min="1" placeholder="请在这里填写活动限制人数" >
@@ -135,7 +138,14 @@
                 <input type="text" style="width: 480px;" class="address" name="address" placeholder="请在这里填写活动地址">
             </div>
         </section>
+        <section class="no-border collect-box">
+            <input type="checkbox" id="collect" name="collect" mdtext="是否收集参与活动的用户信息">
+            <div class="cl-items-box hide">
+                <input type="checkbox" id="phone" name="phone" mdtext="手机号">
+                <input type="checkbox" id="name" name="name" mdtext="姓名">
 
+            </div>
+        </section>
 
         <section class="no-border">
             <input class="button default confirm" type="submit" value="确认发布">
@@ -161,7 +171,8 @@
         maxDate:"2099-01-01 00:00"
     });
     MD.Form(".sec-opt",{type:'radio'});
-    jeBox.msg('我就是要提示！', {icon: 2,time:1.5});
+    MD.Form(".collect-box",{type:'checkbox'});
+
 </script>
 </body>
 </html>

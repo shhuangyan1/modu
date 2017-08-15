@@ -45,6 +45,7 @@ $(function () {
         })
 
         $("#video_upload").on("change",function () {
+            $(".add-video i").removeClass("fa-youtube-play").addClass("fa-spinner")
             setTimeout(function () {
                 var formDom = document.getElementById("video-form");
                 var formData = new FormData(formDom);
@@ -64,7 +65,7 @@ $(function () {
                 req.send(formData);
                 //避免内存泄漏
                 req = null;
-            },1000)
+            },500)
 
 
 
@@ -84,6 +85,11 @@ $(function () {
             $(".upload-img-box").addClass("hide")
             MD.releaseScope.fileType = "video"
 
+        })
+
+    //
+        $("#collect").on("click",function () {
+            $(".cl-items-box").toggleClass("hide")
         })
     }
 
@@ -143,7 +149,7 @@ function newActivity() {
                 $(".upload-video-box").showTips("请上传活动视频");
             }
             if(file_ != "" && url_ == ""){
-                alert("视频上传中，请稍后！")
+                jeBox.msg('视频上传中，请稍后！', {icon: 1,time:1.5});
             }
             if(file_ == "" && url_ != ""){
                 video_bl = true;

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{asset('admin/style/font/css/font-awesome.min.css')}}">
     <script src="{{asset('lirary/uploadify/jquery1.11.3.min.js')}}" type="text/javascript"></script>
     <script type="text/javascript" src="{{asset('js/util.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/confirm.js')}}"></script>
 
 
 
@@ -18,9 +19,6 @@
     <i class="fa fa-home"></i> <a href="#">首页</a> &raquo; <a href="#">文章管理</a> &raquo; 删除确认
 </div>
 <!--面包屑导航 结束-->
-
-
-<form action="#" method="post">
 
     <div class="result_wrap">
         <div class="result_content">
@@ -43,8 +41,8 @@
                     <td class="tc"></td>
                     <td class="tc"></td>
                     <td class="tc">
-                        <a href="javascript:;">同意删除</a>
-                        <a href="javascript:;">继续展示</a>
+                        <a class="delete" data-id="" href="javascript:;">同意删除</a>
+                        <a class="refuse" data-id="" href="javascript:;">继续展示</a>
                     </td>
                 </tr>
                 </tbody>
@@ -54,7 +52,8 @@
             </div>
         </div>
     </div>
-</form>
-
+<script>
+    MD.token = "{{csrf_token()}}"
+</script>
 </body>
 </html>
