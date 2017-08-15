@@ -133,7 +133,7 @@ Class ArticleController extends Controller{
 
 	public function confirm(){
 		//$info = Article::where('status','1')->orderby('id','desc')->paginate(5);
-		$info = DB::table('articleconfirm')->join('article','article.id','=','articleconfirm.article_id')->join('category','article.cat_id','=','category.id')->select('articleconfirm.*','article.title','category.cat_name')->paginate(10);
+		$info = DB::table('articleconfirm')->join('article','article.id','=','articleconfirm.article_id')->join('category','article.cat_id','=','category.id')->select('articleconfirm.*','article.title','article.author','category.cat_name')->paginate(10);
 		//dd($info);
 		return view('admin.article.confirm',compact('info'));
 	}
