@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Model\Category;
 use App\Http\Model\Article;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 
@@ -131,7 +132,8 @@ Class ArticleController extends Controller{
 	}
 
 	public function confirm(){
-		$info = Article::where('status','1')->orderby('id','desc')->paginate(5);
+		//$info = Article::where('status','1')->orderby('id','desc')->paginate(5);
+		$info = DB::table('articleconfirm')->join('article','article.id','=','articleconfirm.article_id')->join('category','article.cat_id','=','category.id')->select('articleconfirm.*','article.title','category.cat_name')->paginate(10);
 		//dd($info);
 		return view('admin.article.confirm',compact('info'));
 	}
@@ -139,6 +141,9 @@ Class ArticleController extends Controller{
 	public function  shenhe(Request $request){
 		$id = $request->get('id');//dd($id);
 		$info= Article::where('id',$id)->update(['status' => 1]);
+		$articleconfirm['time'] = time();
+		$articleconfirm['article_id'] = $id;
+		DB::table('articleconfirm')->insert($articleconfirm);
 		if($info){
 			$data['status'] = 1000;
 			$data['msg'] = '更改成功!';
