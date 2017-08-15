@@ -23,7 +23,9 @@ Class ArticleController extends Controller{
 				if($cat_id){
 					$query ->where('cat_id', $cat_id);
 				}
-		})->orderby('id','desc')->paginate(2);
+		})->join('category','article.cat_id','=','category.id')->orderby('article.id','desc')->paginate(2);
+	//})->lists('cat_name','title','view')->join('category','article.cat_id','=','category.id')->orderby('article.id','desc')->paginate(2);
+		//dd($data);
 		return view('admin.article.list',compact('data','info'));
 	}
 
@@ -53,7 +55,7 @@ Class ArticleController extends Controller{
 
 			$filePath = asset($destinationPath.$fileName);
 		}
-		
+
 		$input=Input::except('_token');
 		$author = session('user.attributes.username');
 //		$rule = [
