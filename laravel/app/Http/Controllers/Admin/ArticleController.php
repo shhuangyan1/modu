@@ -23,8 +23,8 @@ Class ArticleController extends Controller{
 				if($cat_id){
 					$query ->where('cat_id', $cat_id);
 				}
-		})->join('category','article.cat_id','=','category.id')->orderby('article.id','desc')->paginate(2);
-	//})->lists('cat_name','title','view')->join('category','article.cat_id','=','category.id')->orderby('article.id','desc')->paginate(2);
+		})->join('category','article.cat_id','=','category.id')->select('article.*','category.cat_name')->orderby('article.id','desc')->paginate(10);
+
 		//dd($data);
 		return view('admin.article.list',compact('data','info'));
 	}
