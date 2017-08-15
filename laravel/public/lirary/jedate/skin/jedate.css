@@ -7,7 +7,7 @@ blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}
 body{font:14px Arial,"\5b8b\4f53", sans-serif;-webkit-text-size-adjust:100%;}
 h1,h2,h3,h4,h5,h6,button,input,select,textarea{font-size:100%; font-weight:normal; font-style:normal;}
 table{border-collapse:collapse;border-spacing:0;font-size:100%;empty-cells:show}
-*{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
+/**{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}*/
 *:before,*:after{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
 fieldset,img{border:0;}
 address,caption,cite,code,dfn,th,var{font-style:normal; font-weight:normal;}

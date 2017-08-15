@@ -38,6 +38,7 @@ if(!window.MD)
 window.MD = {
     protocol: window.location.protocol,
     hostname: window.location.hostname,
+    url: window.location.protocol + "//" + window.location.hostname,
     preview : function () {
         var img = MD.protocol + "//" + MD.hostname + "/storage/icons/pre-bg.png"
         var bg_shadow = $("<div class='preview-bg'><img class='bg-img' src='" + img +"'><span class='close-prev-bg'></span></div>")
