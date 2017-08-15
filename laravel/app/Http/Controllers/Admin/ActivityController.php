@@ -48,42 +48,27 @@ class ActivityController extends Controller
     public function store(Request $request)
     {
         $data = $request->except('_token');
-        //dd($data);
+        $restype = $request->get('restype');
+        if($restype=='image'){
         $file = $request->file('image');//dd($file);
-        if($file){
-            $allowed_extensions = ["png", "jpg", "gif","jpeg"];
-            if ($file->getClientOriginalExtension() && !in_array($file->getClientOriginalExtension(), $allowed_extensions)) {
-                return ['error' => 'You may only upload png, jpg, jpeg or gif.'];
+            if($file){
+                $allowed_extensions = ["png", "jpg", "gif","jpeg"];
+                if ($file->getClientOriginalExtension() && !in_array($file->getClientOriginalExtension(), $allowed_extensions)) {
+                    return ['error' => 'You may only upload png, jpg, jpeg or gif.'];
+                }
+                $date = date('Y-m-d',time());//dd($date);
+                $destinationPath = 'storage/activity/'.$date.'/'; //public 文件夹下面建 storage/uploads 文件夹
+                $extension = $file->getClientOriginalExtension();
+                $fileName = str_random(20).'.'.$extension;
+                $file->move($destinationPath, $fileName);
+
+                $filePath = asset($destinationPath.$fileName);//dd($filePath);
+                $data['image']=$filePath;//dd($data);
             }
-            $date = date('Y-m-d',time());//dd($date);
-            $destinationPath = 'storage/activity/'.$date.'/'; //public 文件夹下面建 storage/uploads 文件夹
-            $extension = $file->getClientOriginalExtension();
-            $fileName = str_random(20).'.'.$extension;
-            $file->move($destinationPath, $fileName);
 
-            $filePath = asset($destinationPath.$fileName);//dd($filePath);
+        }else{
+                
         }
-
-
-        $video = $request->file('video');
-        if ($video) {//检查表单提交的时候是否有文件
-//文件的存放目录 ./代表当前， / 在linux系统下是服务器更目录，在windows系统中是某盘的根目录
-            $path = 'storage/activityvideo/'.$date.'/';
-//获取后缀
-            $suffix = $request->file('video')->getClientOriginalExtension();
-            $suffixarr=['mp4','flv','wmv'];
-            if(in_array($suffix, $suffixarr)){
-                $fileName = time().rand(100000, 999999).'.'.$suffix;
-                $request->file('video')->move($path, $fileName);
-             //   $user -> profile = trim($path.'/'.$fileName,'.');
-                $videoPath = asset($destinationPath.$fileName);dd($videoPath);
-
-            }else{
-                return back()->with('info','文件不是视频，请上传格式为mp4/flv/png/wmv类型文件');
-            }
-        }
-
-        $data['image']=$filePath;//dd($data);
         $data['addtime']=date('Y-m-d H:i',time());
         $info = Activity::create($data);
         if($info){
@@ -140,7 +125,6 @@ class ActivityController extends Controller
     }
 
     public function uploadvideo(Request $request){
-        //echo 123;
         $date = date('Y-m-d',time());
         $video = $request->file('video');
         if ($video) {//检查表单提交的时候是否有文件
@@ -154,7 +138,7 @@ class ActivityController extends Controller
                 $fileName = time().rand(100000, 999999).'.'.$suffix;
                 $request->file('video')->move($path, $fileName);
                 //   $user -> profile = trim($path.'/'.$fileName,'.');
-                $videoPath = asset($destinationPath.$fileName);//dd($videoPath);
+                $videoPath = asset($path.$fileName);//dd($videoPath);
                 $data['status'] = 1000;
                 $data['path'] = $videoPath;
                 echo json_encode($data);
