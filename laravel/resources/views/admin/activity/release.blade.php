@@ -124,7 +124,7 @@
                         <div class="tab">上传活动视频</div>
                     </div>
                     <div class="video-preview">
-                        <video id="myVideo" width="400" height="160" src="{{asset('storage/videos/test2.mp4')}}" controls></video>
+                        <video id="myVideo" width="400" height="160" src="{{asset('storage/videos/0000V.mp4')}}" controls></video>
                         <!--<div class="tab">更换视频</div>-->
                     </div>
                 </div>
