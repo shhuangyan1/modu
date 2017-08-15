@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="{{asset('admin/style/css/ch-ui.admin.css')}}">
     <link rel="stylesheet" href="{{asset('admin/style/font/css/font-awesome.min.css')}}">
     <script src="{{asset('lirary/uploadify/jquery1.11.3.min.js')}}" type="text/javascript"></script>
-
-    <!--<script type="text/javascript" src="{{asset('admin/style/js/ch-ui.admin.js')}}"></script>-->
+    <script type="text/javascript" src="{{asset('js/util.js')}}"></script>
 
 </head>
 <body>
@@ -65,13 +64,12 @@
                         <td>
                             <a href="#">{{$v->title}}</a>
                         </td>
+                        <td class="tc">{{$v->cat_name}}</td>
                         <td class="tc">{{$v->view}}</td>
-                        <td class="tc"></td>
                         <td class="tc">{{$v->author}}</td>
-                        <td class="tc"></td>
+                        <td class="tc">{{$v->time}}</td>
                         <td class="tc">
-                            <!--<a href="javascript:;" onclick="delarticle({{$v->id}})">申请删除</a>-->
-                            <a href="javascript:;">申请删除</a>
+                            <a class="to-delete" href="javascript:;" data-id="{{$v->id}}">申请删除</a>
                         </td>
                     </tr>
                     @endforeach
@@ -79,32 +77,26 @@
 
                 </table>
                 <div class="page_list">
-                    {{--{{$data->links()}}--}}
                     {{$data->appends(Request::all())->render()}}
                 </div>
             </div>
         </div>
     </form>
     <!--搜索结果页面 列表 结束-->
-
-</body>
 <script>
+    $(function () {
 
-    function delarticle(art_id) {
-
-            $.post("{{url('admin/article/')}}/"+art_id,{'_method':'delete','_token':"{{csrf_token()}}"},function (data) {
-                if (data.status == 1) {
-
-                } else {
+        $(document).on("click",".to-delete",function () {
+            var id = $(this).data("id");
+            $.post(
+                MD.url + "/admin/shenhe",
+                {'_token':"{{csrf_token()}}","id":id},
+                function (res) {
 
                 }
-            });
-
-        }
-
+            )
+        })
+    })
 </script>
-
-
-
-
+</body>
 </html>
