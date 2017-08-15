@@ -50,11 +50,11 @@
 
                 <section class="type clear" id="article_cat">
                     <p>选择文章所属分类</p>
-                    <ul>
+                    <!--<ul>-->
                     @foreach($data as $v)
-                    <li>
+                    <!--<li>-->
                         <input class="cat_id" type="radio" name="cat_id" value="{{$v->id}}" mdtext="{{$v->_cat_name}}">
-                    </li>
+                    <!--</li>-->
                     @endforeach
                     </ul>
                 </section>

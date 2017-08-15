@@ -39,12 +39,10 @@
                         </td>
                     </tr>
                     @endforeach
-                    <div>
-                 <!--    {{$data->link()}} -->
-                    </div>
                 </table>
 
-
+            </div>
+        </div>
 
     </form>
     <!--搜索结果页面 列表 结束-->

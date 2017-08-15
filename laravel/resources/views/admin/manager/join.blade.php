@@ -8,6 +8,7 @@
 
     <script src="{{asset('lirary/uploadify/jquery1.11.3.min.js')}}" type="text/javascript"></script>
     <script type="text/javascript" src="{{asset('js/util.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/join.js')}}"></script>
 
     <style>
         @import "{{asset('css/mdForm.css')}}";
@@ -33,6 +34,9 @@
         #category li{
             float: left;
         }
+        .info p{
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -45,15 +49,13 @@
 
 <div id="new-manager" class="result_wrap section-ctrl">
     <form action="#" id="managerform" name="form" onsubmit="return newManager();">
-        <section class="no-border">
+        <section class="info">
             <p>管理员登录名称</p>
-            <input type="text" class="name" name="name" placeholder="请在这里设置新管理员登录名">
-        </section>
-        <section>
+            <input type="text" class="username" name="username" placeholder="请在这里设置新管理员登录名">
             <p>管理员登录密码</p>
-            <input type="text" class="name" name="name" placeholder="请在这里设置新管理员密码">
+            <input type="text" class="admin_pwd" name="admin_pwd" placeholder="请在这里设置新管理员密码" value="123456">
             <p>确认密码</p>
-            <input type="text" class="name" name="name" placeholder="请在这里确认密码">
+            <input type="text" class="admin_pwd_cf" name="admin_pwd" placeholder="请在这里确认密码">
         </section>
         <section>
             <p>管理员权限设置</p>
@@ -102,9 +104,7 @@
 <script>
     MD.Form("#auth",{type:"checkbox"})
     MD.Form("#category",{type:"checkbox"})
-    $(".publish").on("click",function () {
-        $(".article_cat").toggleClass("hide",!$(".publish").is(":checked"))
-    })
+
 </script>
 </body>
 </html>

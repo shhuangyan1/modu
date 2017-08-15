@@ -6,7 +6,10 @@ $(function () {
             $(this).val(Number(val))
         })
 
-        $(".add-cover").on("click",function () {
+        $(".add-img").on("click",function () {
+            $("#file_upload").click();
+        })
+        $(".img-preview .tab").on("click",function () {
             $("#file_upload").click();
         })
 
@@ -32,6 +35,15 @@ $(function () {
             }catch (Exception){
                 console.log(Exception.name +":"+ Exception.message);
             }
+        })
+
+    //    视频
+        $(".add-video").on("click",function () {
+            $("#video_upload").click()
+        })
+
+        $("#video_upload").on("change",function () {
+            $("#myVideo").attr("src",$(this).val())
         })
 
     }

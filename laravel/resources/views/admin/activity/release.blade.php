@@ -12,6 +12,7 @@
     <script src="{{asset('lirary/jedate/jedate.min.js')}}"></script>
 
     <style>
+        @import "{{asset('css/mdForm.css')}}";
         #new-activity input.title,#new-activity .description{
             border: none;
             box-shadow: none;
@@ -44,15 +45,18 @@
         .sec input{
             width: 240px;
         }
+        .sec input[type=radio]{
+            width: 100%;
+        }
         .sec p{
             color: #666;
             font: 14px "Microsoft Yahei";
         }
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-            -webkit-appearance: none !important;
-            margin: 0;
-        }
+        /*input::-webkit-outer-spin-button,*/
+        /*input::-webkit-inner-spin-button {*/
+            /*-webkit-appearance: none !important;*/
+            /*margin: 0;*/
+        /*}*/
     </style>
 
 </head>
@@ -95,6 +99,10 @@
         </section>
         <section class="no-border sec clear">
             <div style="margin-bottom: 15px;"><p>上传活动海报 或 宣传视频 （只能选择海报和视频中的一种）</p></div>
+                <div class="sec-opt">
+                    <input type="radio" class="up-image" checked name="restype" value="image" mdtext="上传活动海报">
+                    <input type="radio" class="up-video" name="restype" value="video" mdtext="上传活动视频">
+                </div>
                 <div class="upload-img-box">
                     <input id="file_upload" name="image" type="file" accept="image/*" style="display: none;">
                     <p>活动海报建议尺寸：900px * 500px</p>
@@ -107,7 +115,19 @@
                         <div class="tab">更换海报</div>
                     </div>
                 </div>
-
+                <!--上传视频-->
+                <div class="upload-img-box">
+                    <input id="video_upload" name="video" type="file" accept="video/3gpp,video/mp4,video/mpeg" style="display: none;">
+                    <p>活动视频建议5分钟以内</p>
+                    <div class="add-cover add-video">
+                        <i class="fa fa-youtube-play"></i>
+                        <div class="tab">上传活动视频</div>
+                    </div>
+                    <div class="video-preview">
+                        <video id="myVideo" width="400" height="160" src="{{asset('storage/videos/test2.mp4')}}" controls></video>
+                        <!--<div class="tab">更换视频</div>-->
+                    </div>
+                </div>
         </section>
 
         <section class="no-border">
@@ -127,7 +147,9 @@
         isTime:true,
         minDate:"2015-10-19 00:00",
         maxDate:"2099-01-01 00:00"
-    })
+    });
+    MD.Form(".sec-opt",{type:'radio'})
+
 </script>
 </body>
 </html>

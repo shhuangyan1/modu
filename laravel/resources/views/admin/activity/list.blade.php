@@ -32,7 +32,7 @@
                     </select>
                 </td>
                 <th width="70">关键字：</th>
-                <td><input type="text" name="keywords" placeholder="搜索活动名称关键字"></td>
+                <td><input type="text" name="title" placeholder="搜索活动名称关键字"></td>
                 <td><input type="submit" name="sub" value="查询"></td>
             </tr>
         </table>

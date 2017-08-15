@@ -715,6 +715,7 @@ table.add_tab tr td span i {
 .img-preview img{
 	height: 100%;
 	width: 100%;
+	vertical-align: inherit;
 }
 .tab_title {
 	height: 35px;

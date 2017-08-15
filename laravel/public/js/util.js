@@ -20,13 +20,13 @@
             htmlDom.stop().animate({"top": top, "opacity": 1}, 300);
         },100);
 
-        /*self.on("mouseout", function () {
+        self.on("focus click", function () {
             var top = parseInt(htmlDom.css("top"));
             htmlDom.stop().animate({"top": top - 10, "opacity": 0}, 300, function () {
                 htmlDom.remove();
                 sw = false;
             });
-        });*/
+        });
     }
 
 
@@ -63,12 +63,26 @@ window.MD = {
 
             $.each(aims, function (i, v) {
                 var afterDom = $('<i class="fa '+ itype +'"></i><span>'+ $(v).attr("mdtext") +'</span>')
-                $(v).wrap(wrapDom).after(afterDom);
 
-                $(v).on("click",function () {
-                    $(this).parent().toggleClass("on")
-                    console.log($(this).is(":checked"))
-                })
+                if(v.checked){
+                    $(v).wrap(wrapDom.addClass("on")).after(afterDom);
+                }else{
+                    $(v).wrap(wrapDom.removeClass("on")).after(afterDom);
+                }
+
+                if(opts.type == "checkbox"){
+                    $(v).on("click",function () {
+                        $(this).parent().toggleClass("on")
+                    })
+                }
+
+                if(opts.type == "radio"){
+                    $(v).on("click",function () {
+                        $(this).parent().addClass("on")
+                        $(this).parent().siblings().removeClass("on")
+                    })
+                }
+
             })
         })()
 

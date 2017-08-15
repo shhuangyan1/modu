@@ -18,6 +18,41 @@
     <i class="fa fa-home"></i> <a href="#">首页</a> &raquo; <a href="#">管理员管理</a> &raquo; 管理员列表
 </div>
 <!--面包屑导航 结束-->
-
+<div class="search_wrap">
+    <form action="" method="get">
+        <table class="search_tab">
+            <tr>
+                <th width="120">管理员登录名：</th>
+                <td><input type="text" name="username" placeholder="搜索管理员"></td>
+                <td><input type="submit"  value="查询"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<!--结果页快捷搜索框 结束-->
+<div class="result_wrap">
+    <section>
+        <table class="list_tab">
+            <thead>
+            <tr>
+                <th>管理员名称</th>
+                <th>权限列表</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>名</td>
+                <td>
+                    <span>1</span>
+                    <span>2</span>
+                    <span>3</span>
+                </td>
+                <td class="tc"><a href="#">删除</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</div>
 </body>
 </html>
