@@ -136,8 +136,8 @@ Class ArticleController extends Controller{
 		return view('admin.article.confirm',compact('info'));
 	}
 
-	public function  shenhe($id=0){
-
+	public function  shenhe(Request $request){
+		$id = $request->get('id');//dd($id);
 		$info= Article::where('id',$id)->update(['status' => 1]);
 		if($info){
 			$data['status'] = 1000;
