@@ -5,10 +5,12 @@
     <title>确认删除文章</title>
     <link rel="stylesheet" href="{{asset('admin/style/css/ch-ui.admin.css')}}">
     <link rel="stylesheet" href="{{asset('admin/style/font/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{asset('lirary/jedate/skin/default.css')}}">
+
     <script src="{{asset('lirary/uploadify/jquery1.11.3.min.js')}}" type="text/javascript"></script>
     <script type="text/javascript" src="{{asset('js/util.js')}}"></script>
+    <script src="{{asset('lirary/jedate/jquery.jebox.js')}}" ></script>
     <script type="text/javascript" src="{{asset('js/confirm.js')}}"></script>
-
 
 
 </head>
@@ -33,18 +35,20 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach ($info as $v)
                 <tr>
                     <td>
-                        <a href="#"></a>
+                        <a href="#">{{$v->title}}</a>
                     </td>
+                    <td class="tc">{{$v->cat_name}}</td>
                     <td class="tc"></td>
-                    <td class="tc"></td>
-                    <td class="tc"></td>
+                    <td class="tc">{{date('Y-m-d H:i',$v->time)}}</td>
                     <td class="tc">
-                        <a class="delete" data-id="" href="javascript:;">同意删除</a>
-                        <a class="refuse" data-id="" href="javascript:;">继续展示</a>
+                        <a class="delete" data-id="{{$v->article_id}}" href="javascript:;">同意删除</a>
+                        <a class="refuse" data-id="{{$v->article_id}}" href="javascript:;">继续展示</a>
                     </td>
                 </tr>
+                @endforeach
                 </tbody>
 
             </table>

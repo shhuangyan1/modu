@@ -6,8 +6,11 @@
 
     <link rel="stylesheet" href="{{asset('admin/style/css/ch-ui.admin.css')}}">
     <link rel="stylesheet" href="{{asset('admin/style/font/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{asset('lirary/jedate/skin/default.css')}}">
+
     <script src="{{asset('lirary/uploadify/jquery1.11.3.min.js')}}" type="text/javascript"></script>
     <script type="text/javascript" src="{{asset('js/util.js')}}"></script>
+    <script src="{{asset('lirary/jedate/jquery.jebox.js')}}" ></script>
 
 </head>
 <body>
@@ -67,7 +70,7 @@
                         <td class="tc">{{$v->cat_name}}</td>
                         <td class="tc">{{$v->view}}</td>
                         <td class="tc">{{$v->author}}</td>
-                        <td class="tc">{{$v->time}}</td>
+                        <td class="tc">{{date('Y-m-d H:i',$v->time)}}</td>
                         <td class="tc">
                             <a class="to-delete" href="javascript:;" data-id="{{$v->id}}">申请删除</a>
                         </td>
@@ -88,13 +91,43 @@
 
         $(document).on("click",".to-delete",function () {
             var id = $(this).data("id");
-            $.post(
-                MD.url + "/admin/shenhe",
-                {'_token':"{{csrf_token()}}","id":id},
-                function (res) {
+            var this_ = $(this)
+            jeBox.open({
+                cell:"jbx",
+                title:"申请删除",
+                boxSize:["300px","160px"],
+                padding:"25px 10px",
+                content:'<p style="text-align: center;">确定要提交删除申请吗？</p>',
+                maskLock : true ,
+                btnAlign:"center",
+                button:[
+                    {
+                        name: '确定',
+                        callback: function(index){
+                            $.post(
+                                MD.url + "/admin/shenhe",
+                                {'_token':"{{csrf_token()}}","id":id},
+                                function (res) {
+                                    res = JSON.parse(res);
+                                    if(res.status == 1001){
+                                        jeBox.msg(res.msg, {icon: 3,time:1.5});
+//                                        error
+                                    }else{
+                                        jeBox.msg("申请已提交", {icon: 2,time:1.5});
+                                        this_.removeClass("to-delete").text("已申请").css("color","#f40")
+                                    }
+                                    jeBox.close(index);
+                                }
+                            )
 
-                }
-            )
+                        }
+                    },
+                    {
+                        name: '取消'
+                    }
+                ]
+            })
+
         })
     })
 </script>
