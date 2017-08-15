@@ -20,6 +20,7 @@ Route::any('admin/login','Admin\LoginController@login');
 Route::get('code','Admin\LoginController@code');
 Route::get('jiekou','Admin\LoginController@jiekou');
 Route::get('admin/confirm','Admin\ArticleController@confirm');
+Route::any('admin/shenhe','Admin\ArticleController@shenhe');
 
 Route::group(['middleware' => ['web','admin.login'],'prefix'=>'admin','namespace'=>'Admin'], function () {
 
@@ -33,6 +34,6 @@ Route::group(['middleware' => ['web','admin.login'],'prefix'=>'admin','namespace
     Route::resource('activity','ActivityController');
     Route::resource('manager','ManagerController');
     Route::any('upload','ActivityController@uploadvideo');
-    Route::any('shenhe','ArticleController@shenhe');
+
 
 });

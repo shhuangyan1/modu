@@ -23,7 +23,7 @@ Class ArticleController extends Controller{
 				if($cat_id){
 					$query ->where('cat_id', $cat_id);
 				}
-		})->join('category','article.cat_id','=','category.id')->select('article.*','category.cat_name')->orderby('article.id','desc')->paginate(10);
+		})->where('status','0')->join('category','article.cat_id','=','category.id')->select('article.*','category.cat_name')->orderby('article.id','desc')->paginate(10);
 
 		//dd($data);
 		return view('admin.article.list',compact('data','info'));
@@ -136,7 +136,8 @@ Class ArticleController extends Controller{
 		return view('admin.article.confirm',compact('info'));
 	}
 
-	public function  shenhe($id){
+	public function  shenhe($id=0){
+
 		$info= Article::where('id',$id)->update(['status' => 1]);
 		if($info){
 			$data['status'] = 1000;
