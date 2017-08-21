@@ -66,8 +66,8 @@
                         name: '确定',
                         callback: function(index){
                             $.post(
-                                MD.url + "",
-                                {'_token':"{{csrf_token()}}","id":id},
+                                MD.url + "/admin/category/" + id,
+                                {'_token':"{{csrf_token()}}","_method":"delete"},
                                 function (res) {
                                     res = JSON.parse(res);
                                     if(res.status == 1001){

@@ -5,8 +5,11 @@
     <title>话题列表</title>
     <link rel="stylesheet" href="{{asset('admin/style/css/ch-ui.admin.css')}}">
     <link rel="stylesheet" href="{{asset('admin/style/font/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{asset('lirary/jedate/skin/default.css')}}">
+
     <script src="{{asset('lirary/uploadify/jquery1.11.3.min.js')}}" type="text/javascript"></script>
     <script type="text/javascript" src="{{asset('js/util.js')}}"></script>
+    <script src="{{asset('lirary/jedate/jquery.jebox.js')}}" ></script>
 
 
 
@@ -61,7 +64,7 @@
                 <td class="tc">{{$v->view}}</td>
                 <td class="tc">{{$v->time}}</td>
                 <td class="tc">
-                    <a href="javascript:;">结束话题</a>
+                    <a class="shut-down" data-id="{{$v->id}}" href="javascript:;">结束话题</a>
                 </td>
             </tr>
             @endforeach
@@ -73,5 +76,52 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(function () {
+        $(document).on("click",".shut-down",function () {
+            var id = $(this).data("id");
+            var this_ = $(this)
+            jeBox.open({
+                cell:"jbx",
+                title:"结束",
+//                boxSize:["300px","160px"],
+                padding:"25px 10px",
+                content:'<div class="jeBox-iconbox jeicon1">确定要结束该话题吗？</div>',
+                maskLock : true ,
+                btnAlign:"center",
+                button:[
+                    {
+                        name: '确定',
+                        callback: function(index){
+                            $.post(
+                                MD.url + "/admin/stoptopic/" + id,
+                                {'_token':"{{csrf_token()}}","_method":"delete"},
+                                function (res) {
+                                    res = JSON.parse(res);
+                                    if(res.status == 1000){
+                                        jeBox.msg(res.msg, {icon: 2,time:1});
+                                        setTimeout(function () {
+                                            location.reload();
+                                        },1000)
+                                    }else{
+                                        jeBox.msg(res.msg, {icon: 3,time:1.5});
+//                                        error
+                                    }
+                                    jeBox.close(index);
+                                }
+                            )
+
+                        }
+                    },
+                    {
+                        name: '取消'
+                    }
+                ]
+            })
+
+        })
+    })
+</script>
 </body>
 </html>
