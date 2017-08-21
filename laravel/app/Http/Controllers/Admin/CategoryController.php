@@ -61,8 +61,14 @@ class CategoryController extends Controller{
 
 		}
 
-		public function destory(){
+		public function destroy($id){
 
+			$info = Category::where('id',$id)->delete();
+			if($info){
+				echo json_encode(array('status'=>1000,'msg'=>'删除成功'));
+			}else{
+				echo json_encode(array('status'=>1001,'msg'=>'删除失败'));
+			}
 		}
 
 }

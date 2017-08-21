@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Model\Manager;
 use App\Http\Controllers\Controller;
 
 class ManagerController extends Controller
@@ -14,9 +15,17 @@ class ManagerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.manager.list');
+        $manage = $request->get('username');
+        $data = Manager::where(function($query)use( $manage){
+            if( $manage){
+                $query -> where('title', 'like', '%'. $manage.'%');
+            }
+        })->orderby('id','desc')->paginate(10);
+
+      // dd($data);
+        return view('admin.manager.list',compact('data'));
     }
 
     /**

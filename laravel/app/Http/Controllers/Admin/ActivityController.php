@@ -121,7 +121,12 @@ class ActivityController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $info = Activity::where('id',$id)->update(['status'=>1]);
+        if($info){
+            echo json_encode(array('status'=>1000,'msg'=>'取消成功'));
+        }else{
+            echo json_encode(array('status'=>1001,'msg'=>'取消失败'));
+        }
     }
 
     public function uploadvideo(Request $request){
@@ -144,6 +149,7 @@ class ActivityController extends Controller
                 echo json_encode($data);
 
             }else{
+                
                 $data['status'] = 1001;
                 $data['info'] = "文件不是视频，请上传格式为mp4/flv/png/wmv类型文件";
                 echo json_encode($data);
@@ -151,5 +157,18 @@ class ActivityController extends Controller
             }
 
         }
+    }
+
+    public function cancelactivity(Request $request){
+
+        $id = $request->get('id');
+        $info = Activity::where('id',$id)->update(['status'=>1]);
+        if($info){
+            echo json_encode(array('status' => 1000, 'msg'=>'更新成功!'));
+        }else{
+            echo json_encode(array('status' => 1001, 'msg'=>'更新失败!'));
+
+        }
+
     }
 }

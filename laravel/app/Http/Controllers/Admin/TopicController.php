@@ -116,6 +116,24 @@ class TopicController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $info = Topic::where('id',$id)->update(['status'=>1]);
+        if($info){
+            echo json_encode(array('status'=>1000,'msg'=>'更新成功'));
+        }else{
+            echo json_encode(array('status'=>1001,'msg'=>'更新失败'));
+        }
+    }
+
+    public function stoptopic(Request $request){
+        
+        $id = $request->get('id');
+        $info = Topic::where('id',$id)->update(['status'=>1]);
+        if($info){
+            echo json_encode(array('status' => 1000, 'msg'=>'更新成功!'));
+        }else{
+            echo json_encode(array('status' => 1001, 'msg'=>'更新失败!'));
+
+        }
+
     }
 }
