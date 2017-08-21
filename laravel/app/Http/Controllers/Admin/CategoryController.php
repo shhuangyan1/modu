@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Model\Category;
+use App\Http\Model\Article;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 
@@ -62,13 +63,18 @@ class CategoryController extends Controller{
 		}
 
 		public function destroy($id){
-
-			$info = Category::where('id',$id)->delete();
+			$info = Article::where('cat_id',$id)->get();
 			if($info){
-				echo json_encode(array('status'=>1000,'msg'=>'删除成功'));
+				echo json_encode(array('status'=>1002,'msg'=>'该分类下还有文章,不能删除'));
 			}else{
-				echo json_encode(array('status'=>1001,'msg'=>'删除失败'));
+				$data = Category::where('id',$id)->delete();
+				if($data){
+					echo json_encode(array('status'=>1000,'msg'=>'删除成功'));
+				}else{
+					echo json_encode(array('status'=>1001,'msg'=>'删除失败'));
+				}
 			}
+
 		}
 
 }
