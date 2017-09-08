@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\View;
 
-require_once '/lirary/code/Code.class.php';
+require_once './lirary/code/Code.class.php';
 class LoginController extends Controller{
 	public function login(Request $request){
 		if($input = $request->input()){
