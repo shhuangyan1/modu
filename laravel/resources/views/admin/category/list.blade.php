@@ -36,7 +36,7 @@
                         <td></td>
                         <td class="tc">
                             <a href="{{url('admin/category/'.$v->id.'/edit')}}">修改</a>
-                            <a class="delete" data-id="{{$v->id}}" href="javascript:;">删除</a>
+                            <a class="delete" data-id="{{$v->id}}" href="javascript:void(0);">删除</a>
                         </td>
                     </tr>
                     @endforeach

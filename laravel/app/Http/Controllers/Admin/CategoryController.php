@@ -8,6 +8,7 @@ use App\Http\Model\Category;
 use App\Http\Model\Article;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
+use DB;
 
 class CategoryController extends Controller{
 	public function index(){
@@ -63,7 +64,9 @@ class CategoryController extends Controller{
 		}
 
 		public function destroy($id){
-			$info = Article::where('cat_id',$id)->get();
+            $info = DB::table('article')
+                ->where('cat_id',$id)
+                ->get();
 			if($info){
 				echo json_encode(array('status'=>1002,'msg'=>'该分类下还有文章,不能删除'));
 			}else{
