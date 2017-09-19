@@ -28,10 +28,11 @@
             <tr>
                 <th width="120">活动状态：</th>
                 <td>
-                    <select>
-                        <option value="">--全部--</option>
-                        <option value="1">尚未开始</option>
-                        <option value="0">已经结束</option>
+                    <select name="select">
+                        <option value="3">--全部--</option>
+                        <option value="0">尚未开始</option>
+                        <option value="2">正在进行中</option>
+
                     </select>
                 </td>
                 <th width="70">关键字：</th>

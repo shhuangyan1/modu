@@ -29,10 +29,10 @@
             <tr>
                 <th width="120">话题状态：</th>
                 <td>
-                    <select>
-                        <option value="">--全部--</option>
-                        <option value="1">正在讨论</option>
-                        <option value="0">已经结束</option>
+                    <select name="select">
+                        <option value="2">--全部--</option>
+                        <option value="0">正在讨论</option>
+                        <option value="1">已经结束</option>
                     </select>
                 </td>
                 <th width="70">关键字：</th>
@@ -95,7 +95,7 @@
                         name: '确定',
                         callback: function(index){
                             $.post(
-                                MD.url + "/admin/stoptopic/" + id,
+                                MD.url + "/admin/topic/" + id,
                                 {'_token':"{{csrf_token()}}","_method":"delete"},
                                 function (res) {
                                     res = JSON.parse(res);

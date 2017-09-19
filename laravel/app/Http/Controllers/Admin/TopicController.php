@@ -18,12 +18,21 @@ class TopicController extends Controller
     public function index(Request $request)
     {
         $title= $request->get('title');
+        $select = $request->get('select');
         $data =Topic::where(function($query)use($title){
             if($title){
                 $query -> where('title', 'like', '%'.$title.'%');
             }
 
-        })->where('status',0)->orderby('id','desc')->paginate(2);
+        })->where(function($query)use($select){
+            if(isset($select)){
+                if($select==2){
+                    return;
+                }
+                $query-> where('status','=',$select);
+            }
+        })
+            ->orderby('id','desc')->paginate(10);
         //$data=Topic::where('status',0)->get();
         //dd($data);
         return view('admin.topic.list',compact('data'));
@@ -128,6 +137,7 @@ class TopicController extends Controller
         
         $id = $request->get('id');
         $info = Topic::where('id',$id)->update(['status'=>1]);
+        //var_dump($id);die;
         if($info){
             echo json_encode(array('status' => 1000, 'msg'=>'更新成功!'));
         }else{

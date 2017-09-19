@@ -16,13 +16,22 @@ class ActivityController extends Controller
      */
     public function index(Request $request)
     {
+        $select = $request->get('select');
         $title= $request->get('title');
+
         $data =Activity::where(function($query)use($title){
             if($title){
                 $query -> where('title', 'like', '%'.$title.'%');
             }
 
-        })->where('status',0)->orderby('id','desc')->paginate(2);
+        })->where('status','!=',1)->where(function($query)use($select){
+            if($select){
+                if($select==3){
+                    return;
+                }
+                $query-> where('status','=',$select);
+            }
+        })->orderby('id','desc')->paginate(5);
         //$data = Activity::where('status',0)->get();
         //dd($data);
         return view('admin.activity.list',compact('data'));
@@ -123,7 +132,7 @@ class ActivityController extends Controller
     {
         $info = Activity::where('id',$id)->update(['status'=>1]);
         if($info){
-            echo json_encode(array('status'=>1000,'msg'=>'取消成功'));
+            echo json_encode(array('status'=>1004,'msg'=>'取消成功'));
         }else{
             echo json_encode(array('status'=>1001,'msg'=>'取消失败'));
         }
@@ -160,7 +169,6 @@ class ActivityController extends Controller
     }
 
     public function cancelactivity(Request $request){
-
         $id = $request->get('id');
         $info = Activity::where('id',$id)->update(['status'=>1]);
         if($info){
