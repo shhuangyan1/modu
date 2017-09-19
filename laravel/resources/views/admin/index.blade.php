@@ -38,6 +38,7 @@
 				<h3><i class="fa fa-fw fa-clipboard"></i>文章管理</h3>
 				<ul class="sub_menu">
 					<li><a href="{{url('admin/article/create')}}" target="main">发布文章</a></li>
+					<li><a href="{{url('admin/article/ai_publish')}}" target="main">智能发布文章</a></li>
 					<li><a href="{{url('admin/article')}}" target="main">文章列表</a></li>
 					<li><a href="{{url('admin/confirm')}}" target="main">删除确认</a></li>
 				</ul>

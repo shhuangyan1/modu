@@ -41,7 +41,7 @@
                         <a href="#">{{$v->title}}</a>
                     </td>
                     <td class="tc">{{$v->cat_name}}</td>
-                    <td class="tc"></td>
+                    <td class="tc">{{$v->author}}</td>
                     <td class="tc">{{date('Y-m-d H:i',$v->time)}}</td>
                     <td class="tc">
                         <a class="delete" data-id="{{$v->article_id}}" href="javascript:;">同意删除</a>

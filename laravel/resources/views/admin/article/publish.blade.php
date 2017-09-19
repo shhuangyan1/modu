@@ -56,7 +56,7 @@
                         <input class="cat_id" type="radio" name="cat_id" value="{{$v->id}}" mdtext="{{$v->_cat_name}}">
                     <!--</li>-->
                     @endforeach
-                    </ul>
+                    {{--</ul>--}}
                 </section>
                 <section>
                     <input type="text" class="title" name="title" placeholder="请在这里输入标题" maxlength="60" >

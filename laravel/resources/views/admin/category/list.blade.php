@@ -33,7 +33,7 @@
                     @foreach($data as $v)   
                     <tr>
                         <td class="tc">{{$v->cat_name}}</td>
-                        <td></td>
+                        <td class="tc">{{date("Y-m-d H:i:s",$v->cat_time)}}</td>
                         <td class="tc">
                             <a href="{{url('admin/category/'.$v->id.'/edit')}}">修改</a>
                             <a class="delete" data-id="{{$v->id}}" href="javascript:void(0);">删除</a>

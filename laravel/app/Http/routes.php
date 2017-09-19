@@ -15,6 +15,9 @@
 Route::get('/', function () {
     return view('admin/login');
 });
+Route::any('admin/article/ai_article','Admin\ArticleController@ai_article');
+Route::any('admin/article/ai_publish','Admin\ArticleController@ai_publish');
+Route::any('admin/article/article_format','Admin\ArticleController@article_format');
 Route::any('/','Admin\LoginController@login');
 Route::any('admin/login','Admin\LoginController@login');
 Route::get('code','Admin\LoginController@code');
@@ -25,6 +28,7 @@ Route::any('admin/shenhe','Admin\ArticleController@shenhe');
 
 Route::group(['middleware' => ['web','admin.login'],'prefix'=>'admin','namespace'=>'Admin'], function () {
 
+    Route::any('article','ArticleController@article');
     Route::get('index','IndexController@index');
     Route::get('info','IndexController@info');
     Route::get('logout','LoginController@logout');

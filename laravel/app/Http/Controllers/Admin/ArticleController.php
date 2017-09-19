@@ -155,6 +155,49 @@ Class ArticleController extends Controller{
 		}
 	}
 
+	public function article_format(){
+		$article = DB::table('article')
+				->where('status',0)
+				->get();
+		$data['article']=$article;
+		$data['msg']='see you!';
+		$data['status']=1000;
+		echo json_encode($data,JSON_UNESCAPED_UNICODE);
+	}
+
+	public function ai_publish(){
+		return view('admin/article/ai_publish');
+	}
+
+	public function ai_article(){
+		//var_dump($_GET);
+		$url = @$_GET['url'];
+//echo $url;
+		if(!empty($url)) {
+			$html = file_get_contents($url);
+			file_put_contents('E:htmls/'.rand(1000,9999)*time().'.html',$html);
+
+//echo $html;
+			$pattern = "/<[img|IMG].*?data-src=[\'|\"](.*?(?:[\.gif|\.jpg|\.png|\.jpeg]))[\'|\"].*?[\/]?>/";
+
+			preg_match_all($pattern, $html, $match);
+			$count = sizeof($match[1]);
+			echo $count;
+			/*$str1 = file_get_contents($match[1][0]);
+            $str2 = file_get_contents($match[1][1]);
+            file_put_contents('images/1.jpg',$str1);
+            file_put_contents('images/2.jpg',$str2);*/
+//print_r($str);die;
+//$str = file_get_contents($match[1][3]);
+//var_dump($match[1]) ;
+//file_put_contents('images/b.gif',$str);
+			for ($i = 0; $i < $count; $i++) {
+				$str[] = file_get_contents($match[1][$i]);
+				file_put_contents('E:images/' . $i . '.jpg', $str[$i]);
+
+			}
+		}
+	}
 
 }
 

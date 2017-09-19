@@ -43,6 +43,7 @@
                 <p class="title">分类名称：</p>
                 <input type="text" class="cat_name" name="cat_name" placeholder="输入文章分类名称">
                 <input type="hidden" name="cat_pid" value="0">
+                <input type="hidden" name="cat_time" value="{{time()}}">
                 <span id="cat_w_info"><i class="fa fa-exclamation-circle yellow"></i>分类名称不可重复</span>
             </section>
             <section>
