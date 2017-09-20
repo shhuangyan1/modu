@@ -58,7 +58,7 @@
                 title:"删除",
 //                boxSize:["300px","160px"],
                 padding:"25px 10px",
-                content:'<div class="jeBox-iconbox jeicon1">确定要删除分类吗？<br>删除后不可恢复，其下文章划入待分类</div>',
+                content:'<div class="jeBox-iconbox jeicon1">确定要删除该分类吗？删除后不可恢复！</div>',
                 maskLock : true ,
                 btnAlign:"center",
                 button:[

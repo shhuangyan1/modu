@@ -6,14 +6,19 @@
 
     <link rel="stylesheet" href="{{asset('admin/style/css/ch-ui.admin.css')}}">
     <link rel="stylesheet" href="{{asset('admin/style/font/css/font-awesome.min.css')}}">
-    <script src="{{asset('lirary/uploadify/jquery1.11.3.min.js')}}" type="text/javascript"></script>
-    <link href="{{asset('lirary/ueditor2/themes/default/css/ueditor.css')}}" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('lirary/jedate/skin/default.css')}}">
 
+    <script src="{{asset('lirary/uploadify/jquery1.11.3.min.js')}}" type="text/javascript"></script>
+
+    <link href="{{asset('lirary/ueditor2/themes/default/css/ueditor.css')}}" type="text/css" rel="stylesheet">
     <script type="text/javascript" charset="utf-8" src="{{asset('lirary/ueditor2/ueditor.config.js')}}"></script>
     <script type="text/javascript" charset="utf-8" src="{{asset('lirary/ueditor2/ueditor.all.js')}}"></script>
     <script type="text/javascript" src="{{asset('lirary/ueditor2/lang/zh-cn/zh-cn.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/util.js')}}"></script>
 
+    <script type="text/javascript" src="{{asset('js/util.js')}}"></script>
+    <script src="{{asset('lirary/jedate/jquery.jebox.js')}}" ></script>
+
+    <link rel="stylesheet" href="{{asset('css/article-publish.css')}}">
     <script type="text/javascript" src="{{asset('js/publish.js')}}"></script>
 
     <style>
@@ -22,7 +27,6 @@
         div.edui-combox-body,div.edui-button-body,div.edui-splitbutton-body
         {overflow: hidden; height:26px;}
         div.edui-box{overflow: hidden;}
-
         .uploadify{display:inline-block;}
         .uploadify-button{border:none; border-radius:5px; margin-top:8px;}
         table.add_tab tr td span.uploadify-button-text{color: #FFF; margin:0;}
@@ -69,7 +73,124 @@
                 <section class="no-border" id="editor-box">
                 </section>
                 <section class="clear">
-                    <div class="upload-img-box">
+
+                    <div class="tabs-box clear">
+                        <div class="tabs active" data-tmpId="single-tmp">
+                            <input type="radio" name="compose" value="3">单图排版</div>
+                        <div class="tabs" data-tmpId="banner-tmp">
+                            <input type="radio" name="compose" value="1">大图排版</div>
+                        <div class="tabs" data-tmpId="multi-tmp">
+                            <input type="radio" name="compose" value="2">多图排版</div>
+                    </div>
+                    <div class="tmp-box clear">
+                        <div id="single-tmp" class="compose-box">
+                            <div class="compose-left">
+                                <p>排版样式预览</p>
+                                <!-- 单图排版 排版样式预览-->
+                                <label class="">
+                                    <div class="cmp single">
+                                        <p>文章标题</p>
+                                        <div class="cmp-img single-img"><i class="fa fa-photo"></i></div>
+                                    </div>
+                                </label>
+                            </div>
+                            <!--上传图片-->
+                            <div class="compose-right">
+                                <p>封面图片建议比例 10：6 （最小横宽比 160px：96px）</p>
+                                <label>
+                                    <input type="file" class="single-input" name="image">
+                                    <div class="upload-box">
+                                        <p class="p-txt">点此上传图片</p>
+                                        <div class="fa-up"><i class="fa fa-x fa-cloud-upload"></i></div>
+                                    </div>
+                                </label>
+                                <div class="img-preview-box">
+                                    <span class="close"><i class="fa fa-x fa-times-circle"></i></span>
+                                    <img class="img-preview single-img-prev" src="#">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div id="banner-tmp" class="compose-box hide">
+                            <div class="compose-left">
+                                <p>排版样式预览</p>
+                                <!-- 大图排版 排版样式预览-->
+                                <label class="">
+                                    <div class="cmp poster">
+                                        <p>文章标题</p>
+                                        <div class="cmp-img poster-img"><i class="fa fa-photo"></i></div>
+                                    </div>
+                                </label>
+                            </div>
+                            <!--上传图片-->
+                            <div class="compose-right">
+                                <p>封面图片建议比例 10：6 （最小横宽比 400px：240px）</p>
+                                <label>
+                                    <input type="file" class="banner-input" name="image">
+                                    <div class="upload-box">
+                                        <p class="p-txt">点此上传图片</p>
+                                        <div class="fa-up"><i class="fa fa-x fa-cloud-upload"></i></div>
+                                    </div>
+                                </label>
+                                <div class="img-preview-box">
+                                    <span class="close"><i class="fa fa-x fa-times-circle"></i></span>
+                                    <img class="img-preview banner-img-prev" src="#">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="multi-tmp" class="compose-box hide">
+                            <div class="compose-left">
+                                <p>排版样式预览</p>
+                                <!-- 多图排版 排版样式预览-->
+                                <label class="">
+                                    <div class="cmp multi">
+                                        <p>文章标题</p>
+                                        <div class="cmp-img multi-img"><i class="fa fa-photo"></i><i class="fa fa-photo"></i><i class="fa fa-photo"></i></div>
+                                    </div>
+                                </label>
+                            </div>
+                            <!--上传图片-->
+                            <div class="compose-right">
+                                <p>封面图片建议比例 10：6 （最小横宽比 150px：90px）</p>
+                                <label>
+                                    <input type="file" class="multi-input first-multi" name="image">
+                                    <div class="upload-box">
+                                        <p class="p-txt">点此上传图片</p>
+                                        <div class="fa-up"><i class="fa fa-x fa-cloud-upload"></i></div>
+                                    </div>
+                                </label>
+                                <div class="img-preview-box">
+                                    <span class="close"><i class="fa fa-x fa-times-circle"></i></span>
+                                    <img class="img-preview" src="#">
+                                </div>
+                                <label>
+                                    <input type="file" class="multi-input second-multi" name="image">
+                                    <div class="upload-box">
+                                        <p class="p-txt">点此上传图片</p>
+                                        <div class="fa-up"><i class="fa fa-x fa-cloud-upload"></i></div>
+                                    </div>
+                                </label>
+                                <div class="img-preview-box">
+                                    <span class="close"><i class="fa fa-x fa-times-circle"></i></span>
+                                    <img class="img-preview" src="#">
+                                </div>
+                                <label>
+                                    <input type="file" class="multi-input third-multi" name="image">
+                                    <div class="upload-box">
+                                        <p class="p-txt">点此上传图片</p>
+                                        <div class="fa-up"><i class="fa fa-x fa-cloud-upload"></i></div>
+                                    </div>
+                                </label>
+                                <div class="img-preview-box">
+                                    <span class="close"><i class="fa fa-x fa-times-circle"></i></span>
+                                    <img class="img-preview" src="#">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--<div class="upload-img-box">
                         <input id="file_upload" name="image" type="file" accept="image/*" style="display: none;">
                         <p>封面大图片建议尺寸：900px * 500px</p>
                         <div class="add-cover add-img">
@@ -83,9 +204,10 @@
                                 <span class="tab-delete">删除</span>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
+
                  <!-- 排版选择 -->
-                    <div class="compose-box">
+                    <!--<div class="compose-box">
                         <p>排版选择</p>
                         <div class="clear">
                         <label class="disabled">
@@ -103,7 +225,7 @@
                             </div>
                         </label>
                         </div>
-                    </div>
+                    </div>-->
                 </section>
                 <section class="no-border submit">
                     <input type="submit" value="确认发布">

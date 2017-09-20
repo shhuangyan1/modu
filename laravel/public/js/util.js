@@ -30,6 +30,7 @@
     }
 
 
+
 })(jQuery)
 
 
@@ -49,6 +50,12 @@ window.MD = {
 
         $("body").append(bg_shadow)
     },
+    /**
+     * 实现表单元素UI效果
+     * @param elem
+     * @param config
+     * @constructor
+     */
     Form : function (elem,config) {
         var dom = $(elem);
         var opts = {
@@ -86,7 +93,30 @@ window.MD = {
 
             })
         })()
+    },
 
-
+    getValue: function (container) {
+        var el = $(container);
+        var items = el.find('input,select,textarea');
+        if(items.length == 0){
+            if(el.prop('name') != undefined || el.prop('name') != ""){
+                var k = el.attr('name');
+                var v = el.val();
+                var rs = {};
+                rs[k] = v;
+                return rs;
+            }
+            else{
+                return "";
+            }
+        }
+        var config = {};
+        for(var i=0;i<items.length;i++){
+            var key = $(items[i]).attr('name');
+            var value = $(items[i]).val();
+            config[key] = value;
+        }
+        return config;
     }
+
 }

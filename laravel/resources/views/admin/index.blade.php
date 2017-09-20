@@ -24,7 +24,7 @@
 		<div class="top_right">
 			<ul>
 				<li>管理员：{{session('user')->username}}</li>
-				<li><a href="#" target="main">修改密码</a></li>
+				<li><a href="javascript:void(0)" target="main">修改密码</a></li>
 				<li><a href="{{url('admin/logout')}}">退出</a></li>
 			</ul>
 		</div>
@@ -93,7 +93,7 @@
 
 	<!--底部 开始-->
 	<div class="bottom_box">
-		CopyRight © 2015. Powered By <a href="http://www.houdunwang.com"></a>.
+		CopyRight © 企牛牛  <a href="http://www.qiniuniu.com"><img style="vertical-align: middle;margin: 0 5px;" src="{{asset('storage/icons/qiniuniu.png')}}"></a>
 	</div>
 	<!--底部 结束-->
 
