@@ -93,7 +93,7 @@
 
 	<!--底部 开始-->
 	<div class="bottom_box">
-		CopyRight © 企牛牛  <a href="http://www.qiniuniu.com"><img style="vertical-align: middle;margin: 0 5px;" src="{{asset('storage/icons/qiniuniu.png')}}"></a>
+		CopyRight © 企牛牛  <a href="http://www.qiniuniu.com" target="_blank"><img style="vertical-align: middle;margin: 0 5px;" src="{{asset('storage/icons/qiniuniu.png')}}"></a>
 	</div>
 	<!--底部 结束-->
 

@@ -168,6 +168,9 @@ Class ArticleController extends Controller{
 	public function ai_publish(){
 		return view('admin/article/ai_publish');
 	}
+	public function preview(){
+        return view('admin/article/preview');
+	}
 
 	public function ai_article(){
 		//var_dump($_GET);

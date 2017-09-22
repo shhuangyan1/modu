@@ -24,7 +24,7 @@ Route::get('code','Admin\LoginController@code');
 Route::get('jiekou','Admin\LoginController@jiekou');
 Route::get('admin/confirm','Admin\ArticleController@confirm');
 Route::any('admin/shenhe','Admin\ArticleController@shenhe');
-
+Route::any('admin/article/preview','Admin\ArticleController@preview');
 
 Route::group(['middleware' => ['web','admin.login'],'prefix'=>'admin','namespace'=>'Admin'], function () {
 

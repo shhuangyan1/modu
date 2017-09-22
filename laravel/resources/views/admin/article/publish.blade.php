@@ -76,7 +76,7 @@
 
                     <div class="tabs-box clear">
                         <div class="tabs active" data-tmpId="single-tmp">
-                            <input type="radio" name="compose" value="3">单图排版</div>
+                            <input type="radio" name="compose" value="3" checked>单图排版</div>
                         <div class="tabs" data-tmpId="banner-tmp">
                             <input type="radio" name="compose" value="1">大图排版</div>
                         <div class="tabs" data-tmpId="multi-tmp">
@@ -105,7 +105,7 @@
                                     </div>
                                 </label>
                                 <div class="img-preview-box">
-                                    <span class="close"><i class="fa fa-x fa-times-circle"></i></span>
+                                    <span class="close single-close"><i class="fa fa-x fa-times-circle"></i></span>
                                     <img class="img-preview single-img-prev" src="#">
                                 </div>
                             </div>
@@ -133,7 +133,7 @@
                                     </div>
                                 </label>
                                 <div class="img-preview-box">
-                                    <span class="close"><i class="fa fa-x fa-times-circle"></i></span>
+                                    <span class="close banner-close"><i class="fa fa-x fa-times-circle"></i></span>
                                     <img class="img-preview banner-img-prev" src="#">
                                 </div>
                             </div>
@@ -160,7 +160,7 @@
                                     </div>
                                 </label>
                                 <div class="img-preview-box">
-                                    <span class="close"><i class="fa fa-x fa-times-circle"></i></span>
+                                    <span class="close multi-close"><i class="fa fa-x fa-times-circle"></i></span>
                                     <img class="img-preview" src="#">
                                 </div>
                                 <label>
@@ -171,7 +171,7 @@
                                     </div>
                                 </label>
                                 <div class="img-preview-box">
-                                    <span class="close"><i class="fa fa-x fa-times-circle"></i></span>
+                                    <span class="close multi-close"><i class="fa fa-x fa-times-circle"></i></span>
                                     <img class="img-preview" src="#">
                                 </div>
                                 <label>
@@ -182,7 +182,7 @@
                                     </div>
                                 </label>
                                 <div class="img-preview-box">
-                                    <span class="close"><i class="fa fa-x fa-times-circle"></i></span>
+                                    <span class="close multi-close"><i class="fa fa-x fa-times-circle"></i></span>
                                     <img class="img-preview" src="#">
                                 </div>
                             </div>
@@ -229,7 +229,7 @@
                 </section>
                 <section class="no-border submit">
                     <input type="submit" value="确认发布">
-                    <input class="hide" type="button" value="预览">
+                    <input class="default preview-button" type="button" value="预览">
                 </section>
             </div>
 

@@ -50,6 +50,10 @@ window.MD = {
 
         $("body").append(bg_shadow)
     },
+
+    preview_article: function () {
+
+    },
     /**
      * 实现表单元素UI效果
      * @param elem
@@ -95,6 +99,11 @@ window.MD = {
         })()
     },
 
+    /**
+     * 获取某一容器内全部表单元素值
+     * @param container
+     * @returns {*}
+     */
     getValue: function (container) {
         var el = $(container);
         var items = el.find('input,select,textarea');

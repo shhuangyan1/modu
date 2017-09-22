@@ -25,19 +25,6 @@ $(function () {
     }
 
     var bind_event = function () {
-        /*$(".label-cat").on("click",function () {
-            $(this).parent().addClass("label-active")
-            $(this).parent().siblings().removeClass("label-active")
-        })
-
-        $(".add-img").on("click",function () {
-            $("#file_upload").click();
-        })
-
-        $(".tab-upload").on("click",function () {
-            $("#file_upload").click();
-        })*/
-
 
         /**
          * 点击切换选择排版模式
@@ -54,7 +41,6 @@ $(function () {
             $("#"+ target_id).removeClass("hide");
 
         })
-
 
         /**
          * 单图排版点击上传图片
@@ -160,47 +146,92 @@ $(function () {
 
         })
 
+        /**
+         * 点击close删除已上传的某图片
+         */
+        $(".close").on("click",function () {
+            var this_ = $(this);
+            if(this_.hasClass("single-close")){
+                single_resset();
+            }
+            if(this_.hasClass("banner-close")){
+                banner_resset();
+            }
+            if(this_.hasClass("multi-close")){
+                this_.parent().css({"display":"none"});
+                this_.parent().prev().css({"display":"inline-block"});
+                $("#multi-tmp .compose-left label").removeClass("on")
+            }
+        })
 
+
+        /**
+         * 点击预览文章效果
+         */
+        $(".preview-button").on("click",function () {
+            if(check_title() && check_html()){
+                var title = $(".title").val();
+                var content1 = ue.getAllHtml();
+                console.log(content1)
+                window.open('preview',"pre");
+                // var my = window.open('preview','pre','width=414,height=736,resizable=0,location=0,toolbar=0',true)
+                // my.document.write(content1)
+
+
+                // var bg_path = MD.url + "/storage/icons/pre-bg.png";
+                // MD.preview_article();
+            }
+        })
     }
-
-
 
     bind_event();
 })
-var publish_article = function () {
-    function check_type() {
-        var types = $(".type input"),
+var check_type = function() {
+    var types = $(".type input"),
         type = false;
-        $.each(types,function (i, v) {
-            if(v.checked){
-                type = true;
-                return;
-            }
-        })
-        if(!type){
-            $(".type").showTips("请选择文章分类")
-            jeBox.msg("请选择文章分类", {icon: 1,time:1});
+    $.each(types,function (i, v) {
+        if(v.checked){
+            type = true;
+            return;
         }
-        return type;
+    })
+    if(!type){
+        $(".type").showTips("请选择文章分类")
+        jeBox.msg("请选择文章分类", {icon: 1,time:1});
     }
-    function check_title() {
-        var title = $(".new_article .title").val().trim();
-        if(title.length > 0){
-            return true;
-        }else{
-            $(".new_article .title").showTips("请填写文章标题")
-            jeBox.msg("请填写文章标题", {icon: 1,time:1});
-        }
+    return type;
+}
+var check_title = function() {
+    var title = $(".new_article .title").val().trim();
+    if(title.length > 0){
+        return true;
+    }else{
+        $(".new_article .title").showTips("请填写文章标题")
+        jeBox.msg("请填写文章标题", {icon: 1,time:1});
+    }
+    return false;
+}
+
+var check_html = function() {
+    var content = ue.getContent();
+    if(content.trim() == ""){
+        jeBox.msg("请填写文章正文", {icon: 1,time:1});
         return false;
     }
-    /*function check_img() {
-        if($("#file_upload").val() == ""){
-
-        }
-    }*/
-    
-    
-    return check_type() && check_title();
-    
-    
+    return true;
+}
+var check_img = function() {
+    var type = $("input[name=compose]:checked").val();
+    // 3单图，1大图，2多图
+    if((type == 3 && !$("#single-tmp .compose-left label").hasClass("on")) ||
+        (type == 1 && !$("#banner-tmp .compose-left label").hasClass("on")) ||
+        (type == 2 && !$("#multi-tmp .compose-left label").hasClass("on"))
+    ){
+        jeBox.msg("请上传文章封面", {icon: 1,time:1});
+        return false;
+    }
+    return true
+}
+var publish_article = function () {
+    return check_type() && check_title() && check_html() && check_img();
 }
