@@ -41,6 +41,7 @@ Class ArticleController extends Controller{
 	public function store(Request $request){
 		$filePath='';
 		$file = '';
+		$file1 = $file2 = $file3 = '';
 		$compose = $_POST['compose'];
 		if($compose==3){
 			$file = $request->file('image1');
