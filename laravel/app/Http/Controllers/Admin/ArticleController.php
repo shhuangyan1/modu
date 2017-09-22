@@ -39,10 +39,20 @@ Class ArticleController extends Controller{
 
 	//获取表单提交过来的数据(post方法)
 	public function store(Request $request){
-
-		$file = $request->file('image');
 		$filePath='';
-		//dd($file);
+		$file = '';
+		$compose = $_POST['compose'];
+		if($compose==3){
+			$file = $request->file('image1');
+			}
+		elseif($compose==1){
+			$file = $request->file('image2');
+		}
+		elseif($compose==2){
+			$file1 = $request->file('image3');
+			$file2 = $request->file('image4');
+			$file3 = $request->file('image5');
+		}
 		if($file){
 			$allowed_extensions = ["png", "jpg", "gif"];
 			if ($file->getClientOriginalExtension() && !in_array($file->getClientOriginalExtension(), $allowed_extensions)) {
@@ -56,9 +66,51 @@ Class ArticleController extends Controller{
 
 			$filePath = asset($destinationPath.$fileName);
 		}
+		if($file1){
+			$allowed_extensions = ["png", "jpg", "gif"];
+			if ($file1->getClientOriginalExtension() && !in_array($file1->getClientOriginalExtension(), $allowed_extensions)) {
+				return ['error' => 'You may only upload png, jpg or gif.'];
+			}
 
+			$destinationPath = 'storage/uploads/'; //public 文件夹下面建 storage/uploads 文件夹
+			$extension = $file1->getClientOriginalExtension();
+			$fileName = str_random(10).'.'.$extension;
+			$file1->move($destinationPath, $fileName);
+
+			$filePath[] = asset($destinationPath.$fileName);
+		}
+		if($file2){
+			$allowed_extensions = ["png", "jpg", "gif"];
+			if ($file2->getClientOriginalExtension() && !in_array($file2->getClientOriginalExtension(), $allowed_extensions)) {
+				return ['error' => 'You may only upload png, jpg or gif.'];
+			}
+
+			$destinationPath = 'storage/uploads/'; //public 文件夹下面建 storage/uploads 文件夹
+			$extension = $file2->getClientOriginalExtension();
+			$fileName = str_random(10).'.'.$extension;
+			$file2->move($destinationPath, $fileName);
+
+			$filePath[] = asset($destinationPath.$fileName);
+		}
+		if($file3){
+			$allowed_extensions = ["png", "jpg", "gif"];
+			if ($file3->getClientOriginalExtension() && !in_array($file3->getClientOriginalExtension(), $allowed_extensions)) {
+				return ['error' => 'You may only upload png, jpg or gif.'];
+			}
+
+			$destinationPath = 'storage/uploads/'; //public 文件夹下面建 storage/uploads 文件夹
+			$extension = $file3->getClientOriginalExtension();
+			$fileName = str_random(10).'.'.$extension;
+			$file3->move($destinationPath, $fileName);
+
+			$filePath[] = asset($destinationPath.$fileName);
+			//$char = implode("^", $array);
+			$filePath = implode(',',$filePath);
+		}
+		//dump($filePath);die;
 		$input=Input::except('_token');
-		$author = session('user.attributes.username');
+		//$author = session('user.attributes.username');
+		$author = session('user')->username;
 //		$rule = [
 //			'title'=>'required',
 //			'from'=>'required',
@@ -70,9 +122,23 @@ Class ArticleController extends Controller{
 		//$validate = Validator::make($input,$rule,$message);
 		//dd(Input::all());
 		//if($validate->passes()){
-			if($filePath){
+			/*if($filePath){
 				$input['image']=$filePath;
-			}
+			}*/
+		if($compose==3){
+			$input['image'] = $filePath;
+			unset($input['image1']);
+		}
+		elseif($compose==1){
+			$input['image'] = $filePath;
+			unset($input['image2']);
+		}
+		elseif($compose==2){
+			$input['image'] = $filePath;
+			unset($input['image5']);
+			unset($input['image4']);
+			unset($input['image3']);
+		}
 			$input['author']=$author;
 			$input['time']=time();
 			//dd($input);exit;

@@ -98,7 +98,7 @@
                             <div class="compose-right">
                                 <p>封面图片建议比例 10：6 （最小横宽比 160px：96px）</p>
                                 <label>
-                                    <input type="file" class="single-input" name="image">
+                                    <input type="file" class="single-input" name="image1">
                                     <div class="upload-box">
                                         <p class="p-txt">点此上传图片</p>
                                         <div class="fa-up"><i class="fa fa-x fa-cloud-upload"></i></div>
@@ -126,7 +126,7 @@
                             <div class="compose-right">
                                 <p>封面图片建议比例 10：6 （最小横宽比 400px：240px）</p>
                                 <label>
-                                    <input type="file" class="banner-input" name="image">
+                                    <input type="file" class="banner-input" name="image2">
                                     <div class="upload-box">
                                         <p class="p-txt">点此上传图片</p>
                                         <div class="fa-up"><i class="fa fa-x fa-cloud-upload"></i></div>
@@ -153,7 +153,7 @@
                             <div class="compose-right">
                                 <p>封面图片建议比例 10：6 （最小横宽比 150px：90px）</p>
                                 <label>
-                                    <input type="file" class="multi-input first-multi" name="image1">
+                                    <input type="file" class="multi-input first-multi" name="image3">
                                     <div class="upload-box">
                                         <p class="p-txt">点此上传图片</p>
                                         <div class="fa-up"><i class="fa fa-x fa-cloud-upload"></i></div>
@@ -164,7 +164,7 @@
                                     <img class="img-preview" src="#">
                                 </div>
                                 <label>
-                                    <input type="file" class="multi-input second-multi" name="image2">
+                                    <input type="file" class="multi-input second-multi" name="image4">
                                     <div class="upload-box">
                                         <p class="p-txt">点此上传图片</p>
                                         <div class="fa-up"><i class="fa fa-x fa-cloud-upload"></i></div>
@@ -175,7 +175,7 @@
                                     <img class="img-preview" src="#">
                                 </div>
                                 <label>
-                                    <input type="file" class="multi-input third-multi" name="image3">
+                                    <input type="file" class="multi-input third-multi" name="image5">
                                     <div class="upload-box">
                                         <p class="p-txt">点此上传图片</p>
                                         <div class="fa-up"><i class="fa fa-x fa-cloud-upload"></i></div>

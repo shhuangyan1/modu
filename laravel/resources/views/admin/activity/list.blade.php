@@ -103,7 +103,7 @@
                                             location.reload();
                                         },1000)
                                     }else{
-                                        jeBox.msg(res.msg, {icon: 3,time:1.5});
+                                        jeBox.msg(res.msg, {icon: 2,time:1.5});
 //                                        error
                                     }
                                     jeBox.close(index);
