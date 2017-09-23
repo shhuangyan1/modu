@@ -223,13 +223,62 @@ Class ArticleController extends Controller{
 	}
 
 	public function article_format(){
-		$article = DB::table('article')
-				->where('status',0)
-				->get();
-		$data['article']=$article;
-		$data['msg']='see you!';
-		$data['status']=1000;
-		echo json_encode($data,JSON_UNESCAPED_UNICODE);
+		$cat_id = $_GET['cat_id'];
+		$id = $_GET['id'];
+		$cursor = $_GET['cursor'];
+		if(!empty($cursor)){
+			if($cursor=='down'){
+				$map['cat_id'] = $cat_id;
+				$article = DB::table("article")
+						->where($map)
+						->where("id","<","$id-5")
+						->limit(5)
+						->get();
+				$data['article']=$article;
+				$data['msg']='加载更多';
+				$data['status']=1001;
+				echo json_encode($data,JSON_UNESCAPED_UNICODE);
+			}else{
+				$results = DB::select('select MAX(id) from article');
+				$arr = get_object_vars($results[0]);
+				$maxid = $arr['MAX(id)'];
+				if($maxid=$id){
+					$map['cat_id'] = $cat_id;
+					$article = DB::table("article")
+							->where($map)
+							->where("id","<","$id-5")
+							->limit(5)
+							->get();
+					$data['article']=$article;
+					$data['msg']='当前文章最新';
+					$data['status']=1000;
+					echo json_encode($data,JSON_UNESCAPED_UNICODE);
+				}else{
+					$map['cat_id'] = $cat_id;
+					$article = DB::table("article")
+							->where($map)
+							->limit(5)
+							->get();
+					$data['article']=$article;
+					$data['msg']='刷新成功！';
+					$data['status']=1000;
+					echo json_encode($data,JSON_UNESCAPED_UNICODE);
+				}
+			}
+
+		}else{
+			$map['cat_id'] = 1;
+			$article = DB::table("article")
+					->where($map)
+					->where("id","<","$id-5")
+					->limit(5)
+					->get();
+			//dump($article);die;
+			$data['article']=$article;
+			$data['msg']='页面初始化成功！';
+			$data['status']=1000;
+			echo json_encode($data,JSON_UNESCAPED_UNICODE);
+		}
 	}
 
 	public function ai_publish(){
