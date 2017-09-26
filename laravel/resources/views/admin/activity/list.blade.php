@@ -11,8 +11,13 @@
     <script type="text/javascript" src="{{asset('js/util.js')}}"></script>
     <script src="{{asset('lirary/jedate/jquery.jebox.js')}}" ></script>
 
-
-
+    <style>
+        .search-sel{
+            border: 1px solid #ccc;
+            height: 33px;
+            border-radius: 3px;
+        }
+    </style>
 </head>
 <body>
 <!--面包屑导航 开始-->
@@ -28,11 +33,10 @@
             <tr>
                 <th width="120">活动状态：</th>
                 <td>
-                    <select name="select">
+                    <select class="search-sel" name="select">
                         <option value="3">--全部--</option>
                         <option value="0">尚未开始</option>
                         <option value="2">正在进行中</option>
-
                     </select>
                 </td>
                 <th width="70">关键字：</th>

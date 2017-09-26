@@ -86,7 +86,7 @@
         </section>
         <section class="sec clear">
             <div style="margin-bottom: 15px;">
-                <span>上传活动海报 或 宣传视频 （只能选择海报和视频中的一种）</span>
+                <span>上传活动海报 或 宣传视频 （二选一）</span>
                 <div class="sec-opt">
                     <input type="radio" class="up-image" checked name="restype" value="image" mdtext="上传活动海报">
                     <input type="radio" class="up-video" name="restype" value="video" mdtext="上传活动视频">
@@ -94,7 +94,7 @@
             </div>
 
             <div class="upload-img-box">
-                <input id="file_upload" name="image" type="file" accept="image/*" style="display: none;">
+                <input id="file_upload" name="image" type="file" style="display: none;">
                 <p>活动海报建议尺寸：900px * 500px</p>
                 <div class="add-cover add-img">
                     <i class="fa fa-photo"></i>
@@ -149,7 +149,7 @@
 
         <section class="no-border">
             <input class="button default confirm" type="submit" value="确认发布">
-            <input class="button primary btn-preview" type="button" value="预览">
+            <!--<input class="button primary btn-preview" type="button" value="预览">-->
         </section>
 
     </form>

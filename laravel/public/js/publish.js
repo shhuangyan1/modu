@@ -25,6 +25,10 @@ $(function () {
     }
 
     var bind_event = function () {
+        // open-more打开填写更多
+        $(".open-more").on("click",function () {
+            $(".more-info-box").toggleClass("hide")
+        })
 
         /**
          * 点击切换选择排版模式

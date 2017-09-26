@@ -65,9 +65,20 @@
                 <section>
                     <input type="text" class="title" name="title" placeholder="请在这里输入标题" maxlength="60" >
                 </section>
-                <section class="no-border">
-                    <input type="text" class="from" name="from" placeholder="填写文章来源，默认为原创">
-                    <!--<span><i class="fa fa-exclamation-circle red"></i></span>-->
+                <section class="no-border clear">
+                    <div class="open-more">
+                        展开填写更多&nbsp;&gt;
+                    </div>
+                    <div class="more-info-box hide">
+                        <label>
+                            <span>文章来源：</span>
+                            <input type="text" class="from" name="from" placeholder="填写文章来源，默认为原创">
+                        </label>
+                        <label>
+                            <span>设置初始阅读：</span>
+                            <input type="number" class="view" name="view" placeholder="初始阅读数默认为0">
+                        </label>
+                    </div>
                 </section>
 
                 <section class="no-border" id="editor-box">
@@ -189,43 +200,6 @@
                         </div>
                     </div>
 
-
-                    <!--<div class="upload-img-box">
-                        <input id="file_upload" name="image" type="file" accept="image/*" style="display: none;">
-                        <p>封面大图片建议尺寸：900px * 500px</p>
-                        <div class="add-cover add-img">
-                            <i class="fa fa-photo"></i>
-                            <div class="tab">上传封面</div>
-                        </div>
-                        <div class="add-cover hide img-preview">
-                            <img src="#"  alt="封面图片" />
-                            <div class="tab">
-                                <span class="tab-upload">更换</span>
-                                <span class="tab-delete">删除</span>
-                            </div>
-                        </div>
-                    </div>-->
-
-                 <!-- 排版选择 -->
-                    <!--<div class="compose-box">
-                        <p>排版选择</p>
-                        <div class="clear">
-                        <label class="disabled">
-                            <input type="radio" id="poster-input" name="compose" value="1" disabled>
-                            <div class="cmp poster">
-                                <p>文章标题</p>
-                                <div class="cmp-img poster-img"><i class="fa fa-photo"></i></div>
-                            </div>
-                        </label>
-                        <label class="on">
-                            <input type="radio" id="single-input" name="compose" value="2" checked>
-                            <div class="cmp single">
-                                <p>文章标题</p>
-                                <div class="cmp-img single-img"><i class="fa fa-photo"></i></div>
-                            </div>
-                        </label>
-                        </div>
-                    </div>-->
                 </section>
                 <section class="no-border submit">
                     <input type="submit" value="确认发布">

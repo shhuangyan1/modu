@@ -32,6 +32,12 @@
             width: 150px;
             height: 30px;
         }
+        .upload-img-box{
+            width: auto;
+        }
+        .add-cover{
+            width: 240px;
+        }
     </style>
 </head>
 <body>
@@ -52,8 +58,8 @@
     </section>
         <section class="clear no-border">
             <div class="upload-img-box">
-                <input id="file_upload" name="image" type="file" accept="image/*" style="display: none;">
-                <p>话题海报建议尺寸：900px * 500px</p>
+                <input id="file_upload" name="image" type="file" style="display: none;">
+                <p>话题海报建议尺寸10：6 （最小横宽比 400px：200px）</p>
                 <div class="add-cover add-img">
                     <i class="fa fa-photo"></i>
                     <div class="tab">上传海报</div>
@@ -67,7 +73,7 @@
     </section>
         <section class="no-border">
             <input class="button default confirm" type="submit" value="确认发布">
-            <input class="button primary btn-preview" type="button" value="预览">
+            <!--<input class="button primary btn-preview" type="button" value="预览">-->
         </section>
     </form>
 </div>

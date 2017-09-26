@@ -11,7 +11,13 @@
     <script type="text/javascript" src="{{asset('js/util.js')}}"></script>
     <script src="{{asset('lirary/jedate/jquery.jebox.js')}}" ></script>
 
-
+    <style>
+        .search-sel{
+            border: 1px solid #ccc;
+            height: 33px;
+            border-radius: 3px;
+        }
+    </style>
 
 </head>
 <body>
@@ -23,13 +29,13 @@
 <!--面包屑导航 结束-->
 
 <div class="search_wrap">
-    <form action="" method="get">
+    <form action="#" method="get">
         {{csrf_field()}}
         <table class="search_tab">
             <tr>
                 <th width="120">话题状态：</th>
                 <td>
-                    <select name="select">
+                    <select class="search-sel" name="select">
                         <option value="2">--全部--</option>
                         <option value="0">正在讨论</option>
                         <option value="1">已经结束</option>
@@ -106,7 +112,7 @@
                                         },1000)
                                     }else{
                                         jeBox.msg(res.msg, {icon: 3,time:1.5});
-//                                        error
+                                        // error
                                     }
                                     jeBox.close(index);
                                 }
