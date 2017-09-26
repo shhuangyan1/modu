@@ -7,6 +7,7 @@ use App\Http\Model\Topic;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\DB;
 
 class TopicController extends Controller
 {
@@ -89,10 +90,10 @@ class TopicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    /*public function show($id)
     {
       // return view('admin.topic.')
-    }
+    }*/
 
     /**
      * Show the form for editing the specified resource.
@@ -145,5 +146,65 @@ class TopicController extends Controller
 
         }
 
+    }
+    public function topic_format(){
+        $results = DB::select('select MAX(id) from topic');
+        $arr = get_object_vars($results[0]);
+        $maxid = $arr['MAX(id)'];
+        $topic = DB::table("topic")
+            ->where("id",$maxid)
+            ->select("id","image","title","content","view")
+            ->get();
+        foreach($topic as $v){
+            $v->join=0;
+        }
+        echo json_encode($topic,JSON_UNESCAPED_UNICODE);
+    }
+    public function oldtopic_format(){
+        if(empty($_GET['id'])){
+            $topic = DB::table("topic")
+                ->select("id","image","title","content","view")
+                ->limit(5)
+                ->orderBy('id','desc')
+                ->get();
+            foreach($topic as $v){
+                $v->join=0;
+            }
+            echo json_encode($topic,JSON_UNESCAPED_UNICODE);
+        }else{
+            $current = $_GET['id'];
+            $topic = DB::table("topic")
+                ->where("id","<","$current-5")
+                ->select("id","image","title","content","view")
+                ->limit(5)
+                ->orderBy('id','desc')
+                ->get();
+            foreach($topic as $v){
+                $v->join=0;
+            }
+            echo json_encode($topic,JSON_UNESCAPED_UNICODE);
+        }
+
+
+    }
+
+    public function topic_detail(){
+        if(empty($_GET['id'])){
+            $_GET['id']='';
+        }
+        $map['id'] = $_GET['id'];
+        $map1['id'] = $map['id']+1;
+        $view = DB::table("topic")
+            ->where($map)
+            ->update(array("view"=>$map1['id']));
+        $detail = DB::table("topic")
+            ->select("id","image","title","content","view")
+            ->where($map)
+            ->limit(5)
+            ->get();
+        foreach($detail as $v){
+            $v->join=0;
+        }
+        echo json_encode($detail,JSON_UNESCAPED_UNICODE);
     }
 }

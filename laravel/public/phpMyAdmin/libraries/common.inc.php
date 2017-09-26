@@ -31,26 +31,39 @@
  * @package PhpMyAdmin
  */
 
+use PhpMyAdmin\Config;
+use PhpMyAdmin\Core;
+use PhpMyAdmin\DatabaseInterface;
+use PhpMyAdmin\DbList;
+use PhpMyAdmin\ErrorHandler;
+use PhpMyAdmin\LanguageManager;
+use PhpMyAdmin\Logging;
+use PhpMyAdmin\Message;
+use PhpMyAdmin\Plugins\AuthenticationPlugin;
+use PhpMyAdmin\Relation;
+use PhpMyAdmin\Response;
+use PhpMyAdmin\Session;
+use PhpMyAdmin\ThemeManager;
+use PhpMyAdmin\Tracker;
+use PhpMyAdmin\TypesMySQL;
+use PhpMyAdmin\Util;
+
 /**
- * block attempts to directly run this script 
+ * block attempts to directly run this script
  */
 if (getcwd() == dirname(__FILE__)) {
     die('Attack stopped');
 }
 
 /**
- * Minimum PHP version; can't call PMA_fatalError() which uses a
+ * Minimum PHP version; can't call Core::fatalError() which uses a
  * PHP 5 function, so cannot easily localize this message.
  */
-if (version_compare(PHP_VERSION, '5.2.0', 'lt')) {
-    die('PHP 5.2+ is required');
-}
-
-/**
-  * Backward compatibility for PHP 5.2
-  */
-if (!defined('E_DEPRECATED')) {
-    define('E_DEPRECATED', 8192);
+if (version_compare(PHP_VERSION, '5.5.0', 'lt')) {
+    die(
+        'PHP 5.5+ is required. <br /> Currently installed version is: '
+        . phpversion()
+    );
 }
 
 /**
@@ -59,130 +72,51 @@ if (!defined('E_DEPRECATED')) {
 define('PHPMYADMIN', true);
 
 /**
- * the error handler
+ * Load vendor configuration.
  */
-require './libraries/Error_Handler.class.php';
+require_once './libraries/vendor_config.php';
+
+/**
+ * Load hash polyfill.
+ */
+require_once './libraries/hash.lib.php';
+
+/**
+ * Activate autoloader
+ */
+if (! @is_readable(AUTOLOAD_FILE)) {
+    die(
+        'File <tt>' . AUTOLOAD_FILE . '</tt> missing or not readable. <br />'
+        . 'Most likely you did not run Composer to '
+        . '<a href="https://docs.phpmyadmin.net/en/latest/setup.html#installing-from-git">install library files</a>.'
+    );
+}
+require_once AUTOLOAD_FILE;
+
+/**
+ * Load gettext functions.
+ */
+PhpMyAdmin\MoTranslator\Loader::loadFunctions();
 
 /**
  * initialize the error handler
  */
-$GLOBALS['error_handler'] = new PMA_Error_Handler();
-$cfg['Error_Handler']['display'] = true;
-
-/*
- * This setting was removed in PHP 5.3. But at this point PMA_PHP_INT_VERSION
- * is not yet defined so we use another way to find out the PHP version.
- */
-if (version_compare(phpversion(), '5.3', 'lt')) {
-    /**
-     * Avoid object cloning errors
-     */
-    @ini_set('zend.ze1_compatibility_mode', false);
-}
+$GLOBALS['error_handler'] = new ErrorHandler();
 
 /**
- * This setting was removed in PHP 5.4. But at this point PMA_PHP_INT_VERSION
- * is not yet defined so we use another way to find out the PHP version.
+ * Warning about missing PHP extensions.
  */
-if (version_compare(phpversion(), '5.4', 'lt')) {
-    /**
-     * Avoid problems with magic_quotes_runtime
-     */
-    @ini_set('magic_quotes_runtime', false);
-}
+Core::checkExtensions();
 
 /**
- * core functions
+ * Configure required PHP settings.
  */
-require './libraries/core.lib.php';
-
-/**
- * Input sanitizing
- */
-require './libraries/sanitizing.lib.php';
-
-/**
- * the PMA_Theme class
- */
-require './libraries/Theme.class.php';
-
-/**
- * the PMA_Theme_Manager class
- */
-require './libraries/Theme_Manager.class.php';
-
-/**
- * the PMA_Config class
- */
-require './libraries/Config.class.php';
-
-/**
- * the relation lib, tracker needs it
- */
-require './libraries/relation.lib.php';
-
-/**
- * the PMA_Tracker class
- */
-require './libraries/Tracker.class.php';
-
-/**
- * the PMA_Table class
- */
-require './libraries/Table.class.php';
-
-if (!defined('PMA_MINIMUM_COMMON')) {
-    /**
-     * common functions
-     */
-    include_once './libraries/common.lib.php';
-
-    /**
-     * Java script escaping.
-     */
-    include_once './libraries/js_escape.lib.php';
-
-    /**
-     * Include URL/hidden inputs generating.
-     */
-    include_once './libraries/url_generating.lib.php';
-}
+Core::configure();
 
 /******************************************************************************/
 /* start procedural code                       label_start_procedural         */
 
-/**
- * protect against possible exploits - there is no need to have so much variables
- */
-if (count($_REQUEST) > 1000) {
-    die(__('possible exploit'));
-}
-
-/**
- * Check for numeric keys
- * (if register_globals is on, numeric key can be found in $GLOBALS)
- */
-foreach ($GLOBALS as $key => $dummy) {
-    if (is_numeric($key)) {
-        die(__('numeric key detected'));
-    }
-}
-unset($dummy);
-
-/**
- * PATH_INFO could be compromised if set, so remove it from PHP_SELF
- * and provide a clean PHP_SELF here
- */
-$PMA_PHP_SELF = PMA_getenv('PHP_SELF');
-$_PATH_INFO = PMA_getenv('PATH_INFO');
-if (! empty($_PATH_INFO) && ! empty($PMA_PHP_SELF)) {
-    $path_info_pos = strrpos($PMA_PHP_SELF, $_PATH_INFO);
-    if ($path_info_pos + strlen($_PATH_INFO) === strlen($PMA_PHP_SELF)) {
-        $PMA_PHP_SELF = substr($PMA_PHP_SELF, 0, $path_info_pos);
-    }
-}
-$PMA_PHP_SELF = htmlspecialchars($PMA_PHP_SELF);
-
+Core::cleanupPathInfo();
 
 /**
  * just to be sure there was no import (registering) before here
@@ -202,7 +136,7 @@ $variables_whitelist = array (
     'error_handler',
     'PMA_PHP_SELF',
     'variables_whitelist',
-    'key'
+    'key',
 );
 
 foreach (get_defined_vars() as $key => $value) {
@@ -212,7 +146,6 @@ foreach (get_defined_vars() as $key => $value) {
 }
 unset($key, $value, $variables_whitelist);
 
-
 /**
  * Subforms - some functions need to be called by form, cause of the limited URL
  * length, but if this functions inside another form you cannot just open a new
@@ -220,7 +153,7 @@ unset($key, $value, $variables_whitelist);
  *
  * <code>
  * <form ...>
- * ... main form elments ...
+ * ... main form elements ...
  * <input type="hidden" name="subform[action1][id]" value="1" />
  * ... other subform data ...
  * <input type="submit" name="usesubform[action1]" value="do action1" />
@@ -228,7 +161,7 @@ unset($key, $value, $variables_whitelist);
  * <input type="hidden" name="subform[actionX][id]" value="X" />
  * ... other subform data ...
  * <input type="submit" name="usesubform[actionX]" value="do actionX" />
- * ... main form elments ...
+ * ... main form elements ...
  * <input type="submit" name="main_action" value="submit form" />
  * </form>
  * </code>
@@ -236,7 +169,7 @@ unset($key, $value, $variables_whitelist);
  * so we now check if a subform is submitted
  */
 $__redirect = null;
-if (isset($_POST['usesubform'])) {
+if (isset($_POST['usesubform']) && ! defined('PMA_MINIMUM_COMMON')) {
     // if a subform is present and should be used
     // the rest of the form is deprecated
     $subform_id = key($_POST['usesubform']);
@@ -249,7 +182,8 @@ if (isset($_POST['usesubform'])) {
      * track this
      */
     if (isset($_POST['redirect'])
-      && $_POST['redirect'] != basename($PMA_PHP_SELF)) {
+        && $_POST['redirect'] != basename($PMA_PHP_SELF)
+    ) {
         $__redirect = $_POST['redirect'];
         unset($_POST['redirect']);
     }
@@ -264,56 +198,16 @@ if (isset($_POST['usesubform'])) {
 }
 // end check if a subform is submitted
 
-/**
- * This setting was removed in PHP 5.4. But at this point PMA_PHP_INT_VERSION
- * is not yet defined so we use another way to find out the PHP version.
- */
-if (version_compare(phpversion(), '5.4', 'lt')) {
-    // remove quotes added by PHP
-    if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()) {
-        PMA_arrayWalkRecursive($_GET, 'stripslashes', true);
-        PMA_arrayWalkRecursive($_POST, 'stripslashes', true);
-        PMA_arrayWalkRecursive($_COOKIE, 'stripslashes', true);
-        PMA_arrayWalkRecursive($_REQUEST, 'stripslashes', true);
-    }
-}
-
-/**
- * include deprecated grab_globals only if required
- */
-if (empty($__redirect) && !defined('PMA_NO_VARIABLES_IMPORT')) {
-    include './libraries/grab_globals.lib.php';
-}
-
-/**
- * check timezone setting
- * this could produce an E_STRICT - but only once,
- * if not done here it will produce E_STRICT on every date/time function
- *
- * @todo need to decide how we should handle this (without @)
- */
-date_default_timezone_set(@date_default_timezone_get());
 
 /******************************************************************************/
-/* parsing configuration file                         LABEL_parsing_config_file      */
+/* parsing configuration file                  LABEL_parsing_config_file      */
 
 /**
- * We really need this one!
- */
-if (! function_exists('preg_replace')) {
-    PMA_warnMissingExtension('pcre', true);
-}
-
-/**
- * @global PMA_Config $GLOBALS['PMA_Config']
+ * @global Config $GLOBALS['PMA_Config']
  * force reading of config file, because we removed sensitive values
  * in the previous iteration
  */
-$GLOBALS['PMA_Config'] = new PMA_Config(CONFIG_FILE);
-
-if (!defined('PMA_MINIMUM_COMMON')) {
-    $GLOBALS['PMA_Config']->checkPmaAbsoluteUri();
-}
+$GLOBALS['PMA_Config'] = new Config(CONFIG_FILE);
 
 /**
  * BC - enable backward compatibility
@@ -325,53 +219,28 @@ $GLOBALS['PMA_Config']->enableBc();
  * clean cookies on upgrade
  * when changing something related to PMA cookies, increment the cookie version
  */
-$pma_cookie_version = 4;
-if (isset($_COOKIE)
- && (isset($_COOKIE['pmaCookieVer'])
-  && $_COOKIE['pmaCookieVer'] < $pma_cookie_version)) {
-    // delete all cookies
-    foreach ($_COOKIE as $cookie_name => $tmp) {
-        $GLOBALS['PMA_Config']->removeCookie($cookie_name);
-    }
-    $_COOKIE = array();
-    $GLOBALS['PMA_Config']->setCookie('pmaCookieVer', $pma_cookie_version);
-}
-
-
-/**
- * check HTTPS connection
- */
-if ($GLOBALS['PMA_Config']->get('ForceSSL')
-    && ! $GLOBALS['PMA_Config']->get('is_https')
-) {
-    // grab current URL
-    $url = $GLOBALS['PMA_Config']->get('PmaAbsoluteUri');
-    // Parse current URL
-    $parsed = parse_url($url);
-    // In case parsing has failed do stupid string replacement
-    if ($parsed === false) {
-        // Replace http protocol
-        $url = preg_replace('@^http:@', 'https:', $url);
-    } else {
-        if($GLOBALS['PMA_Config']->get('SSLPort')) {
-            $port_number = $GLOBALS['PMA_Config']->get('SSLPort');
-        } else {
-            $port_number = 443;
+$pma_cookie_version = 5;
+if (isset($_COOKIE)) {
+    if (! isset($_COOKIE['pmaCookieVer'])
+        || $_COOKIE['pmaCookieVer'] != $pma_cookie_version
+    ) {
+        // delete all cookies
+        foreach ($_COOKIE as $cookie_name => $tmp) {
+            // We ignore cookies not with pma prefix
+            if (strncmp('pma', $cookie_name, 3) != 0) {
+                continue;
+            }
+            $GLOBALS['PMA_Config']->removeCookie($cookie_name);
         }
-        $url = 'https://' . $parsed['host'] . ':' . $port_number . $parsed['path'];
+        $_COOKIE = array();
+        $GLOBALS['PMA_Config']->setCookie('pmaCookieVer', $pma_cookie_version);
     }
-    // Actually redirect
-    PMA_sendHeaderLocation($url . PMA_generate_common_url($_GET, 'text'));
-    // delete the current session, otherwise we get problems (see bug #2397877)
-    $GLOBALS['PMA_Config']->removeCookie($GLOBALS['session_name']);
-    exit;
 }
-
 
 /**
  * include session handling after the globals, to prevent overwriting
  */
-require './libraries/session.inc.php';
+Session::setUp($GLOBALS['PMA_Config'], $GLOBALS['error_handler']);
 
 /**
  * init some variables LABEL_variables_init
@@ -388,35 +257,22 @@ $GLOBALS['url_params'] = array();
  * @global array $goto_whitelist
  */
 $goto_whitelist = array(
-    //'browse_foreigners.php',
-    //'calendar.php',
-    //'changelog.php',
-    //'chk_rel.php',
-    'db_create.php',
     'db_datadict.php',
     'db_sql.php',
     'db_events.php',
     'db_export.php',
     'db_importdocsql.php',
-    'db_qbe.php',
+    'db_multi_table_query.php',
     'db_structure.php',
     'db_import.php',
     'db_operations.php',
-    'db_printview.php',
     'db_search.php',
     'db_routines.php',
-    //'Documentation.html',
     'export.php',
     'import.php',
-    //'index.php',
-    //'navigation.php',
-    //'license.php',
-    'main.php',
+    'index.php',
     'pdf_pages.php',
     'pdf_schema.php',
-    //'phpinfo.php',
-    'querywindow.php',
-    //'readme.php',
     'server_binlog.php',
     'server_collations.php',
     'server_databases.php',
@@ -426,16 +282,17 @@ $goto_whitelist = array(
     'server_privileges.php',
     'server_sql.php',
     'server_status.php',
+    'server_status_advisor.php',
+    'server_status_monitor.php',
+    'server_status_queries.php',
+    'server_status_variables.php',
     'server_variables.php',
     'sql.php',
     'tbl_addfield.php',
-    'tbl_alter.php',
     'tbl_change.php',
     'tbl_create.php',
     'tbl_import.php',
     'tbl_indexes.php',
-    'tbl_move_copy.php',
-    'tbl_printview.php',
     'tbl_sql.php',
     'tbl_export.php',
     'tbl_operations.php',
@@ -445,7 +302,6 @@ $goto_whitelist = array(
     'tbl_row_action.php',
     'tbl_select.php',
     'tbl_zoom_select.php',
-    //'themes.php',
     'transformation_overview.php',
     'transformation_wrapper.php',
     'user_password.php',
@@ -454,7 +310,7 @@ $goto_whitelist = array(
 /**
  * check $__redirect against whitelist
  */
-if (! PMA_checkPageValidity($__redirect, $goto_whitelist)) {
+if (! Core::checkPageValidity($__redirect, $goto_whitelist)) {
     $__redirect = null;
 }
 
@@ -464,7 +320,7 @@ if (! PMA_checkPageValidity($__redirect, $goto_whitelist)) {
  */
 $GLOBALS['goto'] = '';
 // Security fix: disallow accessing serious server files via "?goto="
-if (PMA_checkPageValidity($_REQUEST['goto'], $goto_whitelist)) {
+if (Core::checkPageValidity($_REQUEST['goto'], $goto_whitelist)) {
     $GLOBALS['goto'] = $_REQUEST['goto'];
     $GLOBALS['url_params']['goto'] = $_REQUEST['goto'];
 } else {
@@ -475,7 +331,7 @@ if (PMA_checkPageValidity($_REQUEST['goto'], $goto_whitelist)) {
  * returning page
  * @global string $GLOBALS['back']
  */
-if (PMA_checkPageValidity($_REQUEST['back'], $goto_whitelist)) {
+if (Core::checkPageValidity($_REQUEST['back'], $goto_whitelist)) {
     $GLOBALS['back'] = $_REQUEST['back'];
 } else {
     unset($_REQUEST['back'], $_GET['back'], $_POST['back'], $_COOKIE['back']);
@@ -487,40 +343,33 @@ if (PMA_checkPageValidity($_REQUEST['back'], $goto_whitelist)) {
  *
  * remember that some objects in the session with session_start and __wakeup()
  * could access this variables before we reach this point
- * f.e. PMA_Config: fontsize
+ * f.e. PhpMyAdmin\Config: fontsize
+ *
+ * Check for token mismatch only if the Request method is POST
+ * GET Requests would never have token and therefore checking
+ * mis-match does not make sense
  *
  * @todo variables should be handled by their respective owners (objects)
- * f.e. lang, server, collation_connection in PMA_Config
+ * f.e. lang, server, collation_connection in PhpMyAdmin\Config
  */
-if (! PMA_isValid($_REQUEST['token']) || $_SESSION[' PMA_token '] != $_REQUEST['token']) {
-    /**
-     *  List of parameters which are allowed from unsafe source
-     */
-    $allow_list = array(
-        /* needed for direct access, see FAQ 1.34
-         * also, server needed for cookie login screen (multi-server)
-         */
-        'server', 'db', 'table', 'target', 'lang',
-        /* Session ID */
-        'phpMyAdmin',
-        /* Cookie preferences */
-        'pma_lang', 'pma_collation_connection',
-        /* Possible login form */
-        'pma_servername', 'pma_username', 'pma_password',
-        /* for playing blobstreamable media */
-        'media_type', 'custom_type', 'bs_reference',
-        /* for changing BLOB repository file MIME type */
-        'bs_db', 'bs_table', 'bs_ref', 'bs_new_mime_type',
-    );
-    /**
-     * Require cleanup functions
-     */
-    include './libraries/cleanup.lib.php';
-    /**
-     * Do actual cleanup
-     */
-    PMA_remove_request_vars($allow_list);
 
+$token_mismatch = true;
+$token_provided = false;
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (Core::isValid($_POST['token'])) {
+        $token_provided = true;
+        $token_mismatch = ! @hash_equals($_SESSION[' PMA_token '], $_POST['token']);
+    }
+
+    if ($token_mismatch) {
+        /**
+         * We don't allow any POST operation parameters if the token is mismatched
+         * or is not provided
+         */
+        $whitelist = array('ajax_request');
+        PhpMyAdmin\Sanitize::removeRequestVars($whitelist);
+    }
 }
 
 
@@ -528,35 +377,29 @@ if (! PMA_isValid($_REQUEST['token']) || $_SESSION[' PMA_token '] != $_REQUEST['
  * current selected database
  * @global string $GLOBALS['db']
  */
-$GLOBALS['db'] = '';
-if (PMA_isValid($_REQUEST['db'])) {
-    // can we strip tags from this?
-    // only \ and / is not allowed in db names for MySQL
-    $GLOBALS['db'] = $_REQUEST['db'];
-    $GLOBALS['url_params']['db'] = $GLOBALS['db'];
-}
+Core::setGlobalDbOrTable('db');
 
 /**
  * current selected table
  * @global string $GLOBALS['table']
  */
-$GLOBALS['table'] = '';
-if (PMA_isValid($_REQUEST['table'])) {
-    // can we strip tags from this?
-    // only \ and / is not allowed in table names for MySQL
-    $GLOBALS['table'] = $_REQUEST['table'];
-    $GLOBALS['url_params']['table'] = $GLOBALS['table'];
-}
+Core::setGlobalDbOrTable('table');
 
 /**
  * Store currently selected recent table.
  * Affect $GLOBALS['db'] and $GLOBALS['table']
  */
-if (PMA_isValid($_REQUEST['selected_recent_table'])) {
+if (Core::isValid($_REQUEST['selected_recent_table'])) {
     $recent_table = json_decode($_REQUEST['selected_recent_table'], true);
-    $GLOBALS['db'] = $recent_table['db'];
+
+    $GLOBALS['db']
+        = (array_key_exists('db', $recent_table) && is_string($recent_table['db'])) ?
+            $recent_table['db'] : '';
     $GLOBALS['url_params']['db'] = $GLOBALS['db'];
-    $GLOBALS['table'] = $recent_table['table'];
+
+    $GLOBALS['table']
+        = (array_key_exists('table', $recent_table) && is_string($recent_table['table'])) ?
+            $recent_table['table'] : '';
     $GLOBALS['url_params']['table'] = $GLOBALS['table'];
 }
 
@@ -565,52 +408,13 @@ if (PMA_isValid($_REQUEST['selected_recent_table'])) {
  * @global string $GLOBALS['sql_query']
  */
 $GLOBALS['sql_query'] = '';
-if (PMA_isValid($_REQUEST['sql_query'])) {
+if (Core::isValid($_REQUEST['sql_query'])) {
     $GLOBALS['sql_query'] = $_REQUEST['sql_query'];
 }
-
-/**
- * avoid problems in phpmyadmin.css.php in some cases
- * @global string $js_frame
- */
-$_REQUEST['js_frame'] = PMA_ifSetOr($_REQUEST['js_frame'], '');
 
 //$_REQUEST['set_theme'] // checked later in this file LABEL_theme_setup
 //$_REQUEST['server']; // checked later in this file
 //$_REQUEST['lang'];   // checked by LABEL_loading_language_file
-
-
-/**
- * holds name of JavaScript files to be included in HTML header
- * @global array $js_include
- */
-$GLOBALS['js_include'] = array();
-$GLOBALS['js_include'][] = 'jquery/jquery-1.6.2+fix-9521.js';
-$GLOBALS['js_include'][] = 'jquery/jquery-ui-1.8.16.custom.js';
-$GLOBALS['js_include'][] = 'update-location.js';
-
-/**
- * holds an array of javascript code snippets to be included in the HTML header
- * Can be used with PMA_AddJSCode() to pass on js variables to the browser.
- * @global array $js_script
- */
-$GLOBALS['js_script'] = array();
-
-/**
- * Add common jQuery functions script here if necessary.
- */
-
-/**
- * JavaScript events that will be registered
- * @global array $js_events
- */
-$GLOBALS['js_events'] = array();
-
-/**
- * footnotes to be displayed ot the page bottom
- * @global array $footnotes
- */
-$GLOBALS['footnotes'] = array();
 
 /******************************************************************************/
 /* loading language file                       LABEL_loading_language_file    */
@@ -618,31 +422,26 @@ $GLOBALS['footnotes'] = array();
 /**
  * lang detection is done here
  */
-require './libraries/select_lang.lib.php';
+$language = LanguageManager::getInstance()->selectLanguage();
+$language->activate();
+
+// Defines the cell alignment values depending on text direction
+if ($GLOBALS['text_dir'] == 'ltr') {
+    $GLOBALS['cell_align_left']  = 'left';
+    $GLOBALS['cell_align_right'] = 'right';
+} else {
+    $GLOBALS['cell_align_left']  = 'right';
+    $GLOBALS['cell_align_right'] = 'left';
+}
 
 /**
  * check for errors occurred while loading configuration
  * this check is done here after loading language files to present errors in locale
  */
 $GLOBALS['PMA_Config']->checkPermissions();
+$GLOBALS['PMA_Config']->checkErrors();
 
-if ($GLOBALS['PMA_Config']->error_config_file) {
-    $error = '<h1>' . __('Failed to read configuration file') . '</h1>'
-        . _('This usually means there is a syntax error in it, please check any errors shown below.')
-        . '<br />'
-        . '<br />'
-        . '<iframe src="show_config_errors.php" />';
-    trigger_error($error, E_USER_ERROR);
-}
-if ($GLOBALS['PMA_Config']->error_config_default_file) {
-    $error = sprintf(__('Could not load default configuration from: %1$s'),
-        $GLOBALS['PMA_Config']->default_source);
-    trigger_error($error, E_USER_ERROR);
-}
-if ($GLOBALS['PMA_Config']->error_pma_uri) {
-    trigger_error(__('The <tt>$cfg[\'PmaAbsoluteUri\']</tt> directive MUST be set in your configuration file!'), E_USER_ERROR);
-}
-
+Core::checkConfiguration();
 
 /******************************************************************************/
 /* setup servers                                       LABEL_setup_servers    */
@@ -655,8 +454,8 @@ $GLOBALS['server'] = 0;
 
 /**
  * Servers array fixups.
- * $default_server comes from PMA_Config::enableBc()
- * @todo merge into PMA_Config
+ * $default_server comes from PhpMyAdmin\Config::enableBc()
+ * @todo merge into PhpMyAdmin\Config
  */
 // Do we have some server?
 if (! isset($cfg['Servers']) || count($cfg['Servers']) == 0) {
@@ -670,23 +469,21 @@ if (! isset($cfg['Servers']) || count($cfg['Servers']) == 0) {
 
         // Detect wrong configuration
         if (!is_int($server_index) || $server_index < 1) {
-            trigger_error(sprintf(__('Invalid server index: %s'), $server_index), E_USER_ERROR);
+            trigger_error(
+                sprintf(__('Invalid server index: %s'), $server_index),
+                E_USER_ERROR
+            );
         }
 
         $each_server = array_merge($default_server, $each_server);
-
-        // Don't use servers with no hostname
-        if ($each_server['connect_type'] == 'tcp' && empty($each_server['host'])) {
-            trigger_error(sprintf(__('Invalid hostname for server %1$s. Please review your configuration.'), $server_index), E_USER_ERROR);
-        }
 
         // Final solution to bug #582890
         // If we are using a socket connection
         // and there is nothing in the verbose server name
         // or the host field, then generate a name for the server
         // in the form of "Server 2", localized of course!
-        if ($each_server['connect_type'] == 'socket' && empty($each_server['host']) && empty($each_server['verbose'])) {
-            $each_server['verbose'] = __('Server') . $server_index;
+        if (empty($each_server['host']) && empty($each_server['verbose'])) {
+            $each_server['verbose'] = sprintf(__('Server %d'), $server_index);
         }
 
         $new_servers[$server_index] = $each_server;
@@ -699,95 +496,23 @@ if (! isset($cfg['Servers']) || count($cfg['Servers']) == 0) {
 unset($default_server);
 
 
-/******************************************************************************/
-/* setup themes                                          LABEL_theme_setup    */
-
-/**
- * @global PMA_Theme_Manager $_SESSION['PMA_Theme_Manager']
- */
-if (! isset($_SESSION['PMA_Theme_Manager'])) {
-    $_SESSION['PMA_Theme_Manager'] = new PMA_Theme_Manager;
-} else {
-    /**
-     * @todo move all __wakeup() functionality into session.inc.php
-     */
-    $_SESSION['PMA_Theme_Manager']->checkConfig();
-}
-
-// for the theme per server feature
-if (isset($_REQUEST['server']) && ! isset($_REQUEST['set_theme'])) {
-    $GLOBALS['server'] = $_REQUEST['server'];
-    $tmp = $_SESSION['PMA_Theme_Manager']->getThemeCookie();
-    if (empty($tmp)) {
-        $tmp = $_SESSION['PMA_Theme_Manager']->theme_default;
-    }
-    $_SESSION['PMA_Theme_Manager']->setActiveTheme($tmp);
-    unset($tmp);
-}
-/**
- * @todo move into PMA_Theme_Manager::__wakeup()
- */
-if (isset($_REQUEST['set_theme'])) {
-    // if user selected a theme
-    $_SESSION['PMA_Theme_Manager']->setActiveTheme($_REQUEST['set_theme']);
-}
-
-/**
- * the theme object
- * @global PMA_Theme $_SESSION['PMA_Theme']
- */
-$_SESSION['PMA_Theme'] = $_SESSION['PMA_Theme_Manager']->theme;
-
-// BC
-/**
- * the active theme
- * @global string $GLOBALS['theme']
- */
-$GLOBALS['theme']           = $_SESSION['PMA_Theme']->getName();
-/**
- * the theme path
- * @global string $GLOBALS['pmaThemePath']
- */
-$GLOBALS['pmaThemePath']    = $_SESSION['PMA_Theme']->getPath();
-/**
- * the theme image path
- * @global string $GLOBALS['pmaThemeImage']
- */
-$GLOBALS['pmaThemeImage']   = $_SESSION['PMA_Theme']->getImgPath();
-
-/**
- * load layout file if exists
- */
-if (@file_exists($_SESSION['PMA_Theme']->getLayoutFile())) {
-    include $_SESSION['PMA_Theme']->getLayoutFile();
-    /**
-     * @todo remove if all themes are update use Navi instead of Left as frame name
-     */
-    if (! isset($GLOBALS['cfg']['NaviWidth'])
-     && isset($GLOBALS['cfg']['LeftWidth'])) {
-        $GLOBALS['cfg']['NaviWidth'] = $GLOBALS['cfg']['LeftWidth'];
-    }
-}
-
 if (! defined('PMA_MINIMUM_COMMON')) {
-    /**
-     * Character set conversion.
-     */
-    include_once './libraries/charset_conversion.lib.php';
-
-    /**
-     * String handling
-     */
-    include_once './libraries/string.lib.php';
-
     /**
      * Lookup server by name
      * (see FAQ 4.8)
      */
-    if (! empty($_REQUEST['server']) && is_string($_REQUEST['server'])
-     && ! is_numeric($_REQUEST['server'])) {
+    if (! empty($_REQUEST['server'])
+        && is_string($_REQUEST['server'])
+        && ! is_numeric($_REQUEST['server'])
+    ) {
         foreach ($cfg['Servers'] as $i => $server) {
-            if ($server['host'] == $_REQUEST['server']) {
+            $verboseToLower = mb_strtolower($server['verbose']);
+            $serverToLower = mb_strtolower($_REQUEST['server']);
+            if ($server['host'] == $_REQUEST['server']
+                || $server['verbose'] == $_REQUEST['server']
+                || $verboseToLower == $serverToLower
+                || md5($verboseToLower) === $serverToLower
+            ) {
                 $_REQUEST['server'] = $i;
                 break;
             }
@@ -797,66 +522,71 @@ if (! defined('PMA_MINIMUM_COMMON')) {
         }
         unset($i);
     }
+}
 
-    /**
-     * If no server is selected, make sure that $cfg['Server'] is empty (so
-     * that nothing will work), and skip server authentication.
-     * We do NOT exit here, but continue on without logging into any server.
-     * This way, the welcome page will still come up (with no server info) and
-     * present a choice of servers in the case that there are multiple servers
-     * and '$cfg['ServerDefault'] = 0' is set.
-     */
+/**
+ * If no server is selected, make sure that $cfg['Server'] is empty (so
+ * that nothing will work), and skip server authentication.
+ * We do NOT exit here, but continue on without logging into any server.
+ * This way, the welcome page will still come up (with no server info) and
+ * present a choice of servers in the case that there are multiple servers
+ * and '$cfg['ServerDefault'] = 0' is set.
+ */
 
-    if (isset($_REQUEST['server']) && (is_string($_REQUEST['server']) || is_numeric($_REQUEST['server'])) && ! empty($_REQUEST['server']) && ! empty($cfg['Servers'][$_REQUEST['server']])) {
-        $GLOBALS['server'] = $_REQUEST['server'];
+if (isset($_REQUEST['server'])
+    && (is_string($_REQUEST['server']) || is_numeric($_REQUEST['server']))
+    && ! empty($_REQUEST['server'])
+    && ! empty($cfg['Servers'][$_REQUEST['server']])
+) {
+    $GLOBALS['server'] = $_REQUEST['server'];
+    $cfg['Server'] = $cfg['Servers'][$GLOBALS['server']];
+} else {
+    if (!empty($cfg['Servers'][$cfg['ServerDefault']])) {
+        $GLOBALS['server'] = $cfg['ServerDefault'];
         $cfg['Server'] = $cfg['Servers'][$GLOBALS['server']];
     } else {
-        if (!empty($cfg['Servers'][$cfg['ServerDefault']])) {
-            $GLOBALS['server'] = $cfg['ServerDefault'];
-            $cfg['Server'] = $cfg['Servers'][$GLOBALS['server']];
-        } else {
-            $GLOBALS['server'] = 0;
-            $cfg['Server'] = array();
-        }
+        $GLOBALS['server'] = 0;
+        $cfg['Server'] = array();
     }
-    $GLOBALS['url_params']['server'] = $GLOBALS['server'];
+}
+$GLOBALS['url_params']['server'] = $GLOBALS['server'];
 
-    /**
-     * Kanji encoding convert feature appended by Y.Kawada (2002/2/20)
-     */
-    if (function_exists('mb_convert_encoding')
-     && $lang == 'ja') {
-        include_once './libraries/kanji-encoding.lib.php';
-    } // end if
+/******************************************************************************/
+/* setup themes                                          LABEL_theme_setup    */
 
+ThemeManager::initializeTheme();
+
+if (! defined('PMA_MINIMUM_COMMON')) {
     /**
      * save some settings in cookies
-     * @todo should be done in PMA_Config
+     * @todo should be done in PhpMyAdmin\Config
      */
     $GLOBALS['PMA_Config']->setCookie('pma_lang', $GLOBALS['lang']);
     if (isset($GLOBALS['collation_connection'])) {
         $GLOBALS['PMA_Config']->setCookie(
             'pma_collation_connection',
-            $GLOBALS['collation_connection']);
+            $GLOBALS['collation_connection']
+        );
     }
 
-    $_SESSION['PMA_Theme_Manager']->setThemeCookie();
+    ThemeManager::getInstance()->setThemeCookie();
 
     if (! empty($cfg['Server'])) {
 
         /**
          * Loads the proper database interface for this server
          */
-        include_once './libraries/database_interface.lib.php';
-
-        include_once './libraries/logging.lib.php';
+        include_once './libraries/database_interface.inc.php';
 
         // get LoginCookieValidity from preferences cache
-        // no generic solution for loading preferences from cache as some settings need to be kept
-        // for processing in PMA_Config::loadUserPreferences()
+        // no generic solution for loading preferences from cache as some settings
+        // need to be kept for processing in
+        // PhpMyAdmin\Config::loadUserPreferences()
         $cache_key = 'server_' . $GLOBALS['server'];
-        if (isset($_SESSION['cache'][$cache_key]['userprefs']['LoginCookieValidity'])) {
-            $value = $_SESSION['cache'][$cache_key]['userprefs']['LoginCookieValidity'];
+        if (isset($_SESSION['cache'][$cache_key]['userprefs']['LoginCookieValidity'])
+        ) {
+            $value
+                = $_SESSION['cache'][$cache_key]['userprefs']['LoginCookieValidity'];
             $GLOBALS['PMA_Config']->set('LoginCookieValidity', $value);
             $GLOBALS['cfg']['LoginCookieValidity'] = $value;
             unset($value);
@@ -867,29 +597,44 @@ if (! defined('PMA_MINIMUM_COMMON')) {
         // and run authentication
 
         // to allow HTTP or http
-        $cfg['Server']['auth_type'] = strtolower($cfg['Server']['auth_type']);
-        if (! file_exists('./libraries/auth/' . $cfg['Server']['auth_type'] . '.auth.lib.php')) {
-            PMA_fatalError(__('Invalid authentication method set in configuration:') . ' ' . $cfg['Server']['auth_type']);
-        }
+        $cfg['Server']['auth_type']
+            = mb_strtolower($cfg['Server']['auth_type']);
+
         /**
          * the required auth type plugin
          */
-        include_once './libraries/auth/' . $cfg['Server']['auth_type'] . '.auth.lib.php';
-        if (!PMA_auth_check()) {
+        $auth_class = "Authentication" . ucfirst($cfg['Server']['auth_type']);
+        if (! @file_exists(
+            './libraries/classes/Plugins/Auth/'
+            . $auth_class . '.php'
+        )) {
+            Core::fatalError(
+                __('Invalid authentication method set in configuration:')
+                . ' ' . $cfg['Server']['auth_type']
+            );
+        }
+        if (isset($_REQUEST['pma_password']) && strlen($_REQUEST['pma_password']) > 256) {
+            $_REQUEST['pma_password'] = substr($_REQUEST['pma_password'], 0, 256);
+        }
+        $fqnAuthClass = 'PhpMyAdmin\Plugins\Auth\\' . $auth_class;
+        // todo: add plugin manager
+        $plugin_manager = null;
+        /** @var AuthenticationPlugin $auth_plugin */
+        $auth_plugin = new $fqnAuthClass($plugin_manager);
+
+        if (! $auth_plugin->authCheck()) {
             /* Force generating of new session on login */
-            PMA_secureSession();
-            PMA_auth();
+            Session::secure();
+            $auth_plugin->auth();
         } else {
-            PMA_auth_set_user();
+            $auth_plugin->authSetUser();
         }
 
-         // Check IP-based Allow/Deny rules as soon as possible to reject the
-        // user
-        // Based on mod_access in Apache:
-        // http://cvs.apache.org/viewcvs.cgi/httpd-2.0/modules/aaa/mod_access.c?rev=1.37&content-type=text/vnd.viewcvs-markup
-        // Look at: "static int check_dir_access(request_rec *r)"
+        // Check IP-based Allow/Deny rules as soon as possible to reject the
+        // user based on mod_access in Apache
         if (isset($cfg['Server']['AllowDeny'])
-                && isset($cfg['Server']['AllowDeny']['order'])) {
+            && isset($cfg['Server']['AllowDeny']['order'])
+        ) {
 
             /**
              * ip based access library
@@ -913,8 +658,7 @@ if (! defined('PMA_MINIMUM_COMMON')) {
                     $allowDeny_forbidden = false;
                 }
             } elseif ($cfg['Server']['AllowDeny']['order'] == 'explicit') {
-                if (PMA_allowDeny('allow')
-                  && !PMA_allowDeny('deny')) {
+                if (PMA_allowDeny('allow') && ! PMA_allowDeny('deny')) {
                     $allowDeny_forbidden = false;
                 } else {
                     $allowDeny_forbidden = true;
@@ -923,31 +667,25 @@ if (! defined('PMA_MINIMUM_COMMON')) {
 
             // Ejects the user if banished
             if ($allowDeny_forbidden) {
-                PMA_log_user($cfg['Server']['user'], 'allow-denied');
-                PMA_auth_fails();
+                Logging::logUser($cfg['Server']['user'], 'allow-denied');
+                $auth_plugin->authFails();
             }
-            unset($allowDeny_forbidden); //Clean up after you!
         } // end if
 
         // is root allowed?
-        if (!$cfg['Server']['AllowRoot'] && $cfg['Server']['user'] == 'root') {
+        if (! $cfg['Server']['AllowRoot'] && $cfg['Server']['user'] == 'root') {
             $allowDeny_forbidden = true;
-            PMA_log_user($cfg['Server']['user'], 'root-denied');
-            PMA_auth_fails();
-            unset($allowDeny_forbidden); //Clean up after you!
+            Logging::logUser($cfg['Server']['user'], 'root-denied');
+            $auth_plugin->authFails();
         }
 
         // is a login without password allowed?
-        if (!$cfg['Server']['AllowNoPassword'] && $cfg['Server']['password'] == '') {
+        if (! $cfg['Server']['AllowNoPassword']
+            && $cfg['Server']['password'] === ''
+        ) {
             $login_without_password_is_forbidden = true;
-            PMA_log_user($cfg['Server']['user'], 'empty-denied');
-            PMA_auth_fails();
-            unset($login_without_password_is_forbidden); //Clean up after you!
-        }
-
-        // if using TCP socket is not needed
-        if (strtolower($cfg['Server']['connect_type']) == 'tcp') {
-            $cfg['Server']['socket'] = '';
+            Logging::logUser($cfg['Server']['user'], 'empty-denied');
+            $auth_plugin->authFails();
         }
 
         // Try to connect MySQL with the control user profile (will be used to
@@ -956,129 +694,183 @@ if (! defined('PMA_MINIMUM_COMMON')) {
         // scripts)
         $controllink = false;
         if ($cfg['Server']['controluser'] != '') {
-            if (! empty($cfg['Server']['controlhost'])) {
-                $controllink = PMA_DBI_connect($cfg['Server']['controluser'],
-                    $cfg['Server']['controlpass'], true,
-                    array('host' => $cfg['Server']['controlhost'])
-                );
-            } else {
-                $controllink = PMA_DBI_connect($cfg['Server']['controluser'],
-                    $cfg['Server']['controlpass'], true);
-            }
+            $controllink = $GLOBALS['dbi']->connect(
+                DatabaseInterface::CONNECT_CONTROL
+            );
         }
 
         // Connects to the server (validates user's login)
-        $userlink = PMA_DBI_connect($cfg['Server']['user'],
-            $cfg['Server']['password'], false);
+        /** @var DatabaseInterface $userlink */
+        $userlink = $GLOBALS['dbi']->connect(DatabaseInterface::CONNECT_USER);
+
+        if ($userlink === false) {
+            Logging::logUser($cfg['Server']['user'], 'mysql-denied');
+            $GLOBALS['auth_plugin']->authFails();
+        }
+
+        // Set timestamp for the session, if required.
+        if ($cfg['Server']['SessionTimeZone'] != '') {
+            $sql_query_tz = 'SET ' . Util::backquote('time_zone') . ' = '
+                . '\''
+                . $GLOBALS['dbi']->escapeString($cfg['Server']['SessionTimeZone'])
+                . '\'';
+
+            if (! $userlink->query($sql_query_tz)) {
+                $error_message_tz = sprintf(
+                    __(
+                        'Unable to use timezone %1$s for server %2$d. '
+                        . 'Please check your configuration setting for '
+                        . '[em]$cfg[\'Servers\'][%3$d][\'SessionTimeZone\'][/em]. '
+                        . 'phpMyAdmin is currently using the default time zone '
+                        . 'of the database server.'
+                    ),
+                    $cfg['Servers'][$GLOBALS['server']]['SessionTimeZone'],
+                    $GLOBALS['server'],
+                    $GLOBALS['server']
+                );
+
+                $GLOBALS['error_handler']->addError(
+                    $error_message_tz,
+                    E_USER_WARNING,
+                    '',
+                    '',
+                    false
+                );
+            }
+        }
 
         if (! $controllink) {
-            $controllink = $userlink;
+            /*
+             * Open separate connection for control queries, this is needed
+             * to avoid problems with table locking used in main connection
+             * and phpMyAdmin issuing queries to configuration storage, which
+             * is not locked by that time.
+             */
+            $controllink = $GLOBALS['dbi']->connect(DatabaseInterface::CONNECT_USER);
         }
+
+        $auth_plugin->storeUserCredentials();
 
         /* Log success */
-        PMA_log_user($cfg['Server']['user']);
+        Logging::logUser($cfg['Server']['user']);
 
-        /**
-         * with phpMyAdmin 3 we support MySQL >=5
-         * but only production releases:
-         *  - > 5.0.15
-         */
-        if (PMA_MYSQL_INT_VERSION < 50015) {
-            PMA_fatalError(__('You should upgrade to %s %s or later.'), array('MySQL', '5.0.15'));
-        }
-
-        if (PMA_DRIZZLE) {
-            // DisableIS must be set to false for Drizzle, it maps SHOW commands
-            // to INFORMATION_SCHEMA queries anyway so it's fast on large servers
-            $cfg['Server']['DisableIS'] = false;
-            // SHOW OPEN TABLES is not supported by Drizzle
-            $cfg['SkipLockedTables'] = false;
+        if ($GLOBALS['dbi']->getVersion() < $cfg['MysqlMinVersion']['internal']) {
+            Core::fatalError(
+                __('You should upgrade to %s %s or later.'),
+                array('MySQL', $cfg['MysqlMinVersion']['human'])
+            );
         }
 
         /**
-         * SQL Parser code
+         * Type handling object.
          */
-        include_once './libraries/sqlparser.lib.php';
+        $GLOBALS['PMA_Types'] = new TypesMySQL();
+
+        // Loads closest context to this version.
+        PhpMyAdmin\SqlParser\Context::loadClosest(
+            ($GLOBALS['dbi']->isMariaDB() ? 'MariaDb' : 'MySql') . $GLOBALS['dbi']->getVersion()
+        );
+
+        // Sets the default delimiter (if specified).
+        if (!empty($_REQUEST['sql_delimiter'])) {
+            PhpMyAdmin\SqlParser\Lexer::$DEFAULT_DELIMITER = $_REQUEST['sql_delimiter'];
+        }
+
+        // TODO: Set SQL modes too.
 
         /**
-         * SQL Validator interface code
+         * the DbList class as a stub for the ListDatabase class
          */
-        include_once './libraries/sqlvalidator.lib.php';
-
-        /**
-         * the PMA_List_Database class
-         */
-        include_once './libraries/PMA.php';
-        $pma = new PMA;
-        $pma->userlink = $userlink;
-        $pma->controllink = $controllink;
+        $dblist = new DbList;
+        $dblist->userlink = $userlink;
+        $dblist->controllink = $controllink;
 
         /**
          * some resetting has to be done when switching servers
          */
-        if (isset($_SESSION['tmp_user_values']['previous_server']) && $_SESSION['tmp_user_values']['previous_server'] != $GLOBALS['server']) {
-            unset($_SESSION['tmp_user_values']['navi_limit_offset']);
+        if (isset($_SESSION['tmpval']['previous_server'])
+            && $_SESSION['tmpval']['previous_server'] != $GLOBALS['server']
+        ) {
+            unset($_SESSION['tmpval']['navi_limit_offset']);
         }
-        $_SESSION['tmp_user_values']['previous_server'] = $GLOBALS['server'];
+        $_SESSION['tmpval']['previous_server'] = $GLOBALS['server'];
 
-    } // end server connecting
+    } else { // end server connecting
+        // No need to check for 'PMA_BYPASS_GET_INSTANCE' since this execution path
+        // applies only to initial login
+        $response = Response::getInstance();
+        $response->getHeader()->disableMenuAndConsole();
+        $response->getFooter()->setMinimal();
+    }
 
     /**
      * check if profiling was requested and remember it
      * (note: when $cfg['ServerDefault'] = 0, constant is not defined)
      */
-    if (isset($_REQUEST['profiling']) && PMA_profilingSupported()) {
+    if (isset($_REQUEST['profiling'])
+        && Util::profilingSupported()
+    ) {
         $_SESSION['profiling'] = true;
     } elseif (isset($_REQUEST['profiling_form'])) {
         // the checkbox was unchecked
         unset($_SESSION['profiling']);
     }
 
-    // library file for blobstreaming
-    include_once './libraries/blobstreaming.lib.php';
+    // load user preferences
+    $GLOBALS['PMA_Config']->loadUserPreferences();
 
-    // checks for blobstreaming plugins and databases that support
-    // blobstreaming (by having the necessary tables for blobstreaming)
-    checkBLOBStreamingPlugins();
+    /**
+     * Inclusion of profiling scripts is needed on various
+     * pages like sql, tbl_sql, db_sql, tbl_select
+     */
+    if (! defined('PMA_BYPASS_GET_INSTANCE')) {
+        $response = Response::getInstance();
+    }
+    if (isset($response) && isset($_SESSION['profiling'])) {
+        $header   = $response->getHeader();
+        $scripts  = $header->getScripts();
+        $scripts->addFile('chart.js');
+        $scripts->addFile('vendor/jqplot/jquery.jqplot.js');
+        $scripts->addFile('vendor/jqplot/plugins/jqplot.pieRenderer.js');
+        $scripts->addFile('vendor/jqplot/plugins/jqplot.highlighter.js');
+        $scripts->addFile('vendor/jquery/jquery.tablesorter.js');
+    }
 
-} // end if !defined('PMA_MINIMUM_COMMON')
-
-// load user preferences
-$GLOBALS['PMA_Config']->loadUserPreferences();
-
-// remove sensitive values from session
-$GLOBALS['PMA_Config']->set('blowfish_secret', '');
-$GLOBALS['PMA_Config']->set('Servers', '');
-$GLOBALS['PMA_Config']->set('default_server', '');
+    /*
+     * There is no point in even attempting to process
+     * an ajax request if there is a token mismatch
+     */
+    if (isset($response) && $response->isAjax() && $_SERVER['REQUEST_METHOD'] == 'POST' && $token_mismatch) {
+        $response->setRequestStatus(false);
+        $response->addJSON(
+            'message',
+            Message::error(__('Error: Token mismatch'))
+        );
+        exit;
+    }
+} else { // end if !defined('PMA_MINIMUM_COMMON')
+    // load user preferences
+    $GLOBALS['PMA_Config']->loadUserPreferences();
+}
 
 /* Tell tracker that it can actually work */
-PMA_Tracker::enable();
+Tracker::enable();
 
-/**
- * @global boolean $GLOBALS['is_ajax_request']
- * @todo should this be moved to the variables init section above?
- *
- * Check if the current request is an AJAX request, and set is_ajax_request
- * accordingly.  Suppress headers, footers and unnecessary output if set to
- * true
- */
-if (isset($_REQUEST['ajax_request']) && $_REQUEST['ajax_request'] == true) {
-    $GLOBALS['is_ajax_request'] = true;
-} else {
-    $GLOBALS['is_ajax_request'] = false;
+if (isset($_REQUEST['GLOBALS']) || isset($_FILES['GLOBALS'])) {
+    Core::fatalError(__("GLOBALS overwrite attempt"));
 }
 
 /**
- * @global  boolean $GLOBALS['grid_edit']
- *
- * Set to true if this is a request made during an grid edit process.  This
- * request is made to retrieve the non-truncated/transformed values.
+ * protect against possible exploits - there is no need to have so much variables
  */
-if (isset($_REQUEST['grid_edit']) && $_REQUEST['grid_edit'] == true) {
-    $GLOBALS['grid_edit'] = true;
-} else {
-    $GLOBALS['grid_edit'] = false;
+if (count($_REQUEST) > 1000) {
+    Core::fatalError(__('possible exploit'));
 }
+
+// here, the function does not exist with this configuration:
+// $cfg['ServerDefault'] = 0;
+$GLOBALS['is_superuser']
+    = isset($GLOBALS['dbi']) && $GLOBALS['dbi']->isSuperuser();
 
 if (!empty($__redirect) && in_array($__redirect, $goto_whitelist)) {
     /**
@@ -1087,4 +879,28 @@ if (!empty($__redirect) && in_array($__redirect, $goto_whitelist)) {
     include $__redirect;
     exit();
 }
-?>
+
+// If Zero configuration mode enabled, check PMA tables in current db.
+if (! defined('PMA_MINIMUM_COMMON')
+    && ! empty($GLOBALS['server'])
+    && isset($GLOBALS['cfg']['ZeroConf'])
+    && $GLOBALS['cfg']['ZeroConf'] == true
+) {
+    if (! empty($GLOBALS['db'])) {
+        $cfgRelation = Relation::getRelationsParam();
+        if (empty($cfgRelation['db'])) {
+            Relation::fixPmaTables($GLOBALS['db'], false);
+        }
+    }
+    $cfgRelation = Relation::getRelationsParam();
+    if (empty($cfgRelation['db'])) {
+        if ($GLOBALS['dblist']->databases->exists('phpmyadmin')) {
+            Relation::fixPmaTables('phpmyadmin', false);
+        }
+    }
+}
+
+if (! defined('PMA_MINIMUM_COMMON')) {
+    include 'libraries/config/user_preferences.forms.php';
+    include_once 'libraries/config/page_settings.forms.php';
+}

@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 
-
 Class ArticleController extends Controller{
 	public function index(Request $request){
 
@@ -223,16 +222,19 @@ Class ArticleController extends Controller{
 	}
 
 	public function article_format(){
+
 		$cat_id = $_GET['cat_id'];
-		$id = $_GET['id'];
+		$current = $_GET['current'];
 		$cursor = $_GET['cursor'];
+
 		if(!empty($cursor)){
 			if($cursor=='down'){
 				$map['cat_id'] = $cat_id;
 				$article = DB::table("article")
 						->where($map)
-						->where("id","<","$id-5")
-						->limit(5)
+						->where("id","<","$current-8")
+						->select("title","author","compose","from","id","view","image")
+						->limit(8)
 						->get();
 				$data['article']=$article;
 				$data['msg']='加载更多';
@@ -242,12 +244,13 @@ Class ArticleController extends Controller{
 				$results = DB::select('select MAX(id) from article');
 				$arr = get_object_vars($results[0]);
 				$maxid = $arr['MAX(id)'];
-				if($maxid=$id){
+				if($maxid=$current){
 					$map['cat_id'] = $cat_id;
 					$article = DB::table("article")
 							->where($map)
-							->where("id","<","$id-5")
-							->limit(5)
+							->where("id","<","$current-8")
+							->select("title","author","compose","from","id","view","image")
+							->limit(8)
 							->get();
 					$data['article']=$article;
 					$data['msg']='当前文章最新';
@@ -257,7 +260,8 @@ Class ArticleController extends Controller{
 					$map['cat_id'] = $cat_id;
 					$article = DB::table("article")
 							->where($map)
-							->limit(5)
+							->select("title","author","compose","from","id","view","image")
+							->limit(8)
 							->get();
 					$data['article']=$article;
 					$data['msg']='刷新成功！';
@@ -267,13 +271,23 @@ Class ArticleController extends Controller{
 			}
 
 		}else{
-			$map['cat_id'] = 1;
+			$map['cat_id'] = $cat_id;
 			$article = DB::table("article")
 					->where($map)
-					->where("id","<","$id-5")
-					->limit(5)
+					->select("title","author","compose","from","id","view","image")
+					->limit(8)
 					->get();
+			//select("title","author","compose","from","id","view","image");
 			//dump($article);die;
+			$num = DB::table('article')
+					->where($map)
+					->count();
+			if($num<8){
+				$num = $num;
+			}else{
+				$num=8;
+			}
+			$data['num']=$num;
 			$data['article']=$article;
 			$data['msg']='页面初始化成功！';
 			$data['status']=1000;
@@ -281,6 +295,21 @@ Class ArticleController extends Controller{
 		}
 	}
 
+	public function article_detail(){
+		if(empty($_GET['id'])){
+			$_GET['id']='';
+		}
+		$map['id'] = $_GET['id'];
+		$map1['id'] = $map['id']+1;
+		$view = DB::table("article")
+				->where($map)
+				->update(array("view"=>$map1['id']));
+		$detail = DB::table("article")
+				->where($map)
+				->select("title","content","author","from")
+				->get();
+		echo json_encode($detail,JSON_UNESCAPED_UNICODE);
+	}
 	public function ai_publish(){
 		return view('admin/article/ai_publish');
 	}

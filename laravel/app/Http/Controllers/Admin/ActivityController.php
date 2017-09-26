@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Model\Activity;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use DB;
 
 class ActivityController extends Controller
 {
@@ -178,5 +179,59 @@ class ActivityController extends Controller
 
         }
 
+    }
+
+    public function activity_format(){
+        $activity = DB::table("activity")
+            ->where("status",0)
+            ->select("id","title","description","time","address","view","image")
+            ->orderBy('id','desc')
+            ->get();
+        //dump($activity);die;
+        foreach($activity as $v){
+            $v->key="hello";
+            $v->join=0;
+        }
+        echo json_encode($activity,JSON_UNESCAPED_UNICODE);
+    }
+    public function oldactivity_format(){
+        if(empty($_GET['id'])){
+            $_GET['id']='';
+            $activity = DB::table("activity")
+                ->select("id","title","time","view","image")
+                ->limit(8)
+                ->orderby("id","desc")
+                ->get();
+        }else{
+            $current = $_GET['id'];
+            $current = $current - 8;
+            $activity = DB::table("activity")
+                ->select("id","title","time","view","image")
+                ->where("id","<",$current)
+                ->limit(8)
+                ->orderby("id","desc")
+                ->get();
+        }
+        foreach($activity as $v){
+            $v->join=0;
+        }
+        echo json_encode($activity,JSON_UNESCAPED_UNICODE);
+    }
+
+    public function activity_detail(){
+        if(empty($_GET['id'])){
+            $_GET['id']='';
+        }else{
+            $map['id'] = $_GET['id'];
+            $detail = DB::table("activity")
+                ->where($map)
+                ->select("id","image","title","limits","fee","time","address","description")
+                ->get();
+            foreach($detail as $v){
+                $v->joined='';
+                $v->joinedList='';
+            }
+            echo json_encode($detail,JSON_UNESCAPED_UNICODE);
+        }
     }
 }

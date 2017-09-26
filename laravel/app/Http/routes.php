@@ -15,6 +15,14 @@
 Route::get('/', function () {
     return view('admin/login');
 });
+Route::any('admin/activity/activity_detail','Admin\ActivityController@activity_detail');
+Route::any('admin/topic/topic_detail','Admin\TopicController@topic_detail');
+Route::get('admin/activity/activity_format','Admin\ActivityController@activity_format');
+Route::get('admin/activity/oldactivity_format','Admin\ActivityController@oldactivity_format');
+Route::get('admin/topic/topic_format','Admin\TopicController@topic_format');
+Route::get('admin/topic/oldtopic_format','Admin\TopicController@oldtopic_format');
+Route::any('admin/article/article_detail','Admin\ArticleController@article_detail');
+Route::any('admin/category/category_format','Admin\CategoryController@category_format');
 Route::any('admin/article/ai_article','Admin\ArticleController@ai_article');
 Route::any('admin/article/ai_publish','Admin\ArticleController@ai_publish');
 Route::any('admin/article/article_format','Admin\ArticleController@article_format');

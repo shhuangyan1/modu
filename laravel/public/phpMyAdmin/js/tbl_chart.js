@@ -1,12 +1,418 @@
-var chart_xaxis_idx=-1,chart_series,chart_series_index=-1,temp_chart_title,currentChart=null,chart_data=null,nonJqplotSettings=null,currentSettings=null;
-$(document).ready(function(){chart_series="columns";chart_xaxis_idx=$('select[name="chartXAxis"]').attr("value");$("#resizer").resizable({minHeight:240,minWidth:300});$("#resizer").bind("resizestop",function(){$("#querychart").height($("#resizer").height()*0.96);$("#querychart").width($("#resizer").width()*0.96);currentChart.replot({resetAxes:true})});nonJqplotSettings={chart:{type:"line",width:$("#resizer").width()-20,height:$("#resizer").height()-20}};currentSettings={grid:{drawBorder:false,shadow:false,
-background:"rgba(0,0,0,0)"},axes:{xaxis:{label:$('input[name="xaxis_label"]').val(),labelRenderer:$.jqplot.CanvasAxisLabelRenderer},yaxis:{label:$('input[name="yaxis_label"]').val(),labelRenderer:$.jqplot.CanvasAxisLabelRenderer}},title:{text:$('input[name="chartTitle"]').attr("value"),escapeHtml:true},legend:{show:true,placement:"outsideGrid",location:"se"}};$("#querychart").html("");$('input[name="chartType"]').click(function(){nonJqplotSettings.chart.type=$(this).attr("value");drawChart();$(this).attr("value")==
-"bar"||$(this).attr("value")=="column"?$("span.barStacked").show():$("span.barStacked").hide()});$('input[name="barStacked"]').click(function(){this.checked?$.extend(true,currentSettings,{stackSeries:true}):$.extend(true,currentSettings,{stackSeries:false});drawChart()});$('input[name="chartTitle"]').focus(function(){temp_chart_title=escapeHtml($(this).val())});$('input[name="chartTitle"]').keyup(function(){escapeHtml($(this).attr("value"));currentSettings.title=escapeHtml($('input[name="chartTitle"]').val());
-drawChart()});$('input[name="chartTitle"]').blur(function(){$(this).val()!=temp_chart_title&&drawChart()});$('select[name="chartXAxis"]').change(function(){chart_xaxis_idx=this.value;drawChart()});$('select[name="chartSeries"]').change(function(){chart_series=this.value;chart_series_index=this.selectedIndex;drawChart()});$('input[name="xaxis_label"]').keyup(function(){currentSettings.axes.xaxis.label=$(this).attr("value");drawChart()});$('input[name="yaxis_label"]').keyup(function(){currentSettings.axes.yaxis.label=
-$(this).attr("value");drawChart()})});
-$("#tblchartform").live("submit",function(){if(!checkFormElementInRange(this,"session_max_rows",PMA_messages.strNotValidRowNumber,1)||!checkFormElementInRange(this,"pos",PMA_messages.strNotValidRowNumber,-1))return false;var a=$(this);if(!checkSqlQuery(a[0]))return false;$(".error").remove();var e=PMA_ajaxShowMessage();PMA_prepareForAjaxRequest(a);$.post(a.attr("action"),a.serialize(),function(b){if(b.success==true){$(".success").fadeOut();if(typeof b.chartData!="undefined"){chart_data=jQuery.parseJSON(b.chartData);
-drawChart();$("#querychart").show()}}else{PMA_ajaxRemoveMessage(e);PMA_ajaxShowMessage(b.error,false);chart_data=null;drawChart()}PMA_ajaxRemoveMessage(e)},"json");return false});function drawChart(){nonJqplotSettings.chart.width=$("#resizer").width()-20;nonJqplotSettings.chart.height=$("#resizer").height()-20;currentChart!=null&&currentChart.destroy();currentChart=PMA_queryChart(chart_data,currentSettings,nonJqplotSettings)}
-function in_array(a,e){for(var b=0;b<e.length;b++)if(e[b]==a)return true;return false}
-function PMA_queryChart(a,e,b){if($("#querychart").length!=0){var d=[],f=[];$.each(a[0],function(h){d.push(h)});switch(b.chart.type){case "column":case "spline":case "line":case "bar":for(var i=0,c=0;c<d.length;c++)if(c!=chart_xaxis_idx){f[i]=[];if(chart_series=="columns"||chart_series==d[c]){$.each(a,function(h,g){f[i].push([g[d[chart_xaxis_idx]],parseFloat(g[d[c]])])});i++}}break;case "pie":if(chart_series!="columns"){f[0]=[];$.each(a,function(h,g){f[0].push([g[d[chart_xaxis_idx]],parseFloat(g[chart_series])])})}}a=
-{title:{text:"",escapeHtml:true}};if(b.chart.type=="line")a.axes={xaxis:{},yaxis:{}};if(b.chart.type=="bar"){a.seriesDefaults={renderer:$.jqplot.BarRenderer,rendererOptions:{barDirection:"vertical",highlightMouseOver:true}};a.axes={xaxis:{renderer:$.jqplot.CategoryAxisRenderer},yaxis:{}}}if(b.chart.type=="spline")a.seriesDefaults={rendererOptions:{smooth:true}};if(b.chart.type=="pie")a.seriesDefaults={renderer:$.jqplot.PieRenderer,rendererOptions:{showDataLabels:true,highlightMouseOver:true,showDataLabels:true,
-dataLabels:"value"}};$.extend(true,a,e);a.series=[];for(c=0;c<d.length;c++)if(parseInt(chart_xaxis_idx)!=c)if(chart_series=="columns"||chart_series==d[c])a.series.push({label:d[c]});return $.jqplot("querychart",f,a)}};
+/* vim: set expandtab sw=4 ts=4 sts=4: */
+
+var chart_data = {};
+var temp_chart_title;
+
+var currentChart = null;
+var currentSettings = null;
+
+var dateTimeCols = [];
+var numericCols = [];
+
+function extractDate(dateString) {
+    var matches, match;
+    var dateTimeRegExp = /[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}/;
+    var dateRegExp = /[0-9]{4}-[0-9]{2}-[0-9]{2}/;
+
+    matches = dateTimeRegExp.exec(dateString);
+    if (matches !== null && matches.length > 0) {
+        match = matches[0];
+        return new Date(match.substr(0, 4), parseInt(match.substr(5, 2), 10) - 1, match.substr(8, 2), match.substr(11, 2), match.substr(14, 2), match.substr(17, 2));
+    } else {
+        matches = dateRegExp.exec(dateString);
+        if (matches !== null && matches.length > 0) {
+            match = matches[0];
+            return new Date(match.substr(0, 4), parseInt(match.substr(5, 2), 10) - 1, match.substr(8, 2));
+        }
+    }
+    return null;
+}
+
+function PMA_queryChart(data, columnNames, settings) {
+    if ($('#querychart').length === 0) {
+        return;
+    }
+
+    var plotSettings = {
+        title : {
+            text : settings.title,
+            escapeHtml: true
+        },
+        grid : {
+            drawBorder : false,
+            shadow : false,
+            background : 'rgba(0,0,0,0)'
+        },
+        legend : {
+            show : true,
+            placement : 'outsideGrid',
+            location : 'e',
+            rendererOptions: {
+                numberColumns: 2
+            }
+        },
+        axes : {
+            xaxis : {
+                label : escapeHtml(settings.xaxisLabel)
+            },
+            yaxis : {
+                label : settings.yaxisLabel
+            }
+        },
+        stackSeries : settings.stackSeries
+    };
+
+    // create the chart
+    var factory = new JQPlotChartFactory();
+    var chart = factory.createChart(settings.type, "querychart");
+
+    // create the data table and add columns
+    var dataTable = new DataTable();
+    if (settings.type == 'timeline') {
+        dataTable.addColumn(ColumnType.DATE, columnNames[settings.mainAxis]);
+    } else if (settings.type == 'scatter') {
+        dataTable.addColumn(ColumnType.NUMBER, columnNames[settings.mainAxis]);
+    } else {
+        dataTable.addColumn(ColumnType.STRING, columnNames[settings.mainAxis]);
+    }
+
+    var i;
+    if (settings.seriesColumn === null) {
+        $.each(settings.selectedSeries, function (index, element) {
+            dataTable.addColumn(ColumnType.NUMBER, columnNames[element]);
+        });
+
+        // set data to the data table
+        var columnsToExtract = [ settings.mainAxis ];
+        $.each(settings.selectedSeries, function (index, element) {
+            columnsToExtract.push(element);
+        });
+        var values = [], newRow, row, col;
+        for (i = 0; i < data.length; i++) {
+            row = data[i];
+            newRow = [];
+            for (var j = 0; j < columnsToExtract.length; j++) {
+                col = columnNames[columnsToExtract[j]];
+                if (j === 0) {
+                    if (settings.type == 'timeline') { // first column is date type
+                        newRow.push(extractDate(row[col]));
+                    } else if (settings.type == 'scatter') {
+                        newRow.push(parseFloat(row[col]));
+                    } else { // first column is string type
+                        newRow.push(row[col]);
+                    }
+                } else { // subsequent columns are of type, number
+                    newRow.push(parseFloat(row[col]));
+                }
+            }
+            values.push(newRow);
+        }
+        dataTable.setData(values);
+    } else {
+        var seriesNames = {}, seriesNumber = 1;
+        var seriesColumnName = columnNames[settings.seriesColumn];
+        for (i = 0; i < data.length; i++) {
+            if (! seriesNames[data[i][seriesColumnName]]) {
+                seriesNames[data[i][seriesColumnName]] = seriesNumber;
+                seriesNumber++;
+            }
+        }
+
+        $.each(seriesNames, function (seriesName, seriesNumber) {
+            dataTable.addColumn(ColumnType.NUMBER, seriesName);
+        });
+
+        var valueMap = {}, xValue, value;
+        var mainAxisName = columnNames[settings.mainAxis];
+        var valueColumnName = columnNames[settings.valueColumn];
+        for (i = 0; i < data.length; i++) {
+            xValue = data[i][mainAxisName];
+            value = valueMap[xValue];
+            if (! value) {
+                value = [xValue];
+                valueMap[xValue] = value;
+            }
+            seriesNumber = seriesNames[data[i][seriesColumnName]];
+            value[seriesNumber] = parseFloat(data[i][valueColumnName]);
+        }
+
+        var values = [];
+        $.each(valueMap, function(index, value) {
+            values.push(value);
+        });
+        dataTable.setData(values);
+    }
+
+    // draw the chart and return the chart object
+    chart.draw(dataTable, plotSettings);
+    return chart;
+}
+
+function drawChart() {
+    currentSettings.width = $('#resizer').width() - 20;
+    currentSettings.height = $('#resizer').height() - 20;
+
+    // TODO: a better way using .redraw() ?
+    if (currentChart !== null) {
+        currentChart.destroy();
+    }
+
+    var columnNames = [];
+    $('select[name="chartXAxis"] option').each(function () {
+        columnNames.push(escapeHtml($(this).text()));
+    });
+    try {
+        currentChart = PMA_queryChart(chart_data, columnNames, currentSettings);
+        if (currentChart != null) {
+            $('#saveChart').attr('href', currentChart.toImageString());
+        }
+    } catch (err) {
+        PMA_ajaxShowMessage(err.message, false);
+    }
+}
+
+function getSelectedSeries() {
+    var val = $('select[name="chartSeries"]').val() || [];
+    var ret = [];
+    $.each(val, function (i, v) {
+        ret.push(parseInt(v, 10));
+    });
+    return ret;
+}
+
+function onXAxisChange() {
+    var $xAxisSelect = $('select[name="chartXAxis"]');
+    currentSettings.mainAxis = parseInt($xAxisSelect.val(), 10);
+    if (dateTimeCols.indexOf(currentSettings.mainAxis) != -1) {
+        $('span.span_timeline').show();
+    } else {
+        $('span.span_timeline').hide();
+        if (currentSettings.type == 'timeline') {
+            $('input#radio_line').prop('checked', true);
+            currentSettings.type = 'line';
+        }
+    }
+    if (numericCols.indexOf(currentSettings.mainAxis) != -1) {
+        $('span.span_scatter').show();
+    } else {
+        $('span.span_scatter').hide();
+        if (currentSettings.type == 'scatter') {
+            $('input#radio_line').prop('checked', true);
+            currentSettings.type = 'line';
+        }
+    }
+    var xaxis_title = $xAxisSelect.children('option:selected').text();
+    $('input[name="xaxis_label"]').val(xaxis_title);
+    currentSettings.xaxisLabel = xaxis_title;
+}
+
+function onDataSeriesChange() {
+    var $seriesSelect = $('select[name="chartSeries"]');
+    currentSettings.selectedSeries = getSelectedSeries();
+    var yaxis_title;
+    if (currentSettings.selectedSeries.length == 1) {
+        $('span.span_pie').show();
+        yaxis_title = $seriesSelect.children('option:selected').text();
+    } else {
+        $('span.span_pie').hide();
+        if (currentSettings.type == 'pie') {
+            $('input#radio_line').prop('checked', true);
+            currentSettings.type = 'line';
+        }
+        yaxis_title = PMA_messages.strYValues;
+    }
+    $('input[name="yaxis_label"]').val(yaxis_title);
+    currentSettings.yaxisLabel = yaxis_title;
+}
+
+/**
+ * Unbind all event handlers before tearing down a page
+ */
+AJAX.registerTeardown('tbl_chart.js', function () {
+    $('input[name="chartType"]').off('click');
+    $('input[name="barStacked"]').off('click');
+    $('input[name="chkAlternative"]').off('click');
+    $('input[name="chartTitle"]').off('focus').off('keyup').off('blur');
+    $('select[name="chartXAxis"]').off('change');
+    $('select[name="chartSeries"]').off('change');
+    $('select[name="chartSeriesColumn"]').off('change');
+    $('select[name="chartValueColumn"]').off('change');
+    $('input[name="xaxis_label"]').off('keyup');
+    $('input[name="yaxis_label"]').off('keyup');
+    $('#resizer').off('resizestop');
+    $('#tblchartform').off('submit');
+});
+
+AJAX.registerOnload('tbl_chart.js', function () {
+
+    // handle manual resize
+    $('#resizer').on('resizestop', function (event, ui) {
+        // make room so that the handle will still appear
+        $('#querychart').height($('#resizer').height() * 0.96);
+        $('#querychart').width($('#resizer').width() * 0.96);
+        if (currentChart !== null) {
+            currentChart.redraw({
+                resetAxes : true
+            });
+        }
+    });
+
+    // handle chart type changes
+    $('input[name="chartType"]').click(function () {
+        var type = currentSettings.type = $(this).val();
+        if (type == 'bar' || type == 'column' || type == 'area') {
+            $('span.barStacked').show();
+        } else {
+            $('input[name="barStacked"]').prop('checked', false);
+            $.extend(true, currentSettings, {stackSeries : false});
+            $('span.barStacked').hide();
+        }
+        drawChart();
+    });
+
+    // handle chosing alternative data format
+    $('input[name="chkAlternative"]').click(function () {
+        var $seriesColumn = $('select[name="chartSeriesColumn"]');
+        var $valueColumn  = $('select[name="chartValueColumn"]');
+        var $chartSeries  = $('select[name="chartSeries"]');
+        if ($(this).is(':checked')) {
+            $seriesColumn.prop('disabled', false);
+            $valueColumn.prop('disabled', false);
+            $chartSeries.prop('disabled', true);
+            currentSettings.seriesColumn = parseInt($seriesColumn.val(), 10);
+            currentSettings.valueColumn = parseInt($valueColumn.val(), 10);
+        } else {
+            $seriesColumn.prop('disabled', true);
+            $valueColumn.prop('disabled', true);
+            $chartSeries.prop('disabled', false);
+            currentSettings.seriesColumn = null;
+            currentSettings.valueColumn = null;
+        }
+        drawChart();
+    });
+
+    // handle stacking for bar, column and area charts
+    $('input[name="barStacked"]').click(function () {
+        if ($(this).is(':checked')) {
+            $.extend(true, currentSettings, {stackSeries : true});
+        } else {
+            $.extend(true, currentSettings, {stackSeries : false});
+        }
+        drawChart();
+    });
+
+    // handle changes in chart title
+    $('input[name="chartTitle"]')
+    .focus(function () {
+        temp_chart_title = $(this).val();
+    })
+    .keyup(function () {
+        currentSettings.title = $('input[name="chartTitle"]').val();
+        drawChart();
+    })
+    .blur(function () {
+        if ($(this).val() != temp_chart_title) {
+            drawChart();
+        }
+    });
+
+    // handle changing the x-axis
+    $('select[name="chartXAxis"]').change(function () {
+        onXAxisChange();
+        drawChart();
+    });
+
+    // handle changing the selected data series
+    $('select[name="chartSeries"]').change(function () {
+        onDataSeriesChange();
+        drawChart();
+    });
+
+    // handle changing the series column
+    $('select[name="chartSeriesColumn"]').change(function () {
+        currentSettings.seriesColumn = parseInt($(this).val(), 10);
+        drawChart();
+    });
+
+    // handle changing the value column
+    $('select[name="chartValueColumn"]').change(function () {
+        currentSettings.valueColumn = parseInt($(this).val(), 10);
+        drawChart();
+    });
+
+    // handle manual changes to the chart x-axis labels
+    $('input[name="xaxis_label"]').keyup(function () {
+        currentSettings.xaxisLabel = $(this).val();
+        drawChart();
+    });
+
+    // handle manual changes to the chart y-axis labels
+    $('input[name="yaxis_label"]').keyup(function () {
+        currentSettings.yaxisLabel = $(this).val();
+        drawChart();
+    });
+
+    // handler for ajax form submission
+    $('#tblchartform').submit(function (event) {
+
+        var $form = $(this);
+        if (codemirror_editor) {
+            $form[0].elements.sql_query.value = codemirror_editor.getValue();
+        }
+        if (!checkSqlQuery($form[0])) {
+            return false;
+        }
+
+        var $msgbox = PMA_ajaxShowMessage();
+        PMA_prepareForAjaxRequest($form);
+        $.post($form.attr('action'), $form.serialize(), function (data) {
+            if (typeof data !== 'undefined' &&
+                    data.success === true &&
+                    typeof data.chartData !== 'undefined') {
+                chart_data = JSON.parse(data.chartData);
+                drawChart();
+                PMA_ajaxRemoveMessage($msgbox);
+            } else {
+                PMA_ajaxShowMessage(data.error, false);
+            }
+        }, "json"); // end $.post()
+
+        return false;
+    });
+
+    // from jQuery UI
+    $('#resizer').resizable({
+        minHeight: 240,
+        minWidth: 300
+    })
+    .width($('#div_view_options').width() - 50)
+    .trigger('resizestop');
+
+    currentSettings = {
+        type : 'line',
+        width : $('#resizer').width() - 20,
+        height : $('#resizer').height() - 20,
+        xaxisLabel : $('input[name="xaxis_label"]').val(),
+        yaxisLabel : $('input[name="yaxis_label"]').val(),
+        title : $('input[name="chartTitle"]').val(),
+        stackSeries : false,
+        mainAxis : parseInt($('select[name="chartXAxis"]').val(), 10),
+        selectedSeries : getSelectedSeries(),
+        seriesColumn : null
+    };
+
+    var vals = $('input[name="dateTimeCols"]').val().split(' ');
+    $.each(vals, function (i, v) {
+        dateTimeCols.push(parseInt(v, 10));
+    });
+
+    vals = $('input[name="numericCols"]').val().split(' ');
+    $.each(vals, function (i, v) {
+        numericCols.push(parseInt(v, 10));
+    });
+
+    onXAxisChange();
+    onDataSeriesChange();
+
+    $("#tblchartform").submit();
+});

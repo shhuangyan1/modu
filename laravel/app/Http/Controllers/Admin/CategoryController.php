@@ -22,6 +22,17 @@ class CategoryController extends Controller{
 		return view('admin.category.add',compact('data'));
 	}
 
+	public function category_format(){
+		$data=DB::table("category")
+				->select("id","cat_name")
+				->get();
+		foreach($data as $v){
+			$v->name = $v->cat_name;
+			unset($v->cat_name);
+		}
+		//dump($data);die;
+		echo json_encode($data,JSON_UNESCAPED_UNICODE);
+	}
 	public function store(){
 		$input=Input::except('_token');//dd($input);
 		$rule=[

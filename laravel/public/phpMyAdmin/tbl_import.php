@@ -1,35 +1,36 @@
 <?php
 /* vim: set expandtab sw=4 ts=4 sts=4: */
 /**
+ * Table import
  *
  * @package PhpMyAdmin
  */
+use PhpMyAdmin\Config\PageSettings;
+use PhpMyAdmin\Response;
 
 /**
  *
  */
-require_once './libraries/common.inc.php';
+require_once 'libraries/common.inc.php';
+require_once 'libraries/config/user_preferences.forms.php';
+require_once 'libraries/config/page_settings.forms.php';
 
-$GLOBALS['js_include'][] = 'import.js';
+PageSettings::showGroup('Import');
+
+$response = Response::getInstance();
+$header   = $response->getHeader();
+$scripts  = $header->getScripts();
+$scripts->addFile('import.js');
 
 /**
- * Gets tables informations and displays top links
+ * Gets tables information and displays top links
  */
-require_once './libraries/tbl_common.php';
+require_once 'libraries/tbl_common.inc.php';
 $url_query .= '&amp;goto=tbl_import.php&amp;back=tbl_import.php';
 
-require_once './libraries/tbl_info.inc.php';
-/**
- * Displays top menu links
- */
-require_once './libraries/tbl_links.inc.php';
-
-$import_type = 'table';
-require_once './libraries/display_import.lib.php';
-
-/**
- * Displays the footer
- */
-require './libraries/footer.inc.php';
-?>
-
+require 'libraries/display_import.lib.php';
+$response->addHTML(
+    PMA_getImportDisplay(
+        'table', $db, $table, $max_upload_size
+    )
+);

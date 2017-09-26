@@ -1,53 +1,78 @@
 <?php
 /* vim: set expandtab sw=4 ts=4 sts=4: */
 /**
+ * Common includes for the database level views
  *
  * @package PhpMyAdmin
  */
+
+use PhpMyAdmin\Core;
+use PhpMyAdmin\Message;
+use PhpMyAdmin\Response;
+use PhpMyAdmin\Url;
+use PhpMyAdmin\Util;
+
 if (! defined('PHPMYADMIN')) {
     exit;
 }
 
-/**
- * Gets some core libraries
- */
-require_once './libraries/common.inc.php';
-require_once './libraries/bookmark.lib.php';
+PhpMyAdmin\Util::checkParameters(array('db'));
 
-PMA_checkParameters(array('db'));
+global $cfg;
+global $db;
 
+$response = Response::getInstance();
 $is_show_stats = $cfg['ShowStats'];
 
-$db_is_information_schema = PMA_is_system_schema($db);
-if ($db_is_information_schema) {
+$db_is_system_schema = $GLOBALS['dbi']->isSystemSchema($db);
+if ($db_is_system_schema) {
     $is_show_stats = false;
 }
 
 /**
  * Defines the urls to return to in case of error in a sql statement
  */
-$err_url_0 = 'main.php?' . PMA_generate_common_url();
-$err_url   = $cfg['DefaultTabDatabase'] . '?' . PMA_generate_common_url($db);
+$err_url_0 = 'index.php' . Url::getCommon();
 
+$err_url = PhpMyAdmin\Util::getScriptNameForOption(
+    $GLOBALS['cfg']['DefaultTabDatabase'], 'database'
+)
+    . Url::getCommon(array('db' => $db));
 
 /**
  * Ensures the database exists (else move to the "parent" script) and displays
  * headers
  */
 if (! isset($is_db) || ! $is_db) {
-    if (strlen($db)) {
-        $is_db = PMA_DBI_select_db($db);
+    if (strlen($db) > 0) {
+        $is_db = $GLOBALS['dbi']->selectDb($db);
         // This "Command out of sync" 2014 error may happen, for example
         // after calling a MySQL procedure; at this point we can't select
         // the db but it's not necessarily wrong
-        if (PMA_DBI_getError() && $GLOBALS['errno'] == 2014) {
+        if ($GLOBALS['dbi']->getError() && $GLOBALS['errno'] == 2014) {
             $is_db = true;
             unset($GLOBALS['errno']);
         }
+    } else {
+        $is_db = false;
     }
     // Not a valid db name -> back to the welcome page
-    if (! strlen($db) || ! $is_db) {
-        PMA_sendHeaderLocation($cfg['PmaAbsoluteUri'] . 'main.php?' . PMA_generate_common_url('', '', '&') . (isset($message) ? '&message=' . urlencode($message) : '') . '&reload=1');
+    $params = array('reload' => '1');
+    if (isset($message)) {
+        $params['message'] = $message;
+    }
+    $uri = './index.php' . Url::getCommonRaw($params);
+    if (strlen($db) === 0 || ! $is_db) {
+        $response = Response::getInstance();
+        if ($response->isAjax()) {
+            $response->setRequestStatus(false);
+            $response->addJSON(
+                'message',
+                Message::error(__('No databases selected.'))
+            );
+        } else {
+            Core::sendHeaderLocation($uri);
+        }
         exit;
     }
 } // end if (ensures db exists)
@@ -55,28 +80,31 @@ if (! isset($is_db) || ! $is_db) {
 /**
  * Changes database charset if requested by the user
  */
-if (isset($submitcollation) && !empty($db_collation)) {
-    list($db_charset) = explode('_', $db_collation);
-    $sql_query        = 'ALTER DATABASE ' . PMA_backquote($db) . ' DEFAULT' . PMA_generateCharsetQueryPart($db_collation);
-    $result           = PMA_DBI_query($sql_query);
-    $message          = PMA_Message::success();
-    unset($db_charset, $db_collation);
+if (isset($_REQUEST['submitcollation'])
+    && isset($_REQUEST['db_collation'])
+    && ! empty($_REQUEST['db_collation'])
+) {
+    list($db_charset) = explode('_', $_REQUEST['db_collation']);
+    $sql_query        = 'ALTER DATABASE '
+        . PhpMyAdmin\Util::backquote($db)
+        . ' DEFAULT' . Util::getCharsetQueryPart($_REQUEST['db_collation']);
+    $result           = $GLOBALS['dbi']->query($sql_query);
+    $message          = Message::success();
+    unset($db_charset);
 
     /**
      * If we are in an Ajax request, let us stop the execution here. Necessary for
      * db charset change action on db_operations.php.  If this causes a bug on
      * other pages, we might have to move this to a different location.
      */
-    if ( $GLOBALS['is_ajax_request'] == true) {
-        PMA_ajaxResponse($message, $message->isSuccess());
-    };
+    if ($response->isAjax()) {
+        $response->setRequestStatus($message->isSuccess());
+        $response->addJSON('message', $message);
+        exit;
+    }
 }
-
-require_once './libraries/header.inc.php';
 
 /**
  * Set parameters for links
  */
-$url_query = PMA_generate_common_url($db);
-
-?>
+$url_query = Url::getCommon(array('db' => $db));

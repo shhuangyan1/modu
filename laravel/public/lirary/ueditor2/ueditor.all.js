@@ -23969,8 +23969,7 @@ UE.plugin.register('autosave', function (){
                 }
 
                 //页面地址+编辑器ID 保持唯一
-                // saveKey = ( location.protocol + location.host + location.pathname ).replace( /[.:\/]/g, '_' ) + key;
-                saveKey = "modu_article"
+                saveKey = ( location.protocol + location.host + location.pathname ).replace( /[.:\/]/g, '_' ) + key;
 
             },
 

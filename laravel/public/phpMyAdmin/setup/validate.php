@@ -3,8 +3,11 @@
 /**
  * Validation callback.
  *
- * @package PhpMyAdmin-setup
+ * @package PhpMyAdmin-Setup
  */
+
+use PhpMyAdmin\Config\Validator;
+use PhpMyAdmin\Core;
 
 /**
  * Core libraries.
@@ -12,19 +15,22 @@
 require './lib/common.inc.php';
 
 $validators = array();
-require './libraries/config/validate.lib.php';
 
-header('Content-type: application/json');
+Core::headerJSON();
 
-$vids = explode(',', filter_input(INPUT_POST, 'id'));
-$values = json_decode(filter_input(INPUT_POST, 'values'));
+$ids = Core::isValid($_POST['id'], 'scalar') ? $_POST['id'] : null;
+$vids = explode(',', $ids);
+$vals = Core::isValid($_POST['values'], 'scalar') ? $_POST['values'] : null;
+$values = json_decode($vals);
 if (!($values instanceof stdClass)) {
-    die(__('Wrong data'));
+    Core::fatalError(__('Wrong data'));
 }
 $values = (array)$values;
-$result = PMA_config_validate($vids, $values, true);
+$result = Validator::validate($GLOBALS['ConfigFile'], $vids, $values, true);
 if ($result === false) {
-    $result = 'Wrong data or no validation for ' . $vids;
+    $result = sprintf(
+        __('Wrong data or no validation for %s'),
+        implode(',', $vids)
+    );
 }
 echo $result !== true ? json_encode($result) : '';
-?>

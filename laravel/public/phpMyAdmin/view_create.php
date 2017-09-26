@@ -8,25 +8,21 @@
  * @package PhpMyAdmin
  */
 
-/**
- * do not import request variable into global scope
- * @ignore
- */
-if (! defined('PMA_NO_VARIABLES_IMPORT')) {
-    define('PMA_NO_VARIABLES_IMPORT', true);
-}
+use PhpMyAdmin\Core;
+use PhpMyAdmin\Url;
+use PhpMyAdmin\Response;
+use PhpMyAdmin\Template;
 
-/**
- *
- */
 require_once './libraries/common.inc.php';
 
 /**
  * Runs common work
  */
 require './libraries/db_common.inc.php';
-$url_params['goto'] = $cfg['DefaultTabDatabase'];
+$url_params['goto'] = 'tbl_structure.php';
 $url_params['back'] = 'view_create.php';
+
+$response = Response::getInstance();
 
 $view_algorithm_options = array(
     'UNDEFINED',
@@ -35,27 +31,71 @@ $view_algorithm_options = array(
 );
 
 $view_with_options = array(
-    'CASCADED CHECK OPTION',
-    'LOCAL CHECK OPTION'
+    'CASCADED',
+    'LOCAL'
 );
 
-if (isset($_REQUEST['createview'])) {
+$view_security_options = array(
+    'DEFINER',
+    'INVOKER'
+);
+
+if (empty($sql_query)) {
+    $sql_query = '';
+}
+
+// View name is a compulsory field
+if (isset($_REQUEST['view']['name'])
+    && empty($_REQUEST['view']['name'])
+) {
+    $message = PhpMyAdmin\Message::error(__('View name can not be empty!'));
+    $response->addJSON(
+        'message',
+        $message
+    );
+    $response->setRequestStatus(false);
+    exit;
+}
+
+if (isset($_REQUEST['createview']) || isset($_REQUEST['alterview'])) {
     /**
      * Creates the view
      */
     $sep = "\r\n";
 
-    $sql_query = 'CREATE';
-
-    if (isset($_REQUEST['view']['or_replace'])) {
-        $sql_query .= ' OR REPLACE';
+    if (isset($_REQUEST['createview'])) {
+        $sql_query = 'CREATE';
+        if (isset($_REQUEST['view']['or_replace'])) {
+            $sql_query .= ' OR REPLACE';
+        }
+    } else {
+        $sql_query = 'ALTER';
     }
 
-    if (PMA_isValid($_REQUEST['view']['algorithm'], $view_algorithm_options)) {
+    if (Core::isValid($_REQUEST['view']['algorithm'], $view_algorithm_options)) {
         $sql_query .= $sep . ' ALGORITHM = ' . $_REQUEST['view']['algorithm'];
     }
 
-    $sql_query .= $sep . ' VIEW ' . PMA_backquote($_REQUEST['view']['name']);
+    if (! empty($_REQUEST['view']['definer'])) {
+        if (strpos($_REQUEST['view']['definer'], '@') === FALSE) {
+            $sql_query .= $sep . 'DEFINER='
+                . PhpMyAdmin\Util::backquote($_REQUEST['view']['definer']);
+        } else {
+            $arr = explode('@', $_REQUEST['view']['definer']);
+            $sql_query .= $sep . 'DEFINER=' . PhpMyAdmin\Util::backquote($arr[0]);
+            $sql_query .= '@' . PhpMyAdmin\Util::backquote($arr[1]) . ' ';
+        }
+    }
+
+    if (isset($_REQUEST['view']['sql_security'])) {
+        if (in_array($_REQUEST['view']['sql_security'], $view_security_options)) {
+            $sql_query .= $sep . ' SQL SECURITY '
+                . $_REQUEST['view']['sql_security'];
+        }
+    }
+
+    $sql_query .= $sep . ' VIEW '
+        . PhpMyAdmin\Util::backquote($_REQUEST['view']['name']);
 
     if (! empty($_REQUEST['view']['column_names'])) {
         $sql_query .= $sep . ' (' . $_REQUEST['view']['column_names'] . ')';
@@ -64,128 +104,100 @@ if (isset($_REQUEST['createview'])) {
     $sql_query .= $sep . ' AS ' . $_REQUEST['view']['as'];
 
     if (isset($_REQUEST['view']['with'])) {
-        $options = array_intersect($_REQUEST['view']['with'], $view_with_options);
-        if (count($options)) {
-            $sql_query .= $sep . ' WITH ' . implode(' ', $options);
+        if (in_array($_REQUEST['view']['with'], $view_with_options)) {
+            $sql_query .= $sep . ' WITH ' . $_REQUEST['view']['with']
+                . '  CHECK OPTION';
         }
     }
 
-    if (PMA_DBI_try_query($sql_query)) {
-        $message = PMA_Message::success();
-        include './' . $cfg['DefaultTabDatabase'];
-        exit();
-    } else {
-        $message = PMA_Message::rawError(PMA_DBI_getError());
+    if (!$GLOBALS['dbi']->tryQuery($sql_query)) {
+        if (! isset($_REQUEST['ajax_dialog'])) {
+            $message = PhpMyAdmin\Message::rawError($GLOBALS['dbi']->getError());
+            return;
+        }
+
+        $response->addJSON(
+            'message',
+            PhpMyAdmin\Message::error(
+                "<i>" . htmlspecialchars($sql_query) . "</i><br /><br />"
+                . $GLOBALS['dbi']->getError()
+            )
+        );
+        $response->setRequestStatus(false);
+        exit;
     }
+
+    // If different column names defined for VIEW
+    $view_columns = array();
+    if (isset($_REQUEST['view']['column_names'])) {
+        $view_columns = explode(',', $_REQUEST['view']['column_names']);
+    }
+
+    $column_map = $GLOBALS['dbi']->getColumnMapFromSql(
+        $_REQUEST['view']['as'], $view_columns
+    );
+
+    $systemDb = $GLOBALS['dbi']->getSystemDatabase();
+    $pma_transformation_data = $systemDb->getExistingTransformationData(
+        $GLOBALS['db']
+    );
+
+    if ($pma_transformation_data !== false) {
+
+        // SQL for store new transformation details of VIEW
+        $new_transformations_sql = $systemDb->getNewTransformationDataSql(
+            $pma_transformation_data, $column_map,
+            $_REQUEST['view']['name'], $GLOBALS['db']
+        );
+
+        // Store new transformations
+        if ($new_transformations_sql != '') {
+            $GLOBALS['dbi']->tryQuery($new_transformations_sql);
+        }
+
+    }
+    unset($pma_transformation_data);
+
+    if (! isset($_REQUEST['ajax_dialog'])) {
+        $message = PhpMyAdmin\Message::success();
+        include 'tbl_structure.php';
+    } else {
+        $response->addJSON(
+            'message',
+            PhpMyAdmin\Util::getMessage(
+                PhpMyAdmin\Message::success(),
+                $sql_query
+            )
+        );
+        $response->setRequestStatus(true);
+    }
+
+    exit;
 }
 
 // prefill values if not already filled from former submission
 $view = array(
+    'operation' => 'create',
     'or_replace' => '',
     'algorithm' => '',
+    'definer' => '',
+    'sql_security' => '',
     'name' => '',
     'column_names' => '',
     'as' => $sql_query,
-    'with' => array(),
+    'with' => '',
 );
 
-if (PMA_isValid($_REQUEST['view'], 'array')) {
+if (Core::isValid($_REQUEST['view'], 'array')) {
     $view = array_merge($view, $_REQUEST['view']);
 }
-
-/**
- * Displays top menu links
- * We use db links because a VIEW is not necessarily on a single table
- */
-$num_tables = 0;
-require_once './libraries/db_links.inc.php';
 
 $url_params['db'] = $GLOBALS['db'];
 $url_params['reload'] = 1;
 
-/**
- * Displays the page
- */
-?>
-<!-- CREATE VIEW options -->
-<div id="div_view_options">
-<form method="post" action="view_create.php">
-<?php echo PMA_generate_common_hidden_inputs($url_params); ?>
-<fieldset>
-    <legend>CREATE VIEW</legend>
-
-    <table>
-    <tr><td><label for="or_replace">OR REPLACE</label></td>
-        <td><input type="checkbox" name="view[or_replace]" id="or_replace"
-                <?php if ($view['or_replace']) { ?>
-                checked="checked"
-                <?php } ?>
-                value="1" />
-        </td>
-    </tr>
-    <tr>
-        <td><label for="algorithm">ALGORITHM</label></td>
-        <td><select name="view[algorithm]" id="algorithm">
-            <?php
-            foreach ($view_algorithm_options as $option) {
-                echo '<option value="' . htmlspecialchars($option) . '"';
-                if ($view['algorithm'] === $option) {
-                    echo 'selected="selected"';
-                }
-                echo '>' . htmlspecialchars($option) . '</option>';
-            }
-            ?>
-            </select>
-        </td>
-    </tr>
-    <tr><td><?php echo __('VIEW name'); ?></td>
-        <td><input type="text" size="20" name="view[name]" onfocus="this.select()"
-                value="<?php echo htmlspecialchars($view['name']); ?>" />
-        </td>
-    </tr>
-
-    <tr><td><?php echo __('Column names'); ?></td>
-        <td><input type="text" maxlength="100" size="50" name="view[column_names]"
-                onfocus="this.select()"
-                value="<?php echo htmlspecialchars($view['column_names']); ?>" />
-        </td>
-    </tr>
-
-    <tr><td>AS</td>
-        <td>
-            <textarea name="view[as]" rows="<?php echo $cfg['TextareaRows']; ?>"
-                cols="<?php echo $cfg['TextareaCols']; ?>"
-                dir="<?php echo $text_dir; ?>" onfocus="this.select();"
-                ><?php echo htmlspecialchars($view['as']); ?></textarea>
-        </td>
-    </tr>
-    <tr><td>WITH</td>
-        <td>
-            <?php
-            foreach ($view_with_options as $option) {
-                echo '<input type="checkbox" name="view[with][]"';
-                if (in_array($option, $view['with'])) {
-                    echo ' checked="checked"';
-                }
-                echo ' id="view_with_' . str_replace(' ', '_', htmlspecialchars($option)) . '"';
-                echo ' value="' . htmlspecialchars($option) . '" />';
-                echo '<label for="view_with_' . str_replace(' ', '_', htmlspecialchars($option)) . '">';
-                echo htmlspecialchars($option) . '</label>&nbsp;';
-            }
-            ?>
-        </td>
-    </tr>
-    </table>
-</fieldset>
-<fieldset class="tblFooters">
-    <input type="submit" name="createview" value="<?php echo __('Go'); ?>" />
-</fieldset>
-</form>
-</div>
-<?php
-/**
- * Displays the footer
- */
-require './libraries/footer.inc.php';
-
-?>
+echo Template::get('view_create')->render([
+    'ajax_dialog'           => isset($_REQUEST['ajax_dialog']),
+    'text_dir'              => $text_dir,
+    'url_params'            => $url_params,
+    'view'                  => $view,
+]);
