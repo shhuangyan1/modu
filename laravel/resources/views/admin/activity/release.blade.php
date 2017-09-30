@@ -158,24 +158,24 @@
         <section class="sec clear inputs">
             <div class="sec-left">
                 <p>活动限制人数 / 人</p>
-                <input type="text" class="limit number" name="limits" min="1" placeholder="请在这里填写活动限制人数" >
+                <input type="text" class="limit number" name="limits" min="1" placeholder="请填写活动限制人数">
             </div>
             <div class="sec-left">
                 <p>活动开始时间</p>
-                <p class="datep"> <input type="text" class="time datainp" name="time" readonly placeholder="请在这里填写活动时间" ></p>
+                <p class="datep"> <input type="text" class="time datainp" name="time" readonly placeholder="请填写活动时间"></p>
             </div>
             <div class="sec-left">
                 <p>活动参与费用（默认免费） / 元</p>
-                <input type="text" class="fee number" name="fee" value="0"  placeholder="请在这里填写活动参与费用" >
+                <input type="text" class="fee number" name="fee" value="0"  placeholder="请填写活动参与费用">
             </div>
             <div class="clear"></div>
             <div class="sec-left">
                 <p>关键词</p>
-                <input type="text" class="key" name="key" value=""  placeholder="请在这里填写活动关键词">
+                <input type="text" class="key" name="key" value="" maxlength="8" placeholder="请填写活动关键词">
             </div>
             <div>
                 <p>请填写活动地址</p>
-                <input type="text" style="width: 480px;" class="address" name="address" placeholder="请在这里填写活动地址">
+                <input type="text" style="width: 480px;" class="address" name="address" placeholder="请填写活动地址">
             </div>
         </section>
         <section class="no-border collect-box">
