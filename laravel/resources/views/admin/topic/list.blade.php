@@ -70,7 +70,13 @@
                 <td class="tc">{{$v->view}}</td>
                 <td class="tc">{{$v->time}}</td>
                 <td class="tc">
-                    <a class="shut-down" data-id="{{$v->id}}" href="javascript:;">结束话题</a>
+                    <a class="shut-down" data-id="{{$v->id}}" href="javascript:;">
+                        @if ($v->status==0)
+                            结束话题
+                        @elseif ($v->status==1)
+                            话题已结束
+                        @endif
+                    </a>
                 </td>
             </tr>
             @endforeach
