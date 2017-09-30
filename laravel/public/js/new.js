@@ -28,9 +28,19 @@ $(function () {
             }
         })
 
+        // 话题描述字数统计
+        $(".content").on("keyup",function () {
+            var cont = $(this).val();
+
+            var inputed = cont.length;
+            var canbe = 300 - inputed;
+
+            $(".content-nums").text("当前已输入"+ inputed +"个字符，您还可以输入"+ canbe +"个字符。")
+        })
+
         //
         $(".btn-preview").on("click",function () {
-            MD.preview();
+            // MD.preview();
         })
     }
 

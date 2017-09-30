@@ -5,16 +5,27 @@
     <title>发布活动</title>
     <link rel="stylesheet" href="{{asset('admin/style/css/ch-ui.admin.css')}}">
     <link rel="stylesheet" href="{{asset('admin/style/font/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{asset('lirary/jedate/skin/default.css')}}">
+
     <script src="{{asset('lirary/uploadify/jquery1.11.3.min.js')}}" type="text/javascript"></script>
+
+    <link href="{{asset('lirary/ueditor2/themes/default/css/ueditor.css')}}" type="text/css" rel="stylesheet">
+    <script type="text/javascript" charset="utf-8" src="{{asset('lirary/ueditor2/ueditor.config.js')}}"></script>
+    <script type="text/javascript" charset="utf-8" src="{{asset('lirary/ueditor2/ueditor.all.js')}}"></script>
+    <script type="text/javascript" src="{{asset('lirary/ueditor2/lang/zh-cn/zh-cn.js')}}"></script>
+
     <script type="text/javascript" src="{{asset('js/util.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/release.js')}}"></script>
 
     <script src="{{asset('lirary/jedate/jedate.min.js')}}"></script>
     <script src="{{asset('lirary/jedate/jquery.jebox.js')}}"></script>
-    <link rel="stylesheet" href="{{asset('lirary/jedate/skin/default.css')}}">
+
 
     <style>
         @import "{{asset('css/mdForm.css')}}";
+        body{
+            font-family: "Microsoft YaHei";
+        }
         #new-activity input.title,#new-activity .description{
             border: none;
             box-shadow: none;
@@ -30,10 +41,14 @@
         }
         #new-activity .description{
             width: 100%;
-            height: 150px;
-            font-size: 14px;
+            height: 130px;
+            font-size: 16px;
             border-bottom: 1px solid #e7e7eb;
             resize: none;
+        }
+        #act-form{
+            min-width: 1039px;
+            overflow: hidden;
         }
         input.button{
             width: 150px;
@@ -65,6 +80,19 @@
             /*-webkit-appearance: none !important;*/
             /*margin: 0;*/
         /*}*/
+        .add-cover{
+            width: 222px;
+        }
+        .upload-img-box{
+            width: auto;
+        }
+        .description-nums{
+            font-size: 12px;
+            color: #666;
+        }
+        .inputs div{
+            margin-top: 15px;
+        }
     </style>
 
 </head>
@@ -76,14 +104,22 @@
 <!--面包屑导航 结束-->
 
 <div id="new-activity" class="result_wrap section-ctrl">
-    <form action="{{url('admin/activity')}}" method="post" enctype="multipart/form-data" name="form" onsubmit="return newActivity();">
+    <form id="act-form" action="{{url('admin/activity')}}" method="post" enctype="multipart/form-data" name="form" onsubmit="return newActivity();">
         {{csrf_field()}}
         <section>
             <input type="text" class="title" name="title" placeholder="请在这里填写活动名称" maxlength="60" >
         </section>
         <section class="no-border">
-            <textarea class="description" name="description" placeholder="请在这里填写活动描述"></textarea>
+            <textarea class="description" name="description" maxlength="300" placeholder="请在这里填写活动摘要"></textarea>
+            <div class="description-nums">字数统计</div>
         </section>
+
+        <!--活动详情 -->
+
+        <p style="margin: 0 50px 10px; color: #333;font-size: 16px;">请在这里填写活动详细描述</p>
+        <section class="no-border" id="editor-box">
+        </section>
+
         <section class="sec clear">
             <div style="margin-bottom: 15px;">
                 <span>上传活动海报 或 宣传视频 （二选一）</span>
@@ -95,7 +131,7 @@
 
             <div class="upload-img-box">
                 <input id="file_upload" name="image" type="file" style="display: none;">
-                <p>活动海报建议尺寸：900px * 500px</p>
+                <p>话题海报建议尺寸10：5 ~ 10：6 （最小横宽比 400px：200px）</p>
                 <div class="add-cover add-img">
                     <i class="fa fa-photo"></i>
                     <div class="tab">上传活动海报</div>
@@ -114,7 +150,7 @@
                     <div class="tab">上传活动视频</div>
                 </div>
                 <div class="video-preview hide">
-                    <video id="myVideo" width="330" height="160" src="" controls autoplay loop></video>
+                    <video id="myVideo" width="330" height="160" src="" controls autoplay></video>
                     <!--<div class="tab">更换视频</div>-->
                 </div>
             </div>
@@ -122,7 +158,7 @@
         <section class="sec clear inputs">
             <div class="sec-left">
                 <p>活动限制人数 / 人</p>
-                <input type="text" class="limit" name="limits" min="1" placeholder="请在这里填写活动限制人数" >
+                <input type="text" class="limit number" name="limits" min="1" placeholder="请在这里填写活动限制人数" >
             </div>
             <div class="sec-left">
                 <p>活动开始时间</p>
@@ -130,16 +166,20 @@
             </div>
             <div class="sec-left">
                 <p>活动参与费用（默认免费） / 元</p>
-                <input type="text" class="fee " name="fee" value="免费"  placeholder="请在这里填写活动参与费用" >
+                <input type="text" class="fee number" name="fee" value="0"  placeholder="请在这里填写活动参与费用" >
             </div>
             <div class="clear"></div>
-            <div style="margin-top: 15px;">
+            <div class="sec-left">
+                <p>关键词</p>
+                <input type="text" class="key" name="key" value=""  placeholder="请在这里填写活动关键词">
+            </div>
+            <div>
                 <p>请填写活动地址</p>
                 <input type="text" style="width: 480px;" class="address" name="address" placeholder="请在这里填写活动地址">
             </div>
         </section>
         <section class="no-border collect-box">
-            <input type="checkbox" id="collect" name="collect" mdtext="是否收集参与活动的用户信息">
+            <input type="checkbox" id="collect" name="collect" value="true" mdtext="是否收集参与活动的用户信息">
             <div class="cl-items-box hide">
                 <input type="checkbox" id="phone" name="phone" mdtext="手机号">
                 <input type="checkbox" id="name" name="name" mdtext="姓名">
@@ -161,6 +201,13 @@
     </section>
 </div>
 <script>
+    $("#editor-box").html('<script type="text/plain" id="myEditor" name="content" style="width:100%;height:240px;min-width: 800px;"><\/script>')
+
+    //实例化编辑器
+    //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+    var ue = UE.getEditor('myEditor',{
+        elementPathEnabled: false
+    });
 
     jeDate({
         dateCell:".time",

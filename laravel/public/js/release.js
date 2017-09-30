@@ -1,12 +1,25 @@
 $(function () {
     MD.releaseScope = {}
     MD.releaseScope.fileType = "image"
+
+    // 清除已选中的活动视频
+    var clear_video = function () {
+        $(".video-preview").addClass("hide");
+        $(".add-video").removeClass("hide");
+        // $("#file_upload").val("");
+        /**
+         * ?????
+         */
+    }
+
+    // 清除已选中的活动海报
+    var clear_img = function () {
+        $(".img-preview").addClass("hide");
+        $(".add-img").removeClass("hide");
+        $("#file_upload").val("");
+    }
+
     var bind_event = function () {
-        $(".limit").on("keyup",function () {
-            var val = $(this).val();
-            val = val.replace(/[^0-9]/g,"")
-            $(this).val(Number(val))
-        })
 
         $(".add-img").on("click",function () {
             $("#file_upload").click();
@@ -15,15 +28,16 @@ $(function () {
             $("#file_upload").click();
         })
 
+        // 活动海报上传
         $("#file_upload").on("change",function () {
             var file = this.files[0];
             var fileReader = new FileReader();
             // 监听
             fileReader.onabort = function(){
-                alert("图片读取中断，请重试")
+                jeBox.msg("图片读取中断，请重试", {icon: 1,time:1});
             }
             fileReader.onerror = function(){
-                alert("图片读取失败，请重试")
+                jeBox.msg("图片读取失败，请重试", {icon: 1,time:1});
             }
             fileReader.onload = function(e){
                 $(".img-preview img").attr("src",e.target.result);
@@ -31,9 +45,7 @@ $(function () {
                 $(".add-img").addClass("hide")
             }
             try{
-                console.log("准备读取-")
                 fileReader.readAsDataURL(file);
-                console.log('读取。。。')
             }catch (Exception){
                 console.log(Exception.name +":"+ Exception.message);
             }
@@ -44,6 +56,10 @@ $(function () {
             $("#video_upload").click()
         })
 
+        // 活动视频上传
+        /**
+         * 上传之后？session?
+         */
         $("#video_upload").on("change",function () {
             $(".add-video i").removeClass("fa-youtube-play").addClass("fa-spinner")
             setTimeout(function () {
@@ -87,9 +103,18 @@ $(function () {
 
         })
 
-    //
+        //
         $("#collect").on("click",function () {
             $(".cl-items-box").toggleClass("hide")
+        })
+
+        // 字数统计
+        $(".description").on("keyup",function () {
+            var cont = $(this).val();
+            var inputed = cont.length;
+            var canbe = 300 - inputed;
+
+            $(".description-nums").text("当前已输入"+ inputed +"个字符，您还可以输入"+ canbe +"个字符。")
         })
     }
 
@@ -102,6 +127,7 @@ function newActivity() {
         var title = $(".title").val().trim();
         if(title.length <= 0){
             $(".title").showTips("请填写活动名称");
+            jeBox.msg("请填写活动名称", {icon: 1,time:1});
             return false;
         }
         return true;
@@ -111,6 +137,7 @@ function newActivity() {
         var description = $(".description").val().trim();
         if(description.length <= 0){
             $(".description").showTips("请填写活动描述");
+            jeBox.msg("请填写活动描述", {icon: 1,time:1});
             return false;
         }
         return true;
@@ -126,6 +153,7 @@ function newActivity() {
         })
         $.each(no_inputs,function (_,t) {
             $(t).showTips(t.placeholder);
+            jeBox.msg(t.placeholder, {icon: 1,time:1});
             inputs_bl = false;
         })
         return inputs_bl;
@@ -135,6 +163,7 @@ function newActivity() {
         var image = $("#file_upload").val();
         if(image == "" && MD.releaseScope.fileType == "image"){
             $(".upload-img-box").showTips("请上传海报图片");
+            jeBox.msg("请上传海报图片", {icon: 1,time:1});
             return false;
         }
         return true;
@@ -147,6 +176,7 @@ function newActivity() {
             var video_bl = false;
             if(file_ == "" && url_ == ""){
                 $(".upload-video-box").showTips("请上传活动视频");
+                jeBox.msg("请上传活动视频", {icon: 1,time:1});
             }
             if(file_ != "" && url_ == ""){
                 jeBox.msg('视频上传中，请稍后！', {icon: 1,time:1.5});

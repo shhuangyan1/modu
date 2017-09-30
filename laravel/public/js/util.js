@@ -1,3 +1,6 @@
+/**
+ * $方法扩展
+ */
 (function ($) {
     $.fn.showTips = function (text) {
         var self = $(this);
@@ -34,7 +37,9 @@
 })(jQuery)
 
 
-
+/**
+ * 自定义全局方法
+ */
 if(!window.MD)
 window.MD = {
     protocol: window.location.protocol,
@@ -129,3 +134,16 @@ window.MD = {
     }
 
 }
+
+
+/**
+ * 全局页面元素绑定方法
+ */
+$(function () {
+    //数字输入控制
+    $(".number").on("keyup",function () {
+        var val = $(this).val();
+        val = val.replace(/[^0-9]/g,"");
+        $(this).val(Number(val))
+    })
+})

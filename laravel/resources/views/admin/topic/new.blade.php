@@ -24,7 +24,7 @@
         #new-topic .content{
             width: 100%;
             height: 200px;
-            font-size: 14px;
+            font-size: 16px;
             border-bottom: 1px solid #e7e7eb;
             resize: none;
         }
@@ -37,6 +37,9 @@
         }
         .add-cover{
             width: 240px;
+        }
+        .content-nums{
+            color: #666;
         }
     </style>
 </head>
@@ -54,7 +57,8 @@
         <input type="text" class="title" name="title" placeholder="请在这里填写话题标题" maxlength="60" >
     </section>
     <section class="no-border">
-        <textarea class="content" name="content" placeholder="请填写话题描述"></textarea>
+        <textarea class="content" name="content" maxlength="300" placeholder="请填写话题描述"></textarea>
+        <div class="content-nums">字数统计</div>
     </section>
         <section class="clear no-border">
             <div class="upload-img-box">
