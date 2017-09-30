@@ -184,12 +184,11 @@ class ActivityController extends Controller
     public function activity_format(){
         $activity = DB::table("activity")
             ->where("status",0)
-            ->select("id","title","description","time","address","view","image")
+            ->select("id","title","description","time","address","view","image","key")
             ->orderBy('id','desc')
             ->get();
         //dump($activity);die;
         foreach($activity as $v){
-            $v->key="hello";
             $v->join=0;
         }
         echo json_encode($activity,JSON_UNESCAPED_UNICODE);
@@ -199,14 +198,18 @@ class ActivityController extends Controller
             $_GET['id']='';
             $activity = DB::table("activity")
                 ->select("id","title","time","view","image")
+                ->where("status","=",1)
                 ->limit(8)
                 ->orderby("id","desc")
                 ->get();
+
         }else{
             $current = $_GET['id'];
             $current = $current - 8;
+            $map['status']=1;
             $activity = DB::table("activity")
                 ->select("id","title","time","view","image")
+                ->where($map)
                 ->where("id","<",$current)
                 ->limit(8)
                 ->orderby("id","desc")
@@ -219,10 +222,15 @@ class ActivityController extends Controller
     }
 
     public function activity_detail(){
-        if(empty($_GET['id'])){
-            $_GET['id']='';
-        }else{
             $map['id'] = $_GET['id'];
+            $view = DB::table("activity")
+                ->where($map)
+                ->select("view")
+                ->first();
+            $view = $view->view +1;
+            $activity = DB::table("activity")
+                ->where($map)
+                ->update(array("view"=>$view));
             $detail = DB::table("activity")
                 ->where($map)
                 ->select("id","image","title","limits","fee","time","address","description")
@@ -232,6 +240,6 @@ class ActivityController extends Controller
                 $v->joinedList='';
             }
             echo json_encode($detail,JSON_UNESCAPED_UNICODE);
-        }
+
     }
 }

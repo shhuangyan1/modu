@@ -128,9 +128,9 @@ class TopicController extends Controller
     {
         $info = Topic::where('id',$id)->update(['status'=>1]);
         if($info){
-            echo json_encode(array('status'=>1000,'msg'=>'更新成功'));
+            echo json_encode(array('status'=>1000,'msg'=>'更新成功1'));
         }else{
-            echo json_encode(array('status'=>1001,'msg'=>'更新失败'));
+            echo json_encode(array('status'=>1001,'msg'=>'更新失败1'));
         }
     }
 
@@ -151,24 +151,34 @@ class TopicController extends Controller
         $results = DB::select('select MAX(id) from topic');
         $arr = get_object_vars($results[0]);
         $maxid = $arr['MAX(id)'];
+        $num = DB::table("topic_comment")
+            ->where("top_id",$maxid)
+            ->count();
         $topic = DB::table("topic")
             ->where("id",$maxid)
             ->select("id","image","title","content","view")
             ->get();
         foreach($topic as $v){
-            $v->join=0;
+            $v->join=$num;
         }
         echo json_encode($topic,JSON_UNESCAPED_UNICODE);
     }
     public function oldtopic_format(){
         if(empty($_GET['id'])){
+            $results = DB::select('select MAX(id) from topic');
+            $arr = get_object_vars($results[0]);
+            $maxid = $arr['MAX(id)'];
             $topic = DB::table("topic")
                 ->select("id","image","title","content","view")
+                ->where("id","<",$maxid)
                 ->limit(5)
                 ->orderBy('id','desc')
                 ->get();
             foreach($topic as $v){
-                $v->join=0;
+                $num = DB::table("topic_comment")
+                    ->where("top_id",$v->id)
+                    ->count();
+                $v->join=$num;
             }
             echo json_encode($topic,JSON_UNESCAPED_UNICODE);
         }else{
@@ -180,7 +190,10 @@ class TopicController extends Controller
                 ->orderBy('id','desc')
                 ->get();
             foreach($topic as $v){
-                $v->join=0;
+                $num = DB::table("topic_comment")
+                    ->where("top_id",$v->id)
+                    ->count();
+                $v->join=$num;
             }
             echo json_encode($topic,JSON_UNESCAPED_UNICODE);
         }
@@ -189,14 +202,15 @@ class TopicController extends Controller
     }
 
     public function topic_detail(){
-        if(empty($_GET['id'])){
-            $_GET['id']='';
-        }
         $map['id'] = $_GET['id'];
-        $map1['id'] = $map['id']+1;
         $view = DB::table("topic")
             ->where($map)
-            ->update(array("view"=>$map1['id']));
+            ->select("view")
+            ->first();
+        $view = $view->view +1;
+        $topic = DB::table("topic")
+            ->where($map)
+            ->update(array("view"=>$view));
         $detail = DB::table("topic")
             ->select("id","image","title","content","view")
             ->where($map)

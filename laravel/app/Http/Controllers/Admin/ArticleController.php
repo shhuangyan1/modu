@@ -142,7 +142,12 @@ Class ArticleController extends Controller{
 			$input['author']=$author;
 			$input['time']=time();
 			//dd($input);exit;
-			$result = Article::create($input);
+		$result = DB::table("article")
+				->insertGetId($input);
+		$data['time']=$input['time'];
+		$data['article_id']=$result;
+		$article = DB::table("article_recommend")
+				->insert($data);
 			if($result){
 				return redirect('admin/article');
 			}else{
@@ -224,10 +229,79 @@ Class ArticleController extends Controller{
 	public function article_format(){
 
 		$cat_id = $_GET['cat_id'];
-		$current = $_GET['current'];
-		$cursor = $_GET['cursor'];
 
-		if(!empty($cursor)){
+		//$cursor = $_GET['cursor'];
+
+		if(!empty($_GET['current'])){
+			$current = $_GET['current'];
+			$current = $current - 8;
+			$map['cat_id'] = $cat_id;
+			$article = DB::table("article")
+					->where($map)
+					->where("id","<","$current")
+					->select("title","author","compose","from","id","view","image")
+					->orderby("id","desc")
+					->limit(8)
+					->get();
+			$num = DB::table("article")
+					->where($map)
+					->where("id","<","$current")
+					->select("title","author","compose","from","id","view","image")
+					->limit(8)
+					->count();
+			if($num == 0){
+				$data['msg']='没有最新的了！';
+			}else{
+				$data['msg']="页面已加载".$num."条数据";
+			}
+			$data['num'] = $num;
+			$data['article']=$article;
+			$data['status']=1001;
+			echo json_encode($data,JSON_UNESCAPED_UNICODE);
+		}else{
+			$map['cat_id'] = $cat_id;
+			if($map['cat_id']==0){
+			//$info = DB::table('articleconfirm')->join('article','article.id','=','articleconfirm.article_id')->join('category','article.cat_id','=','category.id')->select('articleconfirm.*','article.title','article.author','category.cat_name')->paginate(10);
+			$article = DB::table("article_recommend")
+					->join("article","article.id","=","article_recommend.article_id")
+					->select("title","author","compose","from","article.id","view","image")
+					->orderby("article_recommend.id","desc")
+					->limit(8)
+					->get();
+				$num = DB::table('article_recommend')
+						->limit(8)
+						->count();
+				if($num<8){
+					$num = $num;
+				}else{
+					$num=8;
+				}
+
+			}else{
+				$article = DB::table("article")
+						->where($map)
+						->select("title","author","compose","from","id","view","image")
+						->orderby("id","desc")
+						->limit(8)
+						->get();
+				$num = DB::table('article')
+						->where($map)
+						->count();
+				if($num<8){
+					$num = $num;
+				}else{
+					$num=8;
+				}
+			}
+			$data['num']=$num;
+			$data['article']=$article;
+			$data['msg']="页面已加载".$num."条数据";
+			$data['status']=1000;
+			echo json_encode($data,JSON_UNESCAPED_UNICODE);
+		}
+
+
+		/*if(!empty($cursor)){
 			if($cursor=='down'){
 				$map['cat_id'] = $cat_id;
 				$article = DB::table("article")
@@ -250,6 +324,7 @@ Class ArticleController extends Controller{
 							->where($map)
 							->where("id","<","$current-8")
 							->select("title","author","compose","from","id","view","image")
+							->orderby("id","desc")
 							->limit(8)
 							->get();
 					$data['article']=$article;
@@ -275,6 +350,7 @@ Class ArticleController extends Controller{
 			$article = DB::table("article")
 					->where($map)
 					->select("title","author","compose","from","id","view","image")
+					->orderby("id","desc")
 					->limit(8)
 					->get();
 			//select("title","author","compose","from","id","view","image");
@@ -292,7 +368,7 @@ Class ArticleController extends Controller{
 			$data['msg']='页面初始化成功！';
 			$data['status']=1000;
 			echo json_encode($data,JSON_UNESCAPED_UNICODE);
-		}
+		}*/
 	}
 
 	public function article_detail(){
@@ -323,7 +399,7 @@ Class ArticleController extends Controller{
 //echo $url;
 		if(!empty($url)) {
 			$html = file_get_contents($url);
-			file_put_contents('E:htmls/'.rand(1000,9999)*time().'.html',$html);
+			file_put_contents('/:/htmls/'.rand(1000,9999)*time().'.html',$html);
 
 //echo $html;
 			$pattern = "/<[img|IMG].*?data-src=[\'|\"](.*?(?:[\.gif|\.jpg|\.png|\.jpeg]))[\'|\"].*?[\/]?>/";
@@ -341,11 +417,12 @@ Class ArticleController extends Controller{
 //file_put_contents('images/b.gif',$str);
 			for ($i = 0; $i < $count; $i++) {
 				$str[] = file_get_contents($match[1][$i]);
-				file_put_contents('E:images/' . $i . '.jpg', $str[$i]);
+				file_put_contents('/:images/'.$i . '.jpg', $str[$i]);
 
 			}
 		}
 	}
+
 
 }
 
