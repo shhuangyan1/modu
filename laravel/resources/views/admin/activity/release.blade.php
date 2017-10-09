@@ -15,6 +15,7 @@
     <script type="text/javascript" src="{{asset('lirary/ueditor2/lang/zh-cn/zh-cn.js')}}"></script>
 
     <script type="text/javascript" src="{{asset('js/util.js')}}"></script>
+    <link rel="stylesheet" href="{{asset('css/activity-release.css')}}">
     <script type="text/javascript" src="{{asset('js/release.js')}}"></script>
 
     <script src="{{asset('lirary/jedate/jedate.min.js')}}"></script>
@@ -25,73 +26,6 @@
         @import "{{asset('css/mdForm.css')}}";
         body{
             font-family: "Microsoft YaHei";
-        }
-        #new-activity input.title,#new-activity .description{
-            border: none;
-            box-shadow: none;
-            outline: none;
-            -webkit-box-sizing: content-box;
-            -moz-box-sizing: content-box;
-            box-sizing: content-box;
-        }
-        #new-activity .description:focus{
-            box-shadow: none;
-            outline: none;
-            border-bottom: 1px solid #337ab7;
-        }
-        #new-activity .description{
-            width: 100%;
-            height: 130px;
-            font-size: 16px;
-            border-bottom: 1px solid #e7e7eb;
-            resize: none;
-        }
-        #act-form{
-            min-width: 1039px;
-            overflow: hidden;
-        }
-        input.button{
-            width: 150px;
-            height: 30px;
-        }
-        .sec-left,.sec-right{
-            width: 30%;
-            float: left;
-            min-width: 240px;
-        }
-        .sec input{
-            width: 240px;
-        }
-        .sec input[type=radio]{
-            width: 100%;
-        }
-        .sec p{
-            color: #666;
-            font: 14px "Microsoft Yahei";
-        }
-        .sec-opt{
-            display: inline-block;
-        }
-        .cl-items-box{
-            margin: 15px 50px 0;
-        }
-        /*input::-webkit-outer-spin-button,*/
-        /*input::-webkit-inner-spin-button {*/
-            /*-webkit-appearance: none !important;*/
-            /*margin: 0;*/
-        /*}*/
-        .add-cover{
-            width: 222px;
-        }
-        .upload-img-box{
-            width: auto;
-        }
-        .description-nums{
-            font-size: 12px;
-            color: #666;
-        }
-        .inputs div{
-            margin-top: 15px;
         }
     </style>
 
@@ -116,13 +50,13 @@
 
         <!--活动详情 -->
 
-        <p style="margin: 0 50px 10px; color: #333;font-size: 16px;">请在这里填写活动详细描述</p>
+        <p class="banner-title" style="margin: 0 50px 10px;">请在这里填写活动详细描述</p>
         <section class="no-border" id="editor-box">
         </section>
 
         <section class="sec clear">
-            <div style="margin-bottom: 15px;">
-                <span>上传活动海报 或 宣传视频 （二选一）</span>
+            <div class="upload-opt-box" style="margin-bottom: 15px;">
+                <span class="banner-title">上传活动海报 或 宣传视频 （二选一）</span>
                 <div class="sec-opt">
                     <input type="radio" class="up-image" checked name="restype" value="image" mdtext="上传活动海报">
                     <input type="radio" class="up-video" name="restype" value="video" mdtext="上传活动视频">
@@ -179,10 +113,18 @@
             </div>
         </section>
         <section class="no-border collect-box">
-            <input type="checkbox" id="collect" name="collect" value="true" mdtext="是否收集参与活动的用户信息">
+            <div class="sec-banner">
+                <p class="banner-title" style="margin-bottom: 15px;">设置报名表单</p>
+                <input type="checkbox" id="collect" name="collect" value="true" mdtext="是否收集参与活动的用户信息">
+            </div>
             <div class="cl-items-box hide">
-                <input type="checkbox" id="phone" name="phone" mdtext="手机号">
-                <input type="checkbox" id="name" name="name" mdtext="姓名">
+                <input type="checkbox" id="name" checked disabled name="name" mdtext="姓名">
+                <input type="checkbox" id="phone" checked disabled name="phone" mdtext="手机号">
+                <input type="checkbox" id="email" checked name="email" mdtext="邮箱">
+                <input type="checkbox" id="age" name="age" mdtext="年龄">
+                <input type="checkbox" id="wechat" name="wechat" mdtext="微信">
+                <input type="checkbox" id="qq" name="qq" mdtext="QQ">
+                <input type="checkbox" id="address" name="address" mdtext="联系地址">
 
             </div>
         </section>

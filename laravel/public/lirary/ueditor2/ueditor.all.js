@@ -208,7 +208,7 @@ var browser = UE.browser = function(){
         if ( geckoRelease )
         {
             geckoRelease = geckoRelease[1].split( '.' );
-            version = geckoRelease[0] * 10000 + ( geckoRelease[1] || 0 ) * 100 + ( geckoRelease[2] || 0 ) * 1;
+            version = geckoRelease[0] * 100000 + ( geckoRelease[1] || 0 ) * 100 + ( geckoRelease[2] || 0 ) * 1;
         }
     }
 
