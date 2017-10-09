@@ -118,14 +118,19 @@
                 <input type="checkbox" id="collect" name="collect" value="true" mdtext="是否收集参与活动的用户信息">
             </div>
             <div class="cl-items-box hide">
-                <input type="checkbox" id="name" checked disabled name="name" mdtext="姓名">
-                <input type="checkbox" id="phone" checked disabled name="phone" mdtext="手机号">
-                <input type="checkbox" id="email" checked name="email" mdtext="邮箱">
-                <input type="checkbox" id="age" name="age" mdtext="年龄">
-                <input type="checkbox" id="wechat" name="wechat" mdtext="微信">
-                <input type="checkbox" id="qq" name="qq" mdtext="QQ">
-                <input type="checkbox" id="address" name="address" mdtext="联系地址">
-
+                <input type="checkbox" id="name" checked disabled name="name" value="name" mdtext="姓名">
+                <input type="checkbox" id="phone" checked disabled name="phone" value="phone" mdtext="手机号">
+                <input type="checkbox" id="email" checked name="email" value="email" mdtext="邮箱">
+                <input type="checkbox" id="sex" name="sex" value="sex" mdtext="性别">
+                <input type="checkbox" id="age" name="age" value="age" mdtext="年龄">
+                <input type="checkbox" id="wechat" name="wechat" value="wechat" mdtext="微信">
+                <input type="checkbox" id="qq" name="qq" value="qq" mdtext="QQ">
+                <input type="checkbox" id="address" name="address" value="address" mdtext="联系地址">
+                <input type="checkbox" id="company" name="company" value="company" mdtext="工作单位">
+                <input type="checkbox" id="position" name="position" value="position" mdtext="职位">
+                <input type="checkbox" id="education" name="education" value="education" mdtext="学历">
+                <input type="checkbox" id="hobby" name="hobby" value="hobby" mdtext="爱好">
+                <input type="checkbox" id="blood" name="blood" value="blood" mdtext="血型">
             </div>
         </section>
 
