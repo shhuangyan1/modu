@@ -45,7 +45,7 @@
 			</li>
 			<li>
 				<h3><i class="fa fa-fw fa-clipboard"></i>文章分类管理</h3>
-				<ul class="sub_menu">
+				<ul class="sub_menu" style="display: none;">
 					<li><a href="{{url('admin/category/create')}}" target="main">添加分类</a></li>
 					<li><a href="{{url('admin/category')}}" target="main">分类列表</a></li>
 
@@ -65,19 +65,26 @@
                     <li><a href="{{url('admin/activity')}}" target="main">活动列表</a></li>
                 </ul>
             </li>
+			<li>
+				<h3><i class="fa fa-fw fa-user"></i>消息管理</h3>
+				<ul class="sub_menu">
+					<li><a href="{{url('admin/message/activity')}}" target="main">活动消息</a></li>
+					<li><a href="{{url('admin/message/back')}}" target="main">用户反馈</a></li>
+				</ul>
+			</li>
             <li>
             	<h3><i class="fa fa-fw fa-user"></i>管理员管理</h3>
-                <ul class="sub_menu">
+                <ul class="sub_menu" style="display: none;">
                     <li><a href="{{url('admin/manager/create')}}" target="main">添加管理员</a></li>
                     <li><a href="{{url('admin/manager')}}" target="main">管理员列表</a></li>
                 </ul>
             </li>
             <li>
             	<h3><i class="fa fa-fw fa-thumb-tack"></i>工具导航</h3>
-                <ul class="sub_menu">
+                <ul class="sub_menu" style="display: none;">
                     <li><a href="http://www.yeahzan.com/fa/facss.html" target="main">图标调用</a></li>
                     <!--<li><a href="http://hemin.cn/jq/cheatsheet.html" target="main">Jquery手册</a></li>-->
-                    <li><a href="http://tool.c7sky.com/webcolor/" target="main">配色板</a></li>
+                    <!--<li><a href="http://tool.c7sky.com/webcolor/" target="main">配色板</a></li>-->
 					<!--<i class="fa fa-fw fa-tags">-->
                 </ul>
             </li>
