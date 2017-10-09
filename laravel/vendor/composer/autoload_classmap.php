@@ -919,7 +919,7 @@ return array(
     'Illuminate\\Mail\\Events\\MessageSending' => $vendorDir . '/laravel/framework/src/Illuminate/Mail/Events/MessageSending.php',
     'Illuminate\\Mail\\MailServiceProvider' => $vendorDir . '/laravel/framework/src/Illuminate/Mail/MailServiceProvider.php',
     'Illuminate\\Mail\\Mailer' => $vendorDir . '/laravel/framework/src/Illuminate/Mail/Mailer.php',
-    'Illuminate\\Mail\\Message' => $vendorDir . '/laravel/framework/src/Illuminate/Mail/Message.php',
+    'Illuminate\\Mail\\Message' => $vendorDir . '/laravel/framework/src/Illuminate/Mail/MessageController.php',
     'Illuminate\\Mail\\TransportManager' => $vendorDir . '/laravel/framework/src/Illuminate/Mail/TransportManager.php',
     'Illuminate\\Mail\\Transport\\LogTransport' => $vendorDir . '/laravel/framework/src/Illuminate/Mail/Transport/LogTransport.php',
     'Illuminate\\Mail\\Transport\\MailgunTransport' => $vendorDir . '/laravel/framework/src/Illuminate/Mail/Transport/MailgunTransport.php',

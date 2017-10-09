@@ -68,7 +68,7 @@
 			<li>
 				<h3><i class="fa fa-fw fa-user"></i>消息管理</h3>
 				<ul class="sub_menu">
-					<li><a href="{{url('admin/message/activity')}}" target="main">活动消息</a></li>
+					<li><a href="{{url('admin/message')}}" target="main">活动消息</a></li>
 					<li><a href="{{url('admin/message/back')}}" target="main">用户反馈</a></li>
 				</ul>
 			</li>

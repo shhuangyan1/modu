@@ -49,7 +49,6 @@ Route::any("admin/wx/act_comment","Admin\WxController@act_comment");
 Route::any("admin/wx/act_commentlist","Admin\WxController@act_commentlist");
 
 
-
 Route::group(['middleware' => ['web','admin.login'],'prefix'=>'admin','namespace'=>'Admin'], function () {
 
     Route::any('article','ArticleController@article');
@@ -61,6 +60,7 @@ Route::group(['middleware' => ['web','admin.login'],'prefix'=>'admin','namespace
     Route::resource('topic','TopicController');
     Route::resource('activity','ActivityController');
     Route::resource('manager','ManagerController');
+    Route::resource('message','MessageController');
     Route::any('upload','ActivityController@uploadvideo');
     //Route::any('stoptopic','TopicController@stoptopic');
     //Route::any('cancelactivity','ActivityController@cancelactivity');
