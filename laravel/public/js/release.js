@@ -122,6 +122,7 @@ $(function () {
     bind_event();
 })
 
+
 function newActivity() {
     var check_title = function() {
         var title = $(".title").val().trim();
