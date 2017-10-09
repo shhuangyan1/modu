@@ -222,6 +222,7 @@ class ActivityController extends Controller
     }
 
     public function activity_detail(){
+            $openid = $_GET['openid'];
             $map['id'] = $_GET['id'];
             $view = DB::table("activity")
                 ->where($map)
@@ -231,14 +232,28 @@ class ActivityController extends Controller
             $activity = DB::table("activity")
                 ->where($map)
                 ->update(array("view"=>$view));
+            $collect = DB::table("collect")
+                ->where(array("resourceid"=>$map['id'],"type"=>3,"openid"=>$openid))
+                ->first();
             $detail = DB::table("activity")
                 ->where($map)
-                ->select("id","image","title","limits","fee","time","address","description")
+                ->select("id","image","title","limits","fee","time","address","description","content")
                 ->get();
-            foreach($detail as $v){
-                $v->joined='';
-                $v->joinedList='';
+            if($collect){
+                foreach($detail as $v){
+                    $v->joined='';
+                    $v->joinedList='';
+                    $v->collect=1;
+                    $v->collectid=$collect->id;
+                }
+            }else{
+                foreach($detail as $v){
+                    $v->joined='';
+                    $v->joinedList='';
+                    $v->collect=0;
+                }
             }
+
             echo json_encode($detail,JSON_UNESCAPED_UNICODE);
 
     }

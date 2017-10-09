@@ -176,6 +176,18 @@ Class ArticleController extends Controller{
 
 	public function destroy($id){
 		$info=Article::where('id',$id)->delete();
+		$article = DB::table("article_recommend")
+				->select("id")
+				->where("article_id",$id)
+				->first();
+		if($article->id){
+			$info=DB::table("article_recommend")
+					->where("article_id",$id)
+					->delete();
+		}
+		$collect = DB::table("collect")
+				->where(array("resourceid"=>$id,"type"=>1))
+				->delete();
 		if($info){
 			$data = [
 				'status'=>1,
@@ -372,18 +384,32 @@ Class ArticleController extends Controller{
 	}
 
 	public function article_detail(){
-		if(empty($_GET['id'])){
-			$_GET['id']='';
-		}
+		$openid = $_GET['openid'];
 		$map['id'] = $_GET['id'];
-		$map1['id'] = $map['id']+1;
 		$view = DB::table("article")
 				->where($map)
-				->update(array("view"=>$map1['id']));
+				->select("view")
+				->first();
+		$view = $view->view +1;
+		/*$article = DB::table("article")
+				->where($map)
+				->update(array("view"=>$view));*/
+		$article= DB::table("article")
+				->where($map)
+				->update(array("view"=>$view));
+		$collect = DB::table("collect")
+				->where(array("resourceid"=>$map['id'],"type"=>1,"openid"=>$openid))
+				->first();
 		$detail = DB::table("article")
 				->where($map)
 				->select("title","content","author","from")
-				->get();
+				->first();
+		if($collect){
+			$detail->collect=1;
+			$detail->id=$collect->id;
+		}else{
+			$detail->collect=0;
+		}
 		echo json_encode($detail,JSON_UNESCAPED_UNICODE);
 	}
 	public function ai_publish(){

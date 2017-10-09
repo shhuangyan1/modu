@@ -44,6 +44,10 @@ Route::any("admin/wx/article_comment","Admin\WxController@article_comment");
 Route::any("admin/wx/topic_commentlist","Admin\WxController@topic_commentlist");
 Route::any("admin/wx/article_commentlist","Admin\WxController@article_commentlist");
 Route::any("admin/wx/back","Admin\WxController@back");
+Route::any("admin/wx/thumb","Admin\WxController@thumb");
+Route::any("admin/wx/act_comment","Admin\WxController@act_comment");
+Route::any("admin/wx/act_commentlist","Admin\WxController@act_commentlist");
+
 
 
 Route::group(['middleware' => ['web','admin.login'],'prefix'=>'admin','namespace'=>'Admin'], function () {

@@ -168,6 +168,10 @@ class TopicController extends Controller
             $results = DB::select('select MAX(id) from topic');
             $arr = get_object_vars($results[0]);
             $maxid = $arr['MAX(id)'];
+            if($maxid==null){
+                $topic=array();
+                echo json_encode($topic,JSON_UNESCAPED_UNICODE);die;
+            }
             $topic = DB::table("topic")
                 ->select("id","image","title","content","view")
                 ->where("id","<",$maxid)
@@ -180,7 +184,7 @@ class TopicController extends Controller
                     ->count();
                 $v->join=$num;
             }
-            echo json_encode($topic,JSON_UNESCAPED_UNICODE);
+           echo json_encode($topic,JSON_UNESCAPED_UNICODE);
         }else{
             $current = $_GET['id'];
             $topic = DB::table("topic")
