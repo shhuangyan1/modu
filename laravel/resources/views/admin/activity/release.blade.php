@@ -118,8 +118,8 @@
                 <input type="checkbox" id="collect" name="collect" value="true" mdtext="是否收集参与活动的用户信息">
             </div>
             <div class="cl-items-box hide">
-                <input type="checkbox" id="name" checked disabled name="name" value="name" mdtext="姓名">
-                <input type="checkbox" id="phone" checked disabled name="phone" value="phone" mdtext="手机号">
+                <input type="checkbox" id="name" checked name="name" value="name" mdtext="姓名">
+                <input type="checkbox" id="phone" checke name="phone" value="phone" mdtext="手机号">
                 <input type="checkbox" id="email" checked name="email" value="email" mdtext="邮箱">
                 <input type="checkbox" id="sex" name="sex" value="sex" mdtext="性别">
                 <input type="checkbox" id="age" name="age" value="age" mdtext="年龄">

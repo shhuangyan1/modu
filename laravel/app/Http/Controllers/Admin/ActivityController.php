@@ -58,6 +58,9 @@ class ActivityController extends Controller
     public function store(Request $request)
     {
         $data = $request->except('_token');
+        //$c=implode(“##”,$arr1);
+        $str = implode(",",$data);
+        dump($str);die;
         $restype = $request->get('restype');
         if($restype=='image'){
         $file = $request->file('image');//dd($file);
