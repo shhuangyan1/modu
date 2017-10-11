@@ -102,14 +102,20 @@ class ActivityController extends Controller
     }
 
     //官方回复活动提问信息接口
-    public function act_commentreply(){
-        $id = $_GET['id'];
-        $data['reply']=$_GET['reply'];
+    public function act_commentreply(Request $request){
+        $input = $request->input();
+        $id = $input['id'];
+        $data['reply']=$input['reply'];
         $data['admin']=session('user')->username;
         dump($data);die;
         $act_comment = DB::table("act_comment")
             ->where(array("id"=>$id))
             ->update($data);
+        if($act_comment){
+            return "回复成功！";
+        }else{
+            return "回复失败！";
+        }
     }
     /**
      * Display the specified resource.
