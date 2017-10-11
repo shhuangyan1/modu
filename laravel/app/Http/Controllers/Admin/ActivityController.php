@@ -112,9 +112,9 @@ class ActivityController extends Controller
             ->where(array("id"=>$id))
             ->update($data);
         if($act_comment){
-            return "回复成功！";
+            echo "回复成功！";
         }else{
-            return "回复失败！";
+            echo "回复失败！";
         }
     }
     /**
