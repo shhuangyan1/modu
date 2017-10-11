@@ -122,17 +122,17 @@
 
                 <input type="checkbox" id="name" name="name" value="姓名=name" mdtext="姓名">
                 <input type="checkbox" id="phone" name="phone" value="手机号=phone" mdtext="手机号">
-                <input type="checkbox" id="email" name="email" value="email" mdtext="邮箱">
-                <input type="checkbox" id="sex" name="sex" value="sex" mdtext="性别">
-                <input type="checkbox" id="age" name="age" value="age" mdtext="年龄">
-                <input type="checkbox" id="wechat" name="wechat" value="wechat" mdtext="微信">
-                <input type="checkbox" id="qq" name="qq" value="qq" mdtext="QQ">
-                <input type="checkbox" id="address" name="useraddress" value="useraddress" mdtext="联系地址">
-                <input type="checkbox" id="company" name="company" value="company" mdtext="工作单位">
-                <input type="checkbox" id="position" name="position" value="position" mdtext="职位">
-                <input type="checkbox" id="education" name="education" value="education" mdtext="学历">
-                <input type="checkbox" id="hobby" name="hobby" value="hobby" mdtext="爱好">
-                <input type="checkbox" id="blood" name="blood" value="blood" mdtext="血型">
+                <input type="checkbox" id="email" name="email" value="邮箱=email" mdtext="邮箱">
+                <input type="checkbox" id="sex" name="sex" value="性别=sex" mdtext="性别">
+                <input type="checkbox" id="age" name="age" value="年龄=age" mdtext="年龄">
+                <input type="checkbox" id="wechat" name="wechat" value="微信=wechat" mdtext="微信">
+                <input type="checkbox" id="qq" name="qq" value="QQ=qq" mdtext="QQ">
+                <input type="checkbox" id="address" name="useraddress" value="联系地址=useraddress" mdtext="联系地址">
+                <input type="checkbox" id="company" name="company" value="工作单位=company" mdtext="工作单位">
+                <input type="checkbox" id="position" name="position" value="职位=position" mdtext="职位">
+                <input type="checkbox" id="education" name="education" value="学历=education" mdtext="学历">
+                <input type="checkbox" id="hobby" name="hobby" value="爱好=hobby" mdtext="爱好">
+                <input type="checkbox" id="blood" name="blood" value="血型=blood" mdtext="血型">
 
             </div>
         </section>
