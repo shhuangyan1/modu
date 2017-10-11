@@ -129,7 +129,7 @@
                 <div class='com-name'>掌上魔都</div>
                 <div class='com-cont'>
                     <input class="text" data-value="reply" placeholder="写回复">
-                    <button class="btn" data-value="id">回复</button>
+                    <button class="btn back-btn" data-value="id">回复</button>
                 </div>
             </div>
         </div>

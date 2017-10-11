@@ -54,13 +54,9 @@
 
                 <section class="type clear" id="article_cat">
                     <p>选择文章所属分类</p>
-                    <!--<ul>-->
                     @foreach($data as $v)
-                    <!--<li>-->
                         <input class="cat_id" type="radio" name="cat_id" value="{{$v->id}}" mdtext="{{$v->_cat_name}}">
-                    <!--</li>-->
                     @endforeach
-                    {{--</ul>--}}
                 </section>
                 <section>
                     <input type="text" class="title" name="title" placeholder="请在这里输入标题" maxlength="60" >

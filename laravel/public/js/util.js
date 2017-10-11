@@ -106,7 +106,8 @@ window.MD = {
     },
 
     /**
-     * 获取某一容器内全部表单元素值
+     * 获取某一容器内全部表单元素值,
+     * 或者某个表单的value
      * @param container
      * @returns {*}
      */
@@ -149,7 +150,7 @@ window.MD = {
     },
 
     /**
-     * 合并多个对象
+     * 合并多个对象，与 $.extend({})效果一致
      * @returns {{}}
      */
     merger: function(){

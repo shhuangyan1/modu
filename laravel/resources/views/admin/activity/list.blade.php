@@ -53,7 +53,7 @@
             <thead>
             <tr>
                 <th>活动名称</th>
-                <th>参与人数</th>
+                <th>限制人数</th>
                 <th>发布时间</th>
                 <th>操作</th>
             </tr>
@@ -62,7 +62,7 @@
             @foreach($data as $v)
             <tr>
                 <td>
-                    <a href="#">{{$v->title}}</a>
+                    <a href="{{url('admin/activity/info')}}">{{$v->title}}</a>
                 </td>
                 <td class="tc">{{$v->limits}}</td>
                 <td class="tc">{{$v->time}}</td>

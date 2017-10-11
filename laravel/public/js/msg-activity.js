@@ -59,6 +59,26 @@ $(function () {
         });
 
 
+        // 点击回复
+        $(document).on("click", ".back-btn", function () {
+            //
+            var id = $(this).attr("value");
+            var value = $(this).prev().val();
+            if(value == ""){
+                jeBox.msg("请填写回复内容",{icon: 1,time:1})
+                return;
+            }
+
+            MD.ajax_post({
+                url: '/admin/activity/act_commentreply',
+                data: {'id': id, 'reply': value},
+            },function (res) {
+                if(res.success){
+                    jeBox.msg("回复成功",{"icon": 1, "time": 1})
+                }
+            })
+        })
+
     }
     /**
      * 加载尚未开始活动
