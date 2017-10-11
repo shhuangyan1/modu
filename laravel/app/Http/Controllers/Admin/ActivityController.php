@@ -97,8 +97,13 @@ class ActivityController extends Controller
     public function joinactivity(){
         $map['id'] = $_GET['id'];
         $activity = DB::table("activity")
+            ->select("collects")
             ->where($map)
             ->first();
+        $activity = get_object_vars($activity);
+        //$array=explode(separator,$string);
+        $arr = explode(",",$activity['collects']);
+        echo json_encode($arr);
     }
 
     //官方回复活动提问信息接口
