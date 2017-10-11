@@ -125,7 +125,7 @@
                 <input type="checkbox" id="age" name="age" value="age" mdtext="年龄">
                 <input type="checkbox" id="wechat" name="wechat" value="wechat" mdtext="微信">
                 <input type="checkbox" id="qq" name="qq" value="qq" mdtext="QQ">
-                <input type="checkbox" id="address" name="address" value="address" mdtext="联系地址">
+                <input type="checkbox" id="address" name="useraddress" value="useraddress" mdtext="联系地址">
                 <input type="checkbox" id="company" name="company" value="company" mdtext="工作单位">
                 <input type="checkbox" id="position" name="position" value="position" mdtext="职位">
                 <input type="checkbox" id="education" name="education" value="education" mdtext="学历">

@@ -59,8 +59,9 @@ class ActivityController extends Controller
     {
         $data = $request->except('_token');
         //$c=implode(“##”,$arr1);
-        $str = implode(",",$data);
-        dump($str);die;
+        //$str = implode(",",$data);
+        //dump($str);die;
+        unset($data['collect']);
         $restype = $request->get('restype');
         if($restype=='image'){
         $file = $request->file('image');//dd($file);
