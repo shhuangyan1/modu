@@ -23,16 +23,15 @@
     <div class="result_content">
         <table class="list_tab">
             <tr>
-                <th>用户信息</th>
                 <th>反馈内容</th>
                 <th>时间</th>
             </tr>
+            @foreach($data as $v)
             <tr>
-                <td class="tc">chen</td>
-                <td class="tc">好好</td>
-                <td class="tc">2117</td>
+                <td class="tc">{{$v->content}}</td>
+                <td class="tc">{{$v->time}}</td>
             </tr>
-
+            @endforeach
         </table>
     </div>
 

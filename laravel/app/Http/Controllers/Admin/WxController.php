@@ -119,6 +119,48 @@ class WxController extends Controller
 
     }
 
+    //魔都小程序个人中心我的活动接口
+    public function my_activities(){
+        $map['openid'] = $_GET['openid'];
+        //join("article","article.id","=","article_recommend.article_id")
+        if(empty($_GET['current'])){
+            $join_activity = DB::table("join_activity")
+                ->join("activity","activity.id","=","act_activity.act_id")
+                ->select("id","image","title","time")
+                ->where($map)
+                ->limit(5)
+                ->orderby("id","desc")
+                ->get();
+
+        }else{
+            $current = $_GET['current'];
+            $join_activity = DB::table("join_activity")
+                ->join("activity","activity.id","=","act_activity.act_id")
+                ->select("id","image","title","time")
+                ->where($map)
+                ->where("id","<",$current)
+                ->limit(5)
+                ->orderby("id","desc")
+                ->get();
+        }
+        foreach($join_activity as $v){
+            $join = get_object_vars($v);
+            $acttimestart = strtotime($join['time']);
+            $acttimeend = $acttimestart+3600*6;
+            if(time() > $acttimeend){
+                $join_activity->msg="活动已经结束！";
+            }elseif($acttimestart<=time()&&time()<=$acttimeend){
+                $join_activity->msg="活动正在进行！";
+            }elseif(time()<$acttimestart){
+                $resttime = $acttimestart - time();
+                $rest = floor($resttime/86400);
+                $join_activity->msg="活动开始剩余".$rest."天";
+            }
+        }
+
+        echo json_encode($join_activity);
+    }
+
     public function topic_comment(Request $request){
         $input= $request->input();
         $map['top_id'] = $input['top_id'];
@@ -244,7 +286,7 @@ class WxController extends Controller
         $input = $request->input();
         $map['openid'] = $input['openid'];
         $map['content'] = $input['content'];
-        $input['time'] = time();
+        $map['time'] = time();
         $back = DB::table('back')
             ->insert($map);
     }

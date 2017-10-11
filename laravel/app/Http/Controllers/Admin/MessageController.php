@@ -17,11 +17,22 @@ use DB;
 
 class MessageController extends Controller{
     public function index(){
+        //$data = Activity::where('status',0)->get();
+        //dd($data);
+
         return view('admin.message.activity');
     }
 
     public function show()
     {
-        return view('admin.message.back');
+        $data = DB::table("back")
+            ->orderby('id','desc')
+            ->paginate(5);
+        return view('admin.message.back',compact('data'));
+    }
+    //用户反馈内容
+
+    public function userback(){
+
     }
 }
