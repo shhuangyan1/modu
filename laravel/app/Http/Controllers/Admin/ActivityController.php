@@ -93,9 +93,10 @@ class ActivityController extends Controller
 
     }
 
-    //报名活动收集信息接口
+    //报名活动指定收集信息接口
     public function joinactivity(){
         $map['id'] = $_GET['id'];
+        //$map['id']=15;
         $activity = DB::table("activity")
             ->select("collects")
             ->where($map)
@@ -104,6 +105,28 @@ class ActivityController extends Controller
         //$array=explode(separator,$string);
         $arr = explode(",",$activity['collects']);
         echo json_encode($arr);
+    }
+
+    //收集活动报名用户信息接口
+    public function act_infogather(Request $request){
+        $input = $request ->input();
+        $data['time']=time();
+        $data['openid']=$input['openid'];
+        $data['act_id']=$input['act_id'];
+        unset($input['openid']);
+        unset($input['act_id']);
+        //$string=implode(glue,$array);
+        $str = implode(",",$input);
+        $data['userinfo']=$str;
+        $join_activity = DB::table("join_activity")
+            ->insert($data);
+        if($join_activity){
+            $date['msg']="success";
+            echo json_encode($date) ;
+        }else{
+            $date['msg']="fail";
+            echo json_encode($date) ;
+        }
     }
 
     //官方回复活动提问信息接口
@@ -156,6 +179,10 @@ class ActivityController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    public function info(){
+        return view("admin/activity/info");
     }
 
     /**
