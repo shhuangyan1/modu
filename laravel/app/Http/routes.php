@@ -35,6 +35,8 @@ Route::any('admin/shenhe','Admin\ArticleController@shenhe');
 Route::any('admin/article/preview','Admin\ArticleController@preview');
 Route::any('admin/activity/joinactivity','Admin\ActivityController@joinactivity');
 Route::any('admin/activity/act_commentreply','Admin\ActivityController@act_commentreply');
+Route::any('admin/activity/act_infogather','Admin\ActivityController@act_infogather');
+Route::any('admin/activity/info','Admin\ActivityController@info');
 
 Route::any("admin/wx/getopenid","Admin\WxController@getopenid");
 Route::any("admin/wx/collect","Admin\WxController@collect");
