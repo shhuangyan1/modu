@@ -112,9 +112,11 @@ class ActivityController extends Controller
             ->where(array("id"=>$id))
             ->update($data);
         if($act_comment){
-            echo "回复成功！";
+            $date['msg']="回复成功！";
+            echo json_encode($date) ;
         }else{
-            echo "回复失败！";
+            $date['msg']="回复失败！";
+            echo json_encode($date) ;
         }
     }
     /**
