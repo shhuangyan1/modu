@@ -93,6 +93,24 @@ class ActivityController extends Controller
 
     }
 
+    //报名活动收集信息接口
+    public function joinactivity(){
+        $map['id'] = $_GET['id'];
+        $activity = DB::table("activity")
+            ->where($map)
+            ->first();
+    }
+
+    //官方回复活动提问信息接口
+    public function act_commentreply(){
+        $id = $_GET['id'];
+        $data['reply']=$_GET['reply'];
+        $data['admin']=session('user')->username;
+        dump($data);die;
+        $act_comment = DB::table("act_comment")
+            ->where(array("id"=>$id))
+            ->update($data);
+    }
     /**
      * Display the specified resource.
      *
