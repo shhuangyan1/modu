@@ -190,5 +190,38 @@ function newActivity() {
         return true
     }
 
-    return check_title() && check_description() && check_image() && check_video() && check_inputs()
+    /**
+     * collects 处理
+     */
+     var collects = {
+
+        add: function () {
+            var checkeds = $("#collect-items-box").find('input[type=checkbox]:checked')
+            var value = ''
+            $.each(checkeds, function (i, v) {
+                value = value + "," +MD.getValue("#"+ v.name +"")[v.name]
+            });
+
+            if(value == ""){
+                jeBox.msg("请选择报名信息", {icon: 1,time:1});
+                return false;
+            }else{
+                $("#collect-items-box").html('<input type="hidden" name="collects" value="'+ value.substring(1) +'">');
+            }
+            return true;
+        },
+    }
+
+
+    // 收集信息验证
+    var check_collect = function () {
+        // 未收集
+        if($("input[name=collect]:checked").length <= 0){
+            return true;
+        }else{
+            return collects.add()
+        }
+    }
+
+    return check_title() && check_description() && check_image() && check_video() && check_inputs() && check_collect()
 }

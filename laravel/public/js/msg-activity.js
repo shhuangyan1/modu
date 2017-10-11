@@ -2,8 +2,16 @@ $(function () {
     var scope = {}
     /**
      * 默认预览第一条
-     * @param item
+     * @param
      */
+    var load_detail = function (id) {
+        MD.ajax_get({
+            url: '/admin/activity/activity_detail',
+            data: { 'id': id, 'openid': '' },
+        },function (res) {
+            show_activity(res[0])
+        })
+    }
     var show_activity = function (item) {
         $(".act-detail-box").loadTemplate($("#activity-tmp"),item)
     }
@@ -43,8 +51,8 @@ $(function () {
             var id = $(this).attr("value");
             $.each(scope.list, function (i, v) {
                 if(v.id == id){
-                    show_activity(v);
-                    load_ask(id)
+                    load_detail(id);
+                    load_ask(id);
                     return;
                 }
             })
@@ -62,7 +70,7 @@ $(function () {
 
         $("#list-slide-box").loadTemplate($("#activity-list-tmp"),res)
 
-        show_activity(res[0]);
+        load_detail(res[0].id);
         load_ask(res[0].id)
 
         var mySwiper = new Swiper ('.swiper-container', {

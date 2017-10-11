@@ -3,6 +3,15 @@
 }
 .result-box{
     margin-top: 20px;
+    min-width: 1000px;
+}
+.banner-title{
+    font-size: 16px;
+    line-height: 16px;
+    color: #666;
+    border-left: 4px solid #0e84b5;
+    padding-left: 15px;
+    margin: 15px 0 15px;
 }
 .release-box{
     width: 400px;
@@ -12,7 +21,7 @@
     position: relative;
 }
 #preview{
-    width: 390px;
+    width: 400px;
     height: 650px;
     border: 1px solid #ddd;
     box-sizing: border-box;
@@ -24,4 +33,22 @@
     right: 0;
     left: 0;
     bottom: 0;
+}
+
+/*edit-box*/
+.edit-box{
+    float: left;
+    margin-left: 40px;
+    width: 600px;
+}
+.banner-result-t span.red{
+    margin-left: 8px;
+}
+.result-item{
+    margin-bottom: 10px;
+}
+.result-item>label>span{
+    display: inline-block;
+    float: left;
+    width: 90px;
 }

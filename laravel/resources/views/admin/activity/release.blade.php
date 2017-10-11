@@ -117,11 +117,12 @@
                 <p class="banner-title" style="margin-bottom: 15px;">设置报名表单</p>
                 <input type="checkbox" id="collect" name="collect" value="true" mdtext="是否收集参与活动的用户信息">
             </div>
-            <div class="cl-items-box hide">
+            <div class="cl-items-box hide" id="collect-items-box">
+                <!--<input type="text" name="collects" value="">-->
 
-                <input type="checkbox" id="name" checked  name="name" value="name" mdtext="姓名">
-                <input type="checkbox" id="phone" checked  name="phone" value="phone" mdtext="手机号">
-                <input type="checkbox" id="email" checked name="email" value="email" mdtext="邮箱">
+                <input type="checkbox" id="name" name="name" value="姓名=name" mdtext="姓名">
+                <input type="checkbox" id="phone" name="phone" value="手机号=phone" mdtext="手机号">
+                <input type="checkbox" id="email" name="email" value="email" mdtext="邮箱">
                 <input type="checkbox" id="sex" name="sex" value="sex" mdtext="性别">
                 <input type="checkbox" id="age" name="age" value="age" mdtext="年龄">
                 <input type="checkbox" id="wechat" name="wechat" value="wechat" mdtext="微信">
@@ -137,7 +138,7 @@
         </section>
 
         <section class="no-border">
-            <input class="button default confirm" type="submit" value="确认发布">
+            <input class="button confirm" type="submit" value="确认发布">
             <!--<input class="button primary btn-preview" type="button" value="预览">-->
         </section>
 
