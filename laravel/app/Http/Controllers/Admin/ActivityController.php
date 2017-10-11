@@ -107,7 +107,7 @@ class ActivityController extends Controller
         $id = $input['id'];
         $data['reply']=$input['reply'];
         $data['admin']=session('user')->username;
-        dump($data);die;
+        //dump($data);die;
         $act_comment = DB::table("act_comment")
             ->where(array("id"=>$id))
             ->update($data);
