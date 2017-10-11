@@ -1108,3 +1108,18 @@ table.inner_list tr td input {
 	width: auto;
 	height: 100%;
 }
+
+/*置顶*/
+.fixed{
+    position: fixed;
+    right: 10px;
+    bottom: 46px;
+    font-size: 30px;
+    color: #666;
+}
+.fixed-arr{
+    cursor: pointer;
+}
+.fixed-arr:hover{
+    color: #333;
+}

@@ -45,6 +45,7 @@ window.MD = {
     protocol: window.location.protocol,
     hostname: window.location.hostname,
     url: window.location.protocol + "//" + window.location.hostname,
+    https: 'https://shtongnian.com',
     preview : function () {
         var img = MD.protocol + "//" + MD.hostname + "/storage/icons/pre-bg.png"
         var bg_shadow = $("<div class='preview-bg'><img class='bg-img' src='" + img +"'><span class='close-prev-bg'></span></div>")
@@ -131,13 +132,144 @@ window.MD = {
             config[key] = value;
         }
         return config;
-    }
+    },
+
+
+    /**
+     * @param data 表单元素的name与data的key对应
+     * @param callback 针对编辑器的操作，ue非全局变量
+     */
+    setValue: function ( container, data, callback) {
+        var group = $(container).find("input,select,textarea") || []
+        $.each(group,function (_,v) {
+            v.value = data[v.name]
+        })
+
+        typeof callback == "function" && callback(data)
+    },
+
+    /**
+     * 合并多个对象
+     * @returns {{}}
+     */
+    merger: function(){
+
+        var inner_merge = function (obj1, obj2) {
+            for (var key in obj2) {
+                if (obj2.hasOwnProperty(key)) {
+                    obj1[key] = obj2[key]
+                }
+            }
+            return obj1
+        }
+        var ret = {}
+        for (var i = 0, l = arguments.length; i < l; i++) {
+            inner_merge(ret, arguments[i])
+        }
+        return ret
+    },
+
+    /**
+     * ajax_get
+     * 使用注意，若需要自定义弹窗提示，需要借助jedate插件
+     */
+    ajax_get: function (config, callback) {
+        var conf = {
+            url: '',
+            dataType: 'json',
+            async: true,
+            data: {}
+        }
+        config = MD.merger(conf, config);
+        $.ajax({
+            type: 'GET',
+            url: MD.url + config.url,
+            cache: false,
+            dataType: config.dataType,
+            data: config.data,
+            async: config.async,
+            success: function (res) {
+                typeof callback == "function" && callback(res);
+            },
+            error: function(res){
+                console.log("接口请求错误");
+                alert("网络错误")
+            }
+        })
+    },
+
+    /**
+     * ajax_post post请求，实际实现待定
+     * @param config
+     * @param callback
+     */
+    ajax_post: function (config, callback) {
+        var conf = {
+            url: '/',
+            dataType: 'json',
+            async: true,
+            data: {}
+        }
+        config = MD.merger(conf, config);
+        $.ajax({
+            type: 'POST',
+            url: MD.url + config.url,
+            cache: false,
+            dataType: config.dataType,
+            data: config.data,
+            async: config.async,
+            success: function (res) {
+                typeof callback == "function" && callback(res);
+            },
+            error: function(res){
+                console.log("接口请求错误");
+                alert("网络错误")
+            }
+        })
+    },
+
+    // 为编辑器添加微信图标
+    //
+    wechat: function () {
+        var src = MD.url + '/image/uedit-wechat.png';
+        var img = $("<img id='wechat-preview' src=" + src +" title='微信编辑模式' alt='wechat'>")
+
+        img.on("click", function () {
+            var this_ = $(this)
+            this_.toggleClass('we-chat');
+            if(this_.hasClass('we-chat')){
+                $("#myEditor").css({width: '400px', border: '1px solid #ddd'})
+                $("#edui1_iframeholder").css({height: '700px'})
+            }else{
+                $("#myEditor").css({width: '100%', border: 'none'})
+                $("#edui1_iframeholder").css({height: '240px'})
+            }
+
+        })
+
+        $(".edui-editor-toolbarboxinner ").append(img)
+    },
+
+    // 回到顶部
+    //
+    scrollTop: function () {
+        var fix = $('<div class="fixed"></div>');
+        var arr = $('<div class="fixed-arr"><i class="fa fa-arrow-up"></i></div>')
+
+        arr.on('click',function () {
+            $('html, body').animate({scrollTop: 0}, 500);
+        })
+
+        fix.append(arr)
+        $('body').append(fix)
+    },
 
 }
 
 
 /**
  * 全局页面元素绑定方法
+ * 自动执行
  */
 $(function () {
     //数字输入控制

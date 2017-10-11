@@ -76,7 +76,7 @@
                         </label>
                         <label>
                             <span>设置初始阅读：</span>
-                            <input type="number" class="view" name="view" placeholder="初始阅读数默认为0">
+                            <input type="text" class="view number" name="view" placeholder="初始阅读数默认为0">
                         </label>
                     </div>
                 </section>
@@ -214,7 +214,7 @@
 </body>
 
 <script type="text/javascript">
-    $("#editor-box").html('<script type="text/plain" id="myEditor" name="content" style="width:100%;height:240px;min-width: 800px;"><\/script>')
+    $("#editor-box").html('<script type="text/plain" id="myEditor" name="content" style="width:100%;height:240px;"><\/script>')
 
     //实例化编辑器
     //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
@@ -222,7 +222,11 @@
          elementPathEnabled: false
      });
 
-    MD.Form("#article_cat",{type: "radio"})
+    MD.Form("#article_cat",{type: "radio"});
+
+    ue.addListener('ready',function () {
+        MD.wechat();
+    })
 
 </script>
 </html>

@@ -1,0 +1,172 @@
+.swiper-container {
+    width: 1000px;
+    height: 150px;
+}
+.swiper-slide{
+    background-color: #ccc;
+}
+.poster{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.list-opt{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    font-size: 16px;
+    text-align: center;
+    background: rgba(255,255,255,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Microsoft YaHei";
+}
+.list-opt span{
+    display: block;
+    margin-bottom: 8px;
+}
+.list-opt a{
+    color: #0e84b5;
+    padding: 4px 25px;
+    display: inline-block;
+    background: #fff;
+    border-radius: 4px;
+}
+
+.act-detail-box{
+    margin: 20px 0;
+}
+/*预览*/
+.detail-box{
+    width: 414px;
+    height: 736px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    float: left;
+}
+.banner{
+    height: 220px;
+    width: 100%;
+}
+.banner .ban-img{
+    width: 100%;
+    height: 100%;
+}
+.title {
+    font-size:20px;
+    color:#333;
+    margin:15px 10px;
+    text-align:center;
+}
+.sec{
+    padding:15px 0;
+    border-bottom:2px solid #f2f2f2;
+}
+.sec-title{
+    font-size:16px;
+    color:#333;
+    border-left:4px solid #5892f1;
+    padding-left:10px;
+    line-height:16px;
+    margin-bottom: 8px;
+}
+.pro-box{
+    width:68%;
+    height: 4px;
+    float:left;
+    margin-top:7px;
+    background: #ddd;
+}
+.pro-inner{
+    width: 50%;
+    height: 4px;
+    background: #5892f1;
+}
+.limit{
+    width:30%;
+    font-size:12px;
+    color:#999;
+    float:right;
+}
+.act-info{
+    font-size:13px;
+    color:#666;
+    line-height:24px;
+    margin-left:5px;
+
+}
+
+
+
+/*问答区  */
+.com-left{
+    width: 60px;
+    float: left;
+}
+.user-head{
+    width: 45px;
+    height: 45px;
+    display: inline-block;
+    border-radius: 50%;
+}
+.com-right{
+    margin-left: 60px;
+}
+.com-name{
+    color: #333;
+    font-size: 16px;
+}
+.com-cont{
+    font-size: 14px;
+    margin: 8px 0 0;
+    color: #666;
+}
+
+.mobile{
+    border: 1px solid #ddd;
+}
+.act-ask-box{
+    margin-left: 15px;
+    float: left;
+    width: 400px;
+}
+.com-box{
+    margin-bottom: 0.5rem;
+}
+.answer{
+    margin: 8px 0 0 55px;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 4px;
+}
+.answer .user-head{
+    width: 40px;
+    height: 40px;
+}
+.answer .com-name{
+    font-size: 14px;
+}
+.answer .com-cont{
+    font-size: 13px;
+}
+.com-cont .text{
+    border: 1px solid #ccc;
+    width: 200px;
+    height: 20px;
+    display: inline-block;
+    font-size: 12px;
+    float: left;
+}
+.com-cont .btn{
+    border: 1px solid #0e84b5;
+    background: #0e84b5;
+    color: #fff;
+    height: 22px;
+    line-height: 20px;
+    font-size: 12px;
+    padding: 0 15px;
+    float: left;
+    cursor: pointer;
+}

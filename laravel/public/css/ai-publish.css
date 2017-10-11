@@ -1,0 +1,27 @@
+#url{
+    width: 500px;
+}
+.result-box{
+    margin-top: 20px;
+}
+.release-box{
+    width: 400px;
+    float: left;
+}
+.preview-box{
+    position: relative;
+}
+#preview{
+    width: 390px;
+    height: 650px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+}
+.prev-cover{
+    background: rgba(125,125,125,0.3);
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+}

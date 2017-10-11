@@ -20,6 +20,21 @@
 <!--面包屑导航 结束-->
 
 <div class="result_wrap">
+    <div class="result_content">
+        <table class="list_tab">
+            <tr>
+                <th>用户信息</th>
+                <th>反馈内容</th>
+                <th>时间</th>
+            </tr>
+            <tr>
+                <td class="tc">chen</td>
+                <td class="tc">好好</td>
+                <td class="tc">2117</td>
+            </tr>
+
+        </table>
+    </div>
 
 </div>
 </body>

@@ -190,6 +190,7 @@ $(function () {
     }
 
     bind_event();
+    MD.scrollTop();
 })
 var check_type = function() {
     var types = $(".type input"),

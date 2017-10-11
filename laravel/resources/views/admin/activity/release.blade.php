@@ -118,8 +118,9 @@
                 <input type="checkbox" id="collect" name="collect" value="true" mdtext="是否收集参与活动的用户信息">
             </div>
             <div class="cl-items-box hide">
-                <input type="checkbox" id="name" checked name="name" value="name" mdtext="姓名">
-                <input type="checkbox" id="phone" checke name="phone" value="phone" mdtext="手机号">
+
+                <input type="checkbox" id="name" checked  name="name" value="name" mdtext="姓名">
+                <input type="checkbox" id="phone" checked  name="phone" value="phone" mdtext="手机号">
                 <input type="checkbox" id="email" checked name="email" value="email" mdtext="邮箱">
                 <input type="checkbox" id="sex" name="sex" value="sex" mdtext="性别">
                 <input type="checkbox" id="age" name="age" value="age" mdtext="年龄">
@@ -131,6 +132,7 @@
                 <input type="checkbox" id="education" name="education" value="education" mdtext="学历">
                 <input type="checkbox" id="hobby" name="hobby" value="hobby" mdtext="爱好">
                 <input type="checkbox" id="blood" name="blood" value="blood" mdtext="血型">
+
             </div>
         </section>
 
@@ -148,13 +150,16 @@
     </section>
 </div>
 <script>
-    $("#editor-box").html('<script type="text/plain" id="myEditor" name="content" style="width:100%;height:240px;min-width: 800px;"><\/script>')
+    $("#editor-box").html('<script type="text/plain" id="myEditor" name="content" style="width:100%;height:240px;"><\/script>')
 
     //实例化编辑器
     //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
     var ue = UE.getEditor('myEditor',{
         elementPathEnabled: false
     });
+    ue.addListener('ready',function () {
+        MD.wechat();
+    })
 
     jeDate({
         dateCell:".time",
@@ -166,6 +171,7 @@
     });
     MD.Form(".sec-opt",{type:'radio'});
     MD.Form(".collect-box",{type:'checkbox'});
+
 
 </script>
 </body>

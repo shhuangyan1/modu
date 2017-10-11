@@ -39,7 +39,7 @@
             'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
             'insertorderedlist', 'insertunorderedlist','|', 
             'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
-            'insertimage', 'insertvideo', 'music', 'map', '|',
+            'simpleupload', 'insertimage', 'insertvideo', 'music', 'map', '|',
             'spechars'
         ]]
         //当鼠标放在工具栏上时显示的tooltip提示,留空支持自动多语言配置，否则以配置值为准

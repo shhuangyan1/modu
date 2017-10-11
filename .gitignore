@@ -2,3 +2,6 @@
 /.idea/
 /modu.iml
 !/laravel/public/*
+/laravel/public/storage/uploads/*
+/laravel/public/ueditor/php/upload/image/*
+/laravel/public/storage/activityvideo/*
