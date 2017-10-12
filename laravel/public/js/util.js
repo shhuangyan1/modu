@@ -2,6 +2,7 @@
  * $方法扩展
  */
 (function ($) {
+
     $.fn.showTips = function (text) {
         var self = $(this);
         var sw = self.get(0).switch;
@@ -32,9 +33,13 @@
         });
     }
 
+    $.fn.getValue = function () {
+        return MD.getValue($(this))
+    }
 
 
 })(jQuery)
+
 
 
 /**
@@ -112,7 +117,13 @@ window.MD = {
      * @returns {*}
      */
     getValue: function (container) {
-        var el = $(container);
+        var el;
+        if(typeof container == 'string'){
+            el = $(container);
+        }else{
+            el = container
+        }
+
         var items = el.find('input,select,textarea');
         if(items.length == 0){
             if(el.prop('name') != undefined || el.prop('name') != ""){
@@ -174,7 +185,7 @@ window.MD = {
      * ajax_get
      * 使用注意，若需要自定义弹窗提示，需要借助jedate插件
      */
-    ajax_get: function (config, callback) {
+    ajax_get: function (config, callback, error) {
         var conf = {
             url: '',
             dataType: 'json',
@@ -194,17 +205,16 @@ window.MD = {
             },
             error: function(res){
                 console.log("接口请求错误");
-                alert("网络错误")
+                alert("网络错误");
+                typeof error == "function" && error();
             }
         })
     },
 
     /**
      * ajax_post post请求，实际实现待定
-     * @param config
-     * @param callback
      */
-    ajax_post: function (config, callback) {
+    ajax_post: function (config, callback, error) {
         var conf = {
             url: '/',
             dataType: 'json',
@@ -224,7 +234,8 @@ window.MD = {
             },
             error: function(res){
                 console.log("接口请求错误");
-                alert("网络错误")
+                alert("网络错误");
+                typeof error == "function" && error();
             }
         })
     },
@@ -265,6 +276,17 @@ window.MD = {
         $('body').append(fix)
     },
 
+    /**
+     * 手动number表单设置
+     */
+    input_number: function () {
+        $(".number").on("keyup",function () {
+            var val = $(this).val();
+            val = val.replace(/[^0-9]/g,"");
+            $(this).val(Number(val))
+        })
+    },
+
 }
 
 
@@ -280,3 +302,34 @@ $(function () {
         $(this).val(Number(val))
     })
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

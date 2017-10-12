@@ -11,7 +11,14 @@
     <script src="{{asset('lirary/uploadify/jquery1.11.3.min.js')}}" type="text/javascript"></script>
     <script type="text/javascript" src="{{asset('js/util.js')}}"></script>
     <script src="{{asset('lirary/jedate/jquery.jebox.js')}}" ></script>
+    <style>
+        .search_tab select{
+            border: 1px solid #ccc;
+            height: 33px;
+            border-radius: 3px;
+        }
 
+    </style>
 </head>
 <body>
     <!--面包屑导航 开始-->

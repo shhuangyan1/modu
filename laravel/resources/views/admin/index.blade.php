@@ -41,6 +41,7 @@
 					<li><a href="{{url('admin/article/ai_publish')}}" target="main">智能发布文章</a></li>
 					<li><a href="{{url('admin/article')}}" target="main">文章列表</a></li>
 					<li><a href="{{url('admin/confirm')}}" target="main">删除确认</a></li>
+					<li><a href="{{url('admin/article/rule')}}" target="main">解析规则管理</a></li>
 				</ul>
 			</li>
 			<li>

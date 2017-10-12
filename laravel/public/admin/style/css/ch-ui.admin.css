@@ -141,7 +141,7 @@ select option {
 	vertical-align: middle
 }
 
-input[type='submit'],input[type='button'] {
+input[type='submit'],input[type='button'],.button {
 	padding: 0 25px;
 	height: 25px;
 	vertical-align: middle;
@@ -160,7 +160,7 @@ input.default{
 	background: #dedede;
 	border: 1px solid #ccc;
 }
-input[type='submit']:hover,input[type='button']:hover {
+input[type='submit']:hover,input[type='button']:hover ,.button:hover{
 	color: #fff;
 	background: #286090
 }
@@ -179,7 +179,7 @@ input[type='button'].back:hover {
 input.button{
 	height: 30px;
 }
-input.button.default{
+input.button.default, .button.default{
 	background: #f0f0f0;
 	color: #666;
 	border: 1px solid #ccc;
@@ -187,10 +187,10 @@ input.button.default{
 	transition: background 0.2s;
 
 }
-input.button.default:hover{
+input.button.default:hover .button.default:hover{
 	background: #e6e6e6;
 }
-input.button.default.confirm:hover{
+input.button.default.confirm:hover, .button.confirm:hover{
 	background: #286090;
 	color: #fff;
 }
@@ -891,8 +891,11 @@ table.list_tab tr td.tc,table.list_tab tr th.tc {
 }
 
 table.list_tab tr td a {
-	display: inline-block;
-	margin-right: 10px;
+     display: inline-block;
+     margin-right: 10px;
+ }
+table.list_tab tr td a.hide {
+    display: none;
 }
 
 table.list_tab tr td input[type='text'] {

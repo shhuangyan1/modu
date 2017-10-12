@@ -30,10 +30,10 @@
 <!--面包屑导航 结束-->
 
 <div  class="result_wrap">
-    <form action="{{url('admin/article/ai_article')}}" onsubmit="return analyze()">
+    <!--<form action="{{url('admin/article/ai_article')}}" onsubmit="return analyze()">-->
         <input type="text" id="url" name="url" placeholder="输入目标页面网址，http://...">
         <input id="start-release" type="submit" value="开始解析">
-    </form>
+    <!--</form>-->
     <!--解析框-->
   <div class="result-box clear">
     <div class="release-box">

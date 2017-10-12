@@ -26,8 +26,9 @@ $(function () {
         // 开始解析
         $("#start-release").on("click",function () {
             var url = analyze()
+            if(url)
             MD.ajax_post({
-                url: '/admin/xxxxx',
+                url: '/admin/article/ai_article',
                 data: {'url': url}
             },function (res) {
                 // 返回解析规则？
@@ -36,6 +37,8 @@ $(function () {
                     $(".banner-result-t").append($('<span class="red"><i class="fa fa-warning"></i>未知来源，需要新的解析规则</span>'));
                     return;
                 }
+
+
             })
         })
     }

@@ -101,15 +101,8 @@
                                 {'_token':"{{csrf_token()}}","_method":"delete"},
                                 function (res) {
                                     res = JSON.parse(res);
-                                    if(res.status == 1000){
-                                        jeBox.msg(res.msg, {icon: 2,time:1});
-                                        setTimeout(function () {
-                                            location.reload();
-                                        },1000)
-                                    }else{
-                                        jeBox.msg(res.msg, {icon: 2,time:1.5});
-//                                        error
-                                    }
+                                    jeBox.msg(res.msg, {icon: 2,time:1});
+                                    location.reload();
                                     jeBox.close(index);
                                 }
                             )

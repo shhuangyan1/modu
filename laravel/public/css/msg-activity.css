@@ -1,6 +1,7 @@
 .swiper-container {
     width: 1000px;
     height: 150px;
+    margin-left: 0;
 }
 .swiper-slide{
     background-color: #ccc;
@@ -62,7 +63,7 @@
     text-align:center;
 }
 .sec{
-    padding:15px 0;
+    padding:15px 0 15px 10px;
     border-bottom:2px solid #f2f2f2;
 }
 .sec-title{
@@ -132,6 +133,7 @@
     margin-left: 15px;
     float: left;
     width: 400px;
+    padding: 10px;
 }
 .com-box{
     margin-bottom: 0.5rem;
@@ -169,4 +171,12 @@
     padding: 0 15px;
     float: left;
     cursor: pointer;
+}
+
+/**/
+.no-activity{
+    font-size: 22px;
+    color: #666;
+    text-align: center;
+    line-height: 200px;
 }

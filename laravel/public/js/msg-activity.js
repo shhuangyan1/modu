@@ -10,6 +10,15 @@ $(function () {
             data: { 'id': id, 'openid': '' },
         },function (res) {
             show_activity(res[0])
+        },function () {
+            show_activity({
+                join: '数据加载出错',
+                fee: '数据加载出错',
+                time: '数据加载出错',
+                address: '数据加载出错',
+                description: '数据加载出错',
+                content: '数据加载出错',
+            })
         })
     }
     var show_activity = function (item) {
@@ -34,9 +43,9 @@ $(function () {
      */
     var show_asklist = function (list) {
         if(list.length == 0){
-            $(".act-ask-box").html("<p>暂无提问</p>")
+            $(".act-ask-box").html("<p>暂无提问</p>").show()
         }else{
-            $(".act-ask-box").loadTemplate($("#ask-list-tmp"),list)
+            $(".act-ask-box").loadTemplate($("#ask-list-tmp"),list).show()
         }
     }
 
@@ -87,7 +96,10 @@ $(function () {
         url: '/admin/activity/activity_format',
     },function (res) {
         scope.list = res;
-
+        if(res.length <= 0){
+            $(".result_wrap").html("<p class='no-activity'><i class='fa fa-frown-o'></i>暂无活动</p>")
+            return;
+        }
         $("#list-slide-box").loadTemplate($("#activity-list-tmp"),res)
 
         load_detail(res[0].id);

@@ -52,7 +52,7 @@
         </div>
 
         <!--右侧显示活动的问答 -->
-        <div class="act-ask-box mobile">
+        <div class="act-ask-box mobile hide">
             <p>问答信息加载中。。。</p>
         </div>
     </div>
