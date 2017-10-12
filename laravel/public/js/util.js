@@ -33,8 +33,19 @@
         });
     }
 
+    // 获取value
     $.fn.getValue = function () {
         return MD.getValue($(this))
+    }
+    //
+    $.fn.setValue = function (data, callback) {
+        MD.setValue(this, data, callback)
+    }
+
+    // 查找元素
+    $.fn.get_ele = function (cont, index) {
+        cont = ""+ cont + ""
+        return $(this).find( cont )[index]
     }
 
 
@@ -148,8 +159,8 @@ window.MD = {
 
 
     /**
-     * @param data 表单元素的name与data的key对应
-     * @param callback 针对编辑器的操作，ue非全局变量
+     *  data 表单元素的name与data的key对应
+     *  callback 针对编辑器的操作，ue非全局变量
      */
     setValue: function ( container, data, callback) {
         var group = $(container).find("input,select,textarea") || []
@@ -180,6 +191,32 @@ window.MD = {
         }
         return ret
     },
+
+    /**
+     * 获取url携带的 查询字符串
+     */
+    get_query: function (para) {
+        var arr = location.href.split('?');
+        var result = {};
+        if(arr[1] != undefined){
+            var arr_2 = arr[1].split('&');
+            var config = {};
+
+            $.each(arr_2, function (i, v) {
+                var lin = v.split('=')
+                config[lin[0]] = lin[1]
+            })
+            result =  config;
+
+            if(para){
+                var cof = {}
+                cof[para] = config[para]
+                result = cof;
+            }
+        }
+        return result;
+    },
+
 
     /**
      * ajax_get
@@ -286,6 +323,8 @@ window.MD = {
             $(this).val(Number(val))
         })
     },
+
+
 
 }
 

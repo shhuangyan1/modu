@@ -56,10 +56,11 @@
 
         <section class="sec clear">
             <div class="upload-opt-box" style="margin-bottom: 15px;">
-                <span class="banner-title">上传活动海报 或 宣传视频 （二选一）</span>
+                <span class="banner-title">上传活动海报</span>
+                <!--<span class="banner-title">上传活动海报 或 宣传视频 （二选一）</span>-->
                 <div class="sec-opt">
                     <input type="radio" class="up-image" checked name="restype" value="image" mdtext="上传活动海报">
-                    <input type="radio" class="up-video" name="restype" value="video" mdtext="上传活动视频">
+                    <!--<input type="radio" class="up-video" name="restype" value="video" mdtext="上传活动视频">-->
                 </div>
             </div>
 

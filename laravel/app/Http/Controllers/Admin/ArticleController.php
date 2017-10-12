@@ -161,6 +161,9 @@ Class ArticleController extends Controller{
 	public function rule(){
 		return view("admin/article/rule");
 	}
+	public function detail(){
+    		return view("admin/article/detail");
+    }
 	public function edit($id){
 		$category = (new Category)->tree();
 		$data=Article::find($id);

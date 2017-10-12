@@ -43,7 +43,8 @@
             <p><input type="button" value="重新解析"></p>
         </div>
         <div class="preview-box">
-            <iframe id="preview" class="preview" src=""></iframe>
+            <div class="preview-back"></div>
+            <iframe id="preview" name="preview" class="preview" src="http://www.modu.com/admin/category/create"></iframe>
             <!--http://mp.weixin.qq.com/s/A6o7i-iJYTjnEEcjwIIRnA-->
             <div class="prev-cover hide"></div>
         </div>
@@ -80,8 +81,6 @@
                 <!--编辑器-->
                 <div id="editor-box"></div>
             </div>
-
-
         </div>
     </div>
   </div>

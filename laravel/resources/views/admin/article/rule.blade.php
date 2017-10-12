@@ -84,28 +84,28 @@
                     <td class="tc">
                         <label class="text">
                             <span>标题：</span>
-                            <input type="text" name="container1" disabled placeholder="标题标签，如#title或.title">
-                            <input type="text" name="index1" class="number" disabled placeholder="标签索引，如0或1，默认为0">
+                            <input type="text" name="title" disabled placeholder="标题标签，如#title或.title">
+                            <input type="text" name="titleindex" class="number" disabled placeholder="标签索引，如0或1，默认为0">
                         </label>
                         <label class="text">
                             <span>作者：</span>
-                            <input type="text" name="container2" disabled placeholder="标题标签，如#author或.author">
-                            <input type="text" name="index2" disabled class="number" placeholder="标签索引，如0或1，默认为0">
+                            <input type="text" name="author" disabled placeholder="标题标签，如#author或.author">
+                            <input type="text" name="authorindex" disabled class="number" placeholder="标签索引，如0或1，默认为0">
                         </label>
                         <label class="text">
                             <span>来源：</span>
-                            <input type="text" name="container3" disabled placeholder="标题标签，如#from或.from">
-                            <input type="text" name="index3" class="number" disabled placeholder="标签索引，如0或1，默认为0">
+                            <input type="text" name="from" disabled placeholder="标题标签，如#from或.from">
+                            <input type="text" name="fromindex" class="number" disabled placeholder="标签索引，如0或1，默认为0">
                         </label>
                         <label class="text">
                             <span>日期：</span>
-                            <input type="text" name="container4" disabled placeholder="标题标签，如#date或.date">
-                            <input type="text" name="index4" class="number" disabled placeholder="标签索引，如0或1，默认为0">
+                            <input type="text" name="date" disabled placeholder="标题标签，如#date或.date">
+                            <input type="text" name="dateindex" class="number" disabled placeholder="标签索引，如0或1，默认为0">
                         </label>
                         <label class="text">
                             <span>正文：</span>
-                            <input type="text" name="container5" disabled placeholder="标题标签，如#content或.content">
-                            <input type="text" name="index5" class="number" disabled placeholder="标签索引，如0或1，默认为0">
+                            <input type="text" name="content" disabled placeholder="标题标签，如#content或.content">
+                            <input type="text" name="contentindex" class="number" disabled placeholder="标签索引，如0或1，默认为0">
                         </label>
                     </td>
                     <td class="tc opt">
@@ -132,28 +132,28 @@
         <td class="tc value-box">
             <label class="text edit">
                 <span>标题：</span>
-                <input type="text" name="container1"  placeholder="标题标签，如#title或.title">
-                <input type="text" name="index1" class="number"  placeholder="标签索引，如0或1，默认为0">
+                <input type="text" name="title"  placeholder="标题标签，如#title或.title">
+                <input type="text" name="titleindex" class="number"  placeholder="标签索引，如0或1，默认为0">
             </label>
             <label class="text edit">
                 <span>作者：</span>
-                <input type="text" name="container2"  placeholder="标题标签，如#author或.author">
-                <input type="text" name="index2"  class="number" placeholder="标签索引，如0或1，默认为0">
+                <input type="text" name="author"  placeholder="标题标签，如#author或.author">
+                <input type="text" name="authorindex"  class="number" placeholder="标签索引，如0或1，默认为0">
             </label>
             <label class="text edit">
                 <span>来源：</span>
-                <input type="text" name="container3"  placeholder="标题标签，如#from或.from">
-                <input type="text" name="index3" class="number"  placeholder="标签索引，如0或1，默认为0">
+                <input type="text" name="from"  placeholder="标题标签，如#from或.from">
+                <input type="text" name="fromindex" class="number"  placeholder="标签索引，如0或1，默认为0">
             </label>
             <label class="text edit">
                 <span>日期：</span>
-                <input type="text" name="container4"  placeholder="标题标签，如#date或.date">
-                <input type="text" name="index4" class="number"  placeholder="标签索引，如0或1，默认为0">
+                <input type="text" name="date"  placeholder="标题标签，如#date或.date">
+                <input type="text" name="dateindex" class="number"  placeholder="标签索引，如0或1，默认为0">
             </label>
             <label class="text edit">
                 <span>正文：</span>
-                <input type="text" name="container5"  placeholder="标题标签，如#content或.content">
-                <input type="text" name="index5" class="number"  placeholder="标签索引，如0或1，默认为0">
+                <input type="text" name="content"  placeholder="标题标签，如#content或.content">
+                <input type="text" name="contentindex" class="number"  placeholder="标签索引，如0或1，默认为0">
             </label>
         </td>
         <td class="tc opt">

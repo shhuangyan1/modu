@@ -22,6 +22,60 @@ $(function () {
     })
     MD.scrollTop();
 
+    /**
+     * 解析结果
+     */
+    var realist = function (rule_para) {
+        var rule = {
+            title: '#activity-name',
+            titleindex: '0',
+            author: '.rich_media_meta',
+            authorindex: '1',
+            from: '#post-user',
+            fromindex: '0',
+            date: '#post-date',
+            dateindex: '0',
+            content: '#js_content',
+            contentindex: '0'
+        }
+
+        rule_para = MD.merger(rule_para, rule)
+
+        if(rule_para == rule){
+
+        }
+
+        var result = {};
+
+        // 子页面的document
+        var $doc = $($("#preview").contents()[0]);
+
+        // 解析结果赋值
+        var title = $doc.get_ele(rule.title, rule.titleindex)
+        result.title = title.innerText.trim() || ''
+        var author = $doc.get_ele(rule.author, rule.authorindex)
+        result.author = author.innerText.trim() || ''
+        var from = $doc.get_ele(rule.from, rule.fromindex)
+        result.from = from.innerText.trim() || ''
+        var content = $doc.get_ele(rule.content, rule.contentindex)
+        result.content = content.innerHTML || ''
+
+        // 显示解析值
+        $(".result-items-box").setValue(result);
+        MD.res = result
+
+        ue.addListener('ready',function () {
+            ue.setContent(result.content)
+        })
+
+    }
+
+    var pre = document.getElementById('preview');
+    $(pre).load(function () {
+        realist();
+    })
+
+
     var bind = function () {
         // 开始解析
         $("#start-release").on("click",function () {
