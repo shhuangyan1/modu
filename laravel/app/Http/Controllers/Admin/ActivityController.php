@@ -110,21 +110,34 @@ class ActivityController extends Controller
     //收集活动报名用户信息接口
     public function act_infogather(Request $request){
         $input = $request ->input();
-        $data['time']=time();
+
         $data['openid']=$input['openid'];
         $data['act_id']=$input['act_id'];
+
+        //验证下是否是重复报名
+        $is_resign = DB::table("join_activity")
+            ->where($data)
+            ->first();
+        if($is_resign){
+            $date['fail']="fail";
+            $date['msg']="请不要重复报名！";
+            echo json_encode($date) ;die;
+        }
         unset($input['openid']);
         unset($input['act_id']);
+        $data['time']=time();
         //$string=implode(glue,$array);
         $str = implode(",",$input);
         $data['userinfo']=$str;
         $join_activity = DB::table("join_activity")
             ->insert($data);
         if($join_activity){
-            $date['msg']="success";
+            $date['success']="success";
+            $date['msg']="恭喜你报名成功！";
             echo json_encode($date) ;
         }else{
-            $date['msg']="fail";
+            $date['fail']="fail";
+            $date['msg']="网络错误";
             echo json_encode($date) ;
         }
     }
@@ -297,20 +310,24 @@ class ActivityController extends Controller
             $collect = DB::table("collect")
                 ->where(array("resourceid"=>$map['id'],"type"=>3,"openid"=>$openid))
                 ->first();
+            $join = DB::table("join_activity")
+                ->where("act_id",$map['id'])
+                ->count();
+        //dump($join);die;
             $detail = DB::table("activity")
                 ->where($map)
                 ->select("id","image","title","limits","fee","time","address","description","content")
                 ->get();
             if($collect){
                 foreach($detail as $v){
-                    $v->joined='';
+                    $v->joined=$join;
                     $v->joinedList='';
                     $v->collect=1;
                     $v->collectid=$collect->id;
                 }
             }else{
                 foreach($detail as $v){
-                    $v->joined='';
+                    $v->joined=$join;
                     $v->joinedList='';
                     $v->collect=0;
                 }
