@@ -462,8 +462,17 @@ Class ArticleController extends Controller{
 		echo json_encode($regular);
 	}
 	//解析规则管理，修改规则
-	public function modifyregular(){
-
+	public function modifyregular(Request $request){
+		$input=$request->input();
+		$regular = DB::table("regular")->update($input);
+		if($regular){
+			$date['code']="success";
+			$date['msg']="更新成功！";
+		}else{
+			$date['code']="success";
+			$date['msg']="更新成功！";
+		}
+		echo json_encode($date);
 	}
 
 
