@@ -474,7 +474,12 @@ Class ArticleController extends Controller{
 		}
 		echo json_encode($date);
 	}
-
+	//解析规则管理，显示规则
+	public function showregular(){
+		$regualr = DB::table("regular")
+				->get();
+		echo json_encode($regualr);
+	}
 
 }
 

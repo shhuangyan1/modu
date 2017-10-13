@@ -26,6 +26,7 @@ Route::any('admin/category/category_format','Admin\CategoryController@category_f
 Route::any('admin/article/ai_article','Admin\ArticleController@ai_article');
 Route::any('admin/article/ai_publish','Admin\ArticleController@ai_publish');
 Route::any('admin/article/addregular','Admin\ArticleController@addregular');
+Route::any('admin/article/showregular','Admin\ArticleController@showregular');
 Route::any('admin/article/modifyregular','Admin\ArticleController@modifyregular');
 Route::any('admin/article/article_format','Admin\ArticleController@article_format');
 Route::any('/','Admin\LoginController@login');
