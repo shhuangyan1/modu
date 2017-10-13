@@ -70,20 +70,21 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($join_activity as $v)
+            {{--@foreach($join_activity as $v)--}}
             <tr>
                 <td class="tc">
-                    <img class="user-head" src="{{$v->avatarUrl}}">
-                    <span class="user-name">{{$v->nickName}}</span>
+                    <img class="user-head" src="sss">
+                    <span class="user-name">sss</span>
                 </td>
                 <td>
-                    @foreach($v->userinfo as $k)
+                    {{--@foreach($v->userinfo as $k)
                     <label>{{$k}}</label>
-                    @endforeach
+                    @endforeach--}}
+                    <label>fdsf</label>
                 </td>
-                <td class="tc">{{$v->time}}</td>
+                <td class="tc">fdsf</td>
             </tr>
-            @endforeach
+            {{--@endforeach--}}
             </tbody>
         </table>
 
