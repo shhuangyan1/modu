@@ -70,20 +70,20 @@
             </tr>
             </thead>
             <tbody>
-
+            @foreach($join_activity as $v)
             <tr>
                 <td class="tc">
-                    <img class="user-head" src="http://www.modu.com/image/uedit-wechat.png">
-                    <span class="user-name">Troy</span>
+                    <img class="user-head" src="{{$v->avatarUrl}}">
+                    <span class="user-name">{{$v->nickName}}</span>
                 </td>
                 <td>
-                    <label>姓名：陈宝俊</label>
-                    <label>年龄：18</label>
-                    <label>手机号：18855255555</label>
+                    @foreach($v->userinfo as $k)
+                    <label>{{$k}}</label>
+                    @endforeach
                 </td>
-                <td class="tc">2017-10-11</td>
+                <td class="tc">{{$v->time}}</td>
             </tr>
-
+            @endforeach
             </tbody>
         </table>
 

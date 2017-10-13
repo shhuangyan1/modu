@@ -361,8 +361,10 @@ class ActivityController extends Controller
             ->get();
         foreach($join_activity as $v){
             $arr = explode(",",$v->userinfo);
+            $v->time=date("Y-m-d H:i:s",$v->time);
             $v->userinfo=$arr;
         }
-        echo json_encode($join_activity);
+        //dump($join_activity);
+        return view("admin/activity/info",compact('join_activity'));
     }
 }
