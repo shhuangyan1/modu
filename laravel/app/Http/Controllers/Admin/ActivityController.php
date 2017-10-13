@@ -195,7 +195,19 @@ class ActivityController extends Controller
     }
 
     public function info(){
-        return view("admin/activity/info");
+        $id = $_GET['id'];
+        $join_activity = DB::table("join_activity")
+            ->join("user","user.openid","=","join_activity.openid")
+            ->select("avatarUrl","nickName","userinfo","time")
+            ->where("act_id",$id)
+            ->get();
+        foreach($join_activity as $v){
+            $arr = explode(",",$v->userinfo);
+            $v->time=date("Y-m-d H:i:s",$v->time);
+            $v->userinfo=$arr;
+        }
+        //dump($join_activity);die;
+        return view("admin/activity/info",compact('join_activity'));
     }
 
     /**
@@ -339,7 +351,7 @@ class ActivityController extends Controller
 
     //魔都后台活动列表，点击活动接口1
     public function act_id(){
-        $id = $_GET['id'];
+        $id = 15;//$_GET['id'];
         $activity  = DB::table("activity")
             ->select("title","addtime","limits")
             ->where("id",$id)
@@ -352,19 +364,4 @@ class ActivityController extends Controller
     }
 
     //魔都后台活动列表，点击活动接口2
-    public function act_ids(){
-        $id = $_GET['id'];
-        $join_activity = DB::table("join_activity")
-            ->join("user","user.openid","=","join_activity.openid")
-            ->select("avatarUrl","nickName","userinfo","time")
-            ->where("act_id",$id)
-            ->get();
-        foreach($join_activity as $v){
-            $arr = explode(",",$v->userinfo);
-            $v->time=date("Y-m-d H:i:s",$v->time);
-            $v->userinfo=$arr;
-        }
-        //dump($join_activity);
-        return view("admin/activity/info",compact('join_activity'));
-    }
 }

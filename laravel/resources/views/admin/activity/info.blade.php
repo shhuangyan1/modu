@@ -64,21 +64,21 @@
             </tr>
             </thead>
             <tbody>
-            {{--@foreach($join_activity as $v)--}}
+           @foreach($join_activity as $v)
             <tr>
                 <td class="tc">
-                    <img class="user-head" src="sss">
-                    <span class="user-name">sss</span>
+                    <img class="user-head" src="{{$v->avatarUrl}}">
+                    <span class="user-name">{{$v->nickName}}</span>
                 </td>
                 <td>
-                    {{--@foreach($v->userinfo as $k)
-                    <label>{{$k}}</label>
-                    @endforeach--}}
-                    <label>fdsf</label>
+                    @foreach($v->userinfo as $k)
+                        <label>{{$k}}</label>
+                    @endforeach
+
                 </td>
-                <td class="tc">fdsf</td>
+                <td class="tc">{{$v->time}}</td>
             </tr>
-            {{--@endforeach--}}
+            @endforeach
             </tbody>
         </table>
 
@@ -100,12 +100,12 @@
         $("#statistics").html(statistics)
     })
 
-//    MD.ajax_get({
-//        url: '/admin/activity/act_ids',
-//        data: {'id': id}
-//    },function (res) {
-//
-//    })
+   // MD.ajax_get({
+   //     url: '/admin/activity/act_ids',
+   //     data: {'id': id}
+    // },function (res) {
+
+  // })
 </script>
 </body>
 </html>
