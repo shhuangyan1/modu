@@ -458,7 +458,12 @@ Class ArticleController extends Controller{
 	//解析规则管理，添加规则
 	public function addregular(Request $request){
 		$input=$request->input();
-		$regular = DB::table("regular")->insert($input);
+		$regular = DB::table("regular")->insertGetId($input);
+		echo json_encode($regular);
+	}
+	//解析规则管理，修改规则
+	public function modifyregular(){
+
 	}
 
 
