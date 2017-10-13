@@ -27,6 +27,21 @@ class WxController extends Controller
         echo json_encode($date);
     }
 
+    //用户授权登陆之后，收集用户信息
+    public function usersave(Request $request){
+        $input = $request->input();
+        $nouser = DB::table("user")
+            ->where($input['openid'])
+            ->first();
+        //判断用户信息是否已经收集了
+        if(!$nouser){
+            $date['code']='fail';
+            $date['msg']='信息已经收集了';
+            die;
+        }
+        $user = DB::table("user")->insert($input);
+    }
+
     public function collect(Request $request)
     {
         $input = $request->input();

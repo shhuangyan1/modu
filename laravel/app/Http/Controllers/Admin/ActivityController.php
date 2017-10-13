@@ -336,4 +336,33 @@ class ActivityController extends Controller
             echo json_encode($detail,JSON_UNESCAPED_UNICODE);
 
     }
+
+    //魔都后台活动列表，点击活动接口1
+    public function act_id(){
+        $id = $_GET['id'];
+        $activity  = DB::table("activity")
+            ->select("title","addtime","limits")
+            ->where("id",$id)
+            ->first();
+        $join = DB::table("join_activity")
+            ->where("act_id",$id)
+            ->count();
+        $activity->join = $join;
+        echo json_encode($activity);
+    }
+
+    //魔都后台活动列表，点击活动接口2
+    public function act_ids(){
+        $id = $_GET['id'];
+        $join_activity = DB::table("join_activity")
+            ->join("user","user.openid","=","join_activity.openid")
+            ->select("avatarUrl","nickName","userinfo","time")
+            ->where("act_id",$id)
+            ->get();
+        foreach($join_activity as $v){
+            $arr = explode(",",$v->userinfo);
+            $v->userinfo=$arr;
+        }
+        echo json_encode($join_activity);
+    }
 }

@@ -39,6 +39,8 @@ Route::any('admin/activity/joinactivity','Admin\ActivityController@joinactivity'
 Route::any('admin/activity/act_commentreply','Admin\ActivityController@act_commentreply');
 Route::any('admin/activity/act_infogather','Admin\ActivityController@act_infogather');
 Route::any('admin/activity/info','Admin\ActivityController@info');
+Route::any('admin/activity/act_id','Admin\ActivityController@act_id');
+Route::any('admin/activity/act_ids','Admin\ActivityController@act_ids');
 
 Route::any("admin/wx/getopenid","Admin\WxController@getopenid");
 Route::any("admin/wx/collect","Admin\WxController@collect");
@@ -54,6 +56,7 @@ Route::any("admin/wx/thumb","Admin\WxController@thumb");
 Route::any("admin/wx/act_comment","Admin\WxController@act_comment");
 Route::any("admin/wx/act_commentlist","Admin\WxController@act_commentlist");
 Route::any("admin/wx/my_activities","Admin\WxController@my_activities");
+Route::any("admin/wx/usersave","Admin\WxController@usersave");
 
 
 Route::group(['middleware' => ['web','admin.login'],'prefix'=>'admin','namespace'=>'Admin'], function () {
