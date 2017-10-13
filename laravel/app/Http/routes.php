@@ -25,6 +25,7 @@ Route::any('admin/article/article_detail','Admin\ArticleController@article_detai
 Route::any('admin/category/category_format','Admin\CategoryController@category_format');
 Route::any('admin/article/ai_article','Admin\ArticleController@ai_article');
 Route::any('admin/article/ai_publish','Admin\ArticleController@ai_publish');
+Route::any('admin/article/addregular','Admin\ArticleController@addregular');
 Route::any('admin/article/article_format','Admin\ArticleController@article_format');
 Route::any('/','Admin\LoginController@login');
 Route::any('admin/login','Admin\LoginController@login');
