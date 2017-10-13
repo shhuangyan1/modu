@@ -81,6 +81,7 @@ $(function () {
 
     }
 
+    // 临时执行
     var pre = document.getElementById('preview');
     $(pre).load(function () {
         realist();
@@ -96,21 +97,28 @@ $(function () {
                 url: '/admin/article/ai_article',
                 data: {'url': url}
             },function (res) {
-                // 返回解析规则
-                // 返回目标路径
+                // 返回解析规则 rule: {title: '#activity-name',titleindex: '0',...}
+                // 返回目标路径 url: "www.modu.com/wx.html"
+                // 返回图片数据 images: ['http://img1.jpg','http://img2.png',...]
 
-                // if(res.fail){ //失败
-                //     $(".banner-result-t").append($('<span class="red"><i class="fa fa-warning"></i>未知来源，需要新的解析规则</span>'));
-                //     return;
-                // }
 
                 // 没有url，在iframe容器显示提示信息
+                $("#preview").attr("src", res.url);
+                var pre = document.getElementById('preview');
+                $(pre).load(function () {
+                    realist(res.rule);
+                })
 
-                realist(res.rule);
+                //
+
             })
         })
     }
 
+    /**
+     * 排版与封面选择
+     */
+    var show_
 
     /**
      * 确认发布

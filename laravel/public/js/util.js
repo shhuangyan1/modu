@@ -253,7 +253,7 @@ window.MD = {
      */
     ajax_post: function (config, callback, error) {
         var conf = {
-            url: '/',
+            url: MD.url + config.url,
             dataType: 'json',
             async: true,
             data: {}

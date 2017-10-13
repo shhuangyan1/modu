@@ -31,7 +31,7 @@ $(function () {
 
         // 更新规则
         MD.ajax_post({
-            url: '/123/d',
+            url: '/admin/article/modifyregular',
             data: value
         },function (res) {
             jeBox.close(san);
@@ -71,14 +71,15 @@ $(function () {
         console.log(value)
 
         MD.ajax_post({
-            url: '',
-            data: value
+            url: '/admin/article/addregular',
+            data: value,
+            dataType: 'text'
         }, function (res) {
             jeBox.close(san);
             jeBox.msg("新建规则成功",{"icon": 2, "time": 1});
 
             // 返回新数据的id
-            var id = res.id
+            var id = res
             var opt_html = '<a data-id="'+ id +'" class="rule-edit">编辑</a>' +
                 '<a data-id="'+ id +'" class="rule-confirm hide">完成</a>' +
                 '<a data-id="'+ id +'" class="rule-cancel hide">取消</a>'

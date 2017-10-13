@@ -81,6 +81,13 @@
                 </ul>
             </li>
             <li>
+                <h3><i class="fa fa-fw fa-users"></i>会员管理</h3>
+                <ul class="sub_menu" style="display: none;">
+                    <li><a href="{{url('admin/user/date')}}" target="main">会员数据分析</a></li>
+                    <li><a href="{{url('admin/user')}}" target="main">会员列表</a></li>
+                </ul>
+            </li>
+            <li>
             	<h3><i class="fa fa-fw fa-thumb-tack"></i>工具导航</h3>
                 <ul class="sub_menu" style="display: none;">
                     <li><a href="http://www.yeahzan.com/fa/facss.html" target="main">图标调用</a></li>

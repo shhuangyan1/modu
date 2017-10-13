@@ -47,6 +47,13 @@
             <iframe id="preview" name="preview" class="preview" src="http://www.modu.com/admin/category/create"></iframe>
             <!--http://mp.weixin.qq.com/s/A6o7i-iJYTjnEEcjwIIRnA-->
             <div class="prev-cover hide"></div>
+
+            <!--排版选择-->
+            <div id="typeset">
+                <div class="banner-title">排版选择</div>
+
+
+            </div>
         </div>
     </div>
 
@@ -77,7 +84,8 @@
             <div class="result-item" id="category-box">
                 <p>设置分类：</p>
 
-                <input class="cat_id" type="radio" name="cat_id" value="2" mdtext='分类'>
+                <input class="cat_id" type="radio" name="cat_id" value="2" mdtext='分类1'>
+                <input class="cat_id" type="radio" name="cat_id" value="3" mdtext='分类2'>
             </div>
             <div class="result-item">
                 <!--编辑器-->
@@ -86,6 +94,10 @@
         </div>
     </div>
   </div>
+
+    <div id="publish-btn-box">
+        <button></button>
+    </div>
 </div>
 <script>
 </script>
