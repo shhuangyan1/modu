@@ -62,7 +62,7 @@
             @foreach($data as $v)
             <tr>
                 <td>
-                    <a href="{{url('admin/activity/info')}}">{{$v->title}}</a>
+                    <a href="{{url('admin/activity/info')}}?id={{$v->id}}">{{$v->title}}</a>
                 </td>
                 <td class="tc">{{$v->limits}}</td>
                 <td class="tc">{{$v->time}}</td>

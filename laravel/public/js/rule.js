@@ -35,7 +35,7 @@ $(function () {
             data: value
         },function (res) {
             jeBox.close(san);
-            jeBox.msg("编辑成功",{"icon": 1, "time": 1});
+            jeBox.msg("编辑成功",{"icon": 2, "time": 1});
             cancel_edit(that);
 
         },function(){
@@ -75,7 +75,7 @@ $(function () {
             data: value
         }, function (res) {
             jeBox.close(san);
-            jeBox.msg("新建规则成功",{"icon": 1, "time": 1});
+            jeBox.msg("新建规则成功",{"icon": 2, "time": 1});
 
             // 返回新数据的id
             var id = res.id

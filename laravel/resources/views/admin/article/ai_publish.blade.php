@@ -52,7 +52,9 @@
 
     <!--编辑框-->
     <div class="edit-box">
-        <div class="banner-title banner-result-t">解析结果</div>
+        <div class="banner-title banner-result-t">解析结果
+            <span class="edit-error red hide"><i class="fa fa-warning"></i>解析规则过期或暂未收录</span>
+        </div>
         <div class="result-items-box">
             <div class="result-item">
                 <label>

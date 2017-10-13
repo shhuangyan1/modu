@@ -41,10 +41,6 @@ $(function () {
 
         rule_para = MD.merger(rule_para, rule)
 
-        if(rule_para == rule){
-
-        }
-
         var result = {};
 
         // 子页面的document
@@ -52,18 +48,33 @@ $(function () {
 
         // 解析结果赋值
         var title = $doc.get_ele(rule.title, rule.titleindex)
-        result.title = title.innerText.trim() || ''
         var author = $doc.get_ele(rule.author, rule.authorindex)
-        result.author = author.innerText.trim() || ''
         var from = $doc.get_ele(rule.from, rule.fromindex)
-        result.from = from.innerText.trim() || ''
         var content = $doc.get_ele(rule.content, rule.contentindex)
-        result.content = content.innerHTML || ''
+
+        if(title){
+            result.title = title.innerText.trim() || ''
+        }
+        if(author){
+            result.author = author.innerText.trim() || ''
+        }
+        if(from){
+            result.from = from.innerText.trim() || ''
+        }
+        if(content){
+            result.content = content.innerHTML || ''
+        }
+
+        if(result.title && result.author && result.from && result.content){
+        }else{
+            // 解析规则不符
+            $(".edit-error").removeClass("hide")
+            jeBox.msg("解析规则过期或暂未收录",{"icon": 3, "time": 2});
+        }
 
         // 显示解析值
         $(".result-items-box").setValue(result);
-        MD.res = result
-
+        // MD.res = result
         ue.addListener('ready',function () {
             ue.setContent(result.content)
         })
@@ -85,12 +96,15 @@ $(function () {
                 url: '/admin/article/ai_article',
                 data: {'url': url}
             },function (res) {
-                // 返回解析规则？
+                // 返回解析规则
+                // 返回目标路径
 
-                if(res.fail){ //失败
-                    $(".banner-result-t").append($('<span class="red"><i class="fa fa-warning"></i>未知来源，需要新的解析规则</span>'));
-                    return;
-                }
+                // if(res.fail){ //失败
+                //     $(".banner-result-t").append($('<span class="red"><i class="fa fa-warning"></i>未知来源，需要新的解析规则</span>'));
+                //     return;
+                // }
+
+                // 没有url，在iframe容器显示提示信息
 
 
             })

@@ -165,7 +165,7 @@ window.MD = {
     setValue: function ( container, data, callback) {
         var group = $(container).find("input,select,textarea") || []
         $.each(group,function (_,v) {
-            v.value = data[v.name]
+            v.value = data[v.name] || ""
         })
 
         typeof callback == "function" && callback(data)
@@ -291,7 +291,7 @@ window.MD = {
                 $("#edui1_iframeholder").css({height: '700px'})
             }else{
                 $("#myEditor").css({width: '100%', border: 'none'})
-                $("#edui1_iframeholder").css({height: '240px'})
+                $("#edui1_iframeholder").css({height: 'auto'})
             }
 
         })

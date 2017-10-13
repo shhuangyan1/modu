@@ -63,7 +63,7 @@
 
                     <div id="img-content">
 
-                        <h2 class="rich_media_title" id="activity-name">
+                        <h2 class="rich_media_title" id="actvity-name">
                             【第1076期】 如何无痛降低 if else 面条代码复杂度                                    </h2>
                         <div id="meta_content" class="rich_media_meta_list">
                             <em id="post-date" class="rich_media_meta rich_media_meta_text">2017-10-12</em>

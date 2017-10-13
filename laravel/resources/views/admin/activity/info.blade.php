@@ -90,7 +90,18 @@
     </div>
 </div>
 <script>
+    var id = MD.get_query('id').id
 
+    // 加载统计数据
+    MD.ajax_get({
+        url: '/admin/activity/act_id',
+        data: {'act_id': id}
+    },function (res) {
+
+    })
+
+    // 加载表格数据
+    
 </script>
 </body>
 </html>
