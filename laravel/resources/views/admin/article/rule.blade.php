@@ -72,48 +72,50 @@
                 </tr>
                 </thead>
                 <tbody id="tbody">
+                @foreach($regular as $v)
                 <tr>
                     <td class="tc">
                         <label class="text">
-                            <input type="text" disabled name="webname" value="" placeholder="平台名称，如微信公众平台">
+                            <input type="text" disabled name="webname" value="{{$v->webname}}" placeholder="平台名称，如微信公众平台">
                         </label>
                         <label class="text">
-                            <input type="text" disabled name="url" value="" placeholder="平台网址：如https://mp.weixin.qq.com">
+                            <input type="text" disabled name="url" value="{{$v->url}}" placeholder="平台网址：如https://mp.weixin.qq.com">
                         </label>
                     </td>
                     <td class="tc">
                         <label class="text">
                             <span>标题：</span>
-                            <input type="text" name="title" disabled placeholder="标题标签，如#title或.title">
-                            <input type="text" name="titleindex" class="number" disabled placeholder="标签索引，如0或1，默认为0">
+                            <input type="text" value="{{$v->title}}" name="title" disabled placeholder="标题标签，如#title或.title">
+                            <input type="text" value="{{$v->titleindex}}" name="titleindex" class="number" disabled placeholder="标签索引，如0或1，默认为0">
                         </label>
                         <label class="text">
                             <span>作者：</span>
-                            <input type="text" name="author" disabled placeholder="标题标签，如#author或.author">
-                            <input type="text" name="authorindex" disabled class="number" placeholder="标签索引，如0或1，默认为0">
+                            <input type="text" value="{{$v->author}}" name="author" disabled placeholder="标题标签，如#author或.author">
+                            <input type="text" value="{{$v->authorindex}}" name="authorindex" disabled class="number" placeholder="标签索引，如0或1，默认为0">
                         </label>
                         <label class="text">
                             <span>来源：</span>
-                            <input type="text" name="from" disabled placeholder="标题标签，如#from或.from">
-                            <input type="text" name="fromindex" class="number" disabled placeholder="标签索引，如0或1，默认为0">
+                            <input type="text" value="{{$v->from}}" name="from" disabled placeholder="标题标签，如#from或.from">
+                            <input type="text" value="{{$v->fromindex}}" name="fromindex" class="number" disabled placeholder="标签索引，如0或1，默认为0">
                         </label>
                         <label class="text">
                             <span>日期：</span>
-                            <input type="text" name="date" disabled placeholder="标题标签，如#date或.date">
-                            <input type="text" name="dateindex" class="number" disabled placeholder="标签索引，如0或1，默认为0">
+                            <input type="text" value="{{$v->date}}" name="date" disabled placeholder="标题标签，如#date或.date">
+                            <input type="text" value="{{$v->dateindex}}" name="dateindex" class="number" disabled placeholder="标签索引，如0或1，默认为0">
                         </label>
                         <label class="text">
                             <span>正文：</span>
-                            <input type="text" name="content" disabled placeholder="标题标签，如#content或.content">
-                            <input type="text" name="contentindex" class="number" disabled placeholder="标签索引，如0或1，默认为0">
+                            <input type="text" value="{{$v->content}}" name="content" disabled placeholder="标题标签，如#content或.content">
+                            <input type="text" value="{{$v->contentindex}}" name="contentindex" class="number" disabled placeholder="标签索引，如0或1，默认为0">
                         </label>
                     </td>
                     <td class="tc opt">
-                        <a data-id="1" class="rule-edit">编辑</a>
-                        <a data-id="1" class="rule-confirm hide">完成</a>
-                        <a data-id="1" class="rule-cancel hide">取消</a>
+                        <a data-id="{{$v->id}}" class="rule-edit">编辑</a>
+                        <a data-id="{{$v->id}}" class="rule-confirm hide">完成</a>
+                        <a data-id="{{$v->id}}" class="rule-cancel hide">取消</a>
                     </td>
                 </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

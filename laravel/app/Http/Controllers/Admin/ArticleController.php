@@ -159,7 +159,9 @@ Class ArticleController extends Controller{
 	}
 
 	public function rule(){
-		return view("admin/article/rule");
+		$regular = DB::table("regular")
+				->get();
+		return view("admin/article/rule",compact('regular'));
 	}
 	public function detail(){
     		return view("admin/article/detail");
@@ -473,12 +475,6 @@ Class ArticleController extends Controller{
 			$date['msg']="更新成功！";
 		}
 		echo json_encode($date);
-	}
-	//解析规则管理，显示规则
-	public function showregular(){
-		$regualr = DB::table("regular")
-				->get();
-		echo json_encode($regualr);
 	}
 
 }
