@@ -466,7 +466,10 @@ Class ArticleController extends Controller{
 	//解析规则管理，修改规则
 	public function modifyregular(Request $request){
 		$input=$request->input();
-		$regular = DB::table("regular")->update($input);
+		$map['id']=$input['id'];
+		$regular = DB::table("regular")
+				->where($map)
+				->update($input);
 		if($regular){
 			$date['code']="success";
 			$date['msg']="更新成功！";
