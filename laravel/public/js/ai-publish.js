@@ -23,7 +23,7 @@ $(function () {
     MD.scrollTop();
 
     /**
-     * 解析结果
+     * 解析结果，参数：解析规则
      */
     var realist = function (rule_para) {
         var rule = {
@@ -106,10 +106,15 @@ $(function () {
 
                 // 没有url，在iframe容器显示提示信息
 
-
+                realist(res.rule);
             })
         })
     }
+
+
+    /**
+     * 确认发布
+     */
 
 
     bind();

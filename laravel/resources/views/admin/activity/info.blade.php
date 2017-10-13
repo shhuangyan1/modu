@@ -50,13 +50,7 @@
                 <th>发布时间</th>
             </tr>
             </thead>
-            <tbody>
-
-            <tr>
-                <td>活动名称</td>
-                <td class="tc">88 / 100</td>
-                <td class="tc">2017-10-11</td>
-            </tr>
+            <tbody id="statistics">
             </tbody>
         </table>
 
@@ -96,13 +90,22 @@
     // 加载统计数据
     MD.ajax_get({
         url: '/admin/activity/act_id',
-        data: {'act_id': id}
+        data: {'id': id}
     },function (res) {
-
+        var statistics = '<tr>\n' +
+            '                <td>'+res.title+'</td>\n' +
+            '                <td class="tc">'+res.join+' / '+res.limits+'</td>\n' +
+            '                <td class="tc">'+res.addtime+'</td>\n' +
+            '            </tr>'
+        $("#statistics").html(statistics)
     })
 
-    // 加载表格数据
-    
+//    MD.ajax_get({
+//        url: '/admin/activity/act_ids',
+//        data: {'id': id}
+//    },function (res) {
+//
+//    })
 </script>
 </body>
 </html>
