@@ -7,10 +7,12 @@ function analyze() {
 }
 
 $(function () {
+    var scope = {}
     /**
      * 页面初始化加载
      */
     MD.Form("#category-box",{type: "radio"});
+    MD.Form(".recommend-item",{type: "checkbox"});
     $("#editor-box").html('<script type="text/plain" id="myEditor" name="content" style="width:100%;height:240px;"><\/script>')
     //实例化编辑器
     //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
@@ -25,93 +27,94 @@ $(function () {
     /**
      * 解析结果，参数：解析规则
      */
-    var realist = function (rule_para) {
-        var rule = {
-            title: '#activity-name',
-            titleindex: '0',
-            author: '.rich_media_meta',
-            authorindex: '1',
-            from: '#post-user',
-            fromindex: '0',
-            date: '#post-date',
-            dateindex: '0',
-            content: '#js_content',
-            contentindex: '0'
-        }
-
-        rule_para = MD.merger(rule_para, rule)
+    var realist = function (rule) {
 
         var result = {};
-
         // 子页面的document
         var $doc = $($("#preview").contents()[0]);
 
+        // 预处理
+        MD.release_before($doc, rule.url)
+
         // 解析结果赋值
-        var title = $doc.get_ele(rule.title, rule.titleindex)
-        var author = $doc.get_ele(rule.author, rule.authorindex)
-        var from = $doc.get_ele(rule.from, rule.fromindex)
-        var content = $doc.get_ele(rule.content, rule.contentindex)
+        var title = $doc.get_ele(rule.title, rule.titleindex),
+            author = $doc.get_ele(rule.author, rule.authorindex),
+            from = $doc.get_ele(rule.from, rule.fromindex),
+            content = $doc.get_ele(rule.content, rule.contentindex)
 
         if(title){
-            result.title = title.innerText.trim() || ''
-        }
+            result.title = title.innerText.trim() || ''}
         if(author){
-            result.author = author.innerText.trim() || ''
-        }
+            result.author = author.innerText.trim() || ''}
         if(from){
-            result.from = from.innerText.trim() || ''
-        }
+            result.from = from.innerText.trim() || ''}
         if(content){
-            result.content = content.innerHTML || ''
-        }
+            result.content = content.innerHTML || ''}
 
         if(result.title && result.author && result.from && result.content){
         }else{
-            // 解析规则不符
             $(".edit-error").removeClass("hide")
             jeBox.msg("解析规则过期或暂未收录",{"icon": 3, "time": 2});
         }
 
         // 显示解析值
         $(".result-items-box").setValue(result);
-        // MD.res = result
-        ue.addListener('ready',function () {
-            ue.setContent(result.content)
-        })
+        // 编辑器赋值
+        ue.setContent(result.content)
 
     }
 
-    // 临时执行
-    var pre = document.getElementById('preview');
-    $(pre).load(function () {
-        realist();
-    })
+    // 通过url匹配目标规则
+    var get_rule = function (url) {
+        var result_rule = {};
+        // 获取全部解析规则
+        MD.ajax_get({
+            url: '/admin/article/showregular',
+            async: false
+        }, function (res) {
+
+            MD.rule = scope.rule = res;
+
+            for(var i=0; i<res.length; i++){
+                if(url.indexOf(res[i].url) >= 0){
+                    MD.current_rule = result_rule = res[i]
+                }
+            }
+        })
+        return result_rule;
+    }
 
 
     var bind = function () {
         // 开始解析
         $("#start-release").on("click",function () {
-            var url = analyze()
-            if(url)
-            MD.ajax_post({
-                url: '/admin/article/ai_article',
-                data: {'url': url}
-            },function (res) {
-                // 返回解析规则 rule: {title: '#activity-name',titleindex: '0',...}
-                // 返回目标路径 url: "www.modu.com/wx.html"
-                // 返回图片数据 images: ['http://img1.jpg','http://img2.png',...]
+            var url = analyze(); // 验证并返回输入的url
+            var san = jeBox.loading(1,"正在解析…");
+            // 通过url获取解析规则， {title: '#activity-name',titleindex: '0',...}
+            if(typeof url == 'string'){
+                var result_rule = get_rule(url)
+                MD.ajax_post({
+                    url: '/admin/article/ai_article',
+                    data: {'url': url}
+                },function (res) {
+                    jeBox.close(san)
 
+                    // 返回图片数据
+                    MD.rule_image = res.image;
+                    // 没有url，在iframe容器显示提示信息
+                    $("#preview").attr("src", MD.url+'/'+res.file);
+                    var pre = document.getElementById('preview');
+                    $(pre).load(function () {
+                        realist(result_rule);
+                    })
 
-                // 没有url，在iframe容器显示提示信息
-                $("#preview").attr("src", res.url);
-                var pre = document.getElementById('preview');
-                $(pre).load(function () {
-                    realist(res.rule);
+                },function () {
+                    jeBox.close(san)
                 })
+            }else{
+                jeBox.close(san)
+            }
 
-                //
-
-            })
         })
     }
 

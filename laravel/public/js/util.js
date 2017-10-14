@@ -42,12 +42,21 @@
         MD.setValue(this, data, callback)
     }
 
-    // 查找元素
+    // 查找特定元素,cont元素id或class，index元素的索引
     $.fn.get_ele = function (cont, index) {
         cont = ""+ cont + ""
         return $(this).find( cont )[index]
     }
 
+    // 查找元素，用于解析页面
+    $.fn.find_ele = function (cont, index) {
+        cont = ""+ cont + ""
+        if(index){
+            return $(this).find( cont )[index]
+        }else{
+            return $(this).find( cont )
+        }
+    }
 
 })(jQuery)
 
@@ -62,20 +71,7 @@ window.MD = {
     hostname: window.location.hostname,
     url: window.location.protocol + "//" + window.location.hostname,
     https: 'https://shtongnian.com',
-    preview : function () {
-        var img = MD.protocol + "//" + MD.hostname + "/storage/icons/pre-bg.png"
-        var bg_shadow = $("<div class='preview-bg'><img class='bg-img' src='" + img +"'><span class='close-prev-bg'></span></div>")
-        var bg_img = "<div></div>"
 
-
-        bg_shadow.append($(bg_img))
-
-        $("body").append(bg_shadow)
-    },
-
-    preview_article: function () {
-
-    },
     /**
      * 实现表单元素UI效果
      * @param elem
@@ -280,7 +276,7 @@ window.MD = {
     // 为编辑器添加微信图标
     //
     wechat: function () {
-        var src = MD.url + '/image/uedit-wechat.png';
+        var src = MD.url + '/storage/icons/uedit-wechat.png';
         var img = $("<img id='wechat-preview' src=" + src +" title='微信编辑模式' alt='wechat'>")
 
         img.on("click", function () {
@@ -323,6 +319,23 @@ window.MD = {
             $(this).val(Number(val))
         })
     },
+
+    /**
+     * 页面解析时，是否需要特殊的解析规则
+     * 如： 微信公众号文章中的figure标签为自定义标签，innerHTML无法解析，所以需要特殊处理
+     * $doc 为目标iframe,document
+     */
+    release_before: function ($doc, current_url) {
+        if(current_url == 'https://mp.weixin.qq.com'){
+            // 解决微信 的figure标签无法解析问题
+            var f = $doc.find('figure')
+            $.each(f, function (i, v) {
+                var wp = $(v).wrap("<div class='md-wrap'></div>")
+                $(v).find('img').attr({'src': MD.url+'/'+ MD.rule_image[i], 'width':'100%'})
+                wp.parent().html($(v).html())
+            })
+        }
+    }
 
 
 

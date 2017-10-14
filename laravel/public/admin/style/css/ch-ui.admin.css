@@ -1126,3 +1126,6 @@ table.inner_list tr td input {
 .fixed-arr:hover{
     color: #333;
 }
+.width_100{
+    width: 100%;
+}

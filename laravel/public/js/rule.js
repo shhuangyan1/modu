@@ -24,6 +24,7 @@ $(function () {
     // 点击完成
     $(document).on("click",'.rule-confirm', function () {
         var that = $(this)
+        var id = {'id': that.data("id")}
 
         var san = jeBox.loading(2,"Loading...");
         // 获取数据
@@ -32,7 +33,7 @@ $(function () {
         // 更新规则
         MD.ajax_post({
             url: '/admin/article/modifyregular',
-            data: value
+            data: MD.merger(value, id)
         },function (res) {
             jeBox.close(san);
             jeBox.msg("编辑成功",{"icon": 2, "time": 1});
@@ -75,6 +76,8 @@ $(function () {
             data: value,
             dataType: 'text'
         }, function (res) {
+
+            cancel_edit(that)
             jeBox.close(san);
             jeBox.msg("新建规则成功",{"icon": 2, "time": 1});
 
@@ -84,8 +87,6 @@ $(function () {
                 '<a data-id="'+ id +'" class="rule-confirm hide">完成</a>' +
                 '<a data-id="'+ id +'" class="rule-cancel hide">取消</a>'
             that.parent().html(opt_html)
-
-            cancel_edit(that)
 
         },function () {
             jeBox.close(san);

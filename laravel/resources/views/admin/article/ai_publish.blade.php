@@ -29,12 +29,10 @@
 </div>
 <!--面包屑导航 结束-->
 
-<div  class="result_wrap">
-    <!--<form action="{{url('admin/article/ai_article')}}" onsubmit="return analyze()">-->
+<div class="result_wrap">
         <input type="text" id="url" name="url" placeholder="输入目标页面网址，http://...">
-        <input id="start-release" type="submit" value="开始解析">
-    <!--</form>-->
-    <!--解析框-->
+        <button id="start-release" class="button" >开始解析</button>
+  <!--解析框-->
   <div class="result-box clear">
     <div class="release-box">
         <div class="banner-title">解析显示</div>
@@ -44,8 +42,8 @@
         </div>
         <div class="preview-box">
             <div class="preview-back"></div>
-            <iframe id="preview" name="preview" class="preview" src="http://www.modu.com/admin/category/create"></iframe>
-            <!--http://mp.weixin.qq.com/s/A6o7i-iJYTjnEEcjwIIRnA-->
+            <iframe id="preview" name="preview" class="preview" src=""></iframe>
+            <!--<iframe id="preview" name="preview" class="preview" src="{{url('admin/category/create')}}"></iframe>-->
             <div class="prev-cover hide"></div>
 
             <!--排版选择-->
@@ -81,11 +79,23 @@
                     <input type="text" class="from" name="from" placeholder="文章来源">
                 </label>
             </div>
+            <div class="result-item">
+                <label>
+                    <span>日期：</span>
+                    <input type="text" class="date" name="date" placeholder="文章发布日期">
+                </label>
+            </div>
             <div class="result-item" id="category-box">
                 <p>设置分类：</p>
 
                 <input class="cat_id" type="radio" name="cat_id" value="2" mdtext='分类1'>
                 <input class="cat_id" type="radio" name="cat_id" value="3" mdtext='分类2'>
+            </div>
+            <div class="result-item recommend-item">
+                <label>
+                    <span>是否推荐：</span>
+                    <input type="checkbox" name="recommend" value="true" mdtext="推荐">
+                </label>
             </div>
             <div class="result-item">
                 <!--编辑器-->
@@ -96,7 +106,7 @@
   </div>
 
     <div id="publish-btn-box">
-        <button></button>
+        <button class="button confirm-button">确定发布</button>
     </div>
 </div>
 <script>
