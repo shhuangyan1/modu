@@ -256,23 +256,44 @@ Class ArticleController extends Controller{
 			$current = $_GET['current'];
 			$current = $current - 8;
 			$map['cat_id'] = $cat_id;
-			$article = DB::table("article")
-					->where($map)
-					->where("id","<","$current")
-					->select("title","author","compose","from","id","view","image")
-					->orderby("id","desc")
-					->limit(8)
-					->get();
-			$num = DB::table("article")
-					->where($map)
-					->where("id","<","$current")
-					->select("title","author","compose","from","id","view","image")
-					->limit(8)
-					->count();
-			if($num == 0){
-				$data['msg']='没有最新的了！';
+			if($map['cat_id']==0){
+				//$info = DB::table('articleconfirm')->join('article','article.id','=','articleconfirm.article_id')->join('category','article.cat_id','=','category.id')->select('articleconfirm.*','article.title','article.author','category.cat_name')->paginate(10);
+				$article = DB::table("article_recommend")
+						->join("article","article.id","=","article_recommend.article_id")
+						->select("title","author","compose","from","article.id","view","image")
+						->where("article_id","<","$current")
+						->orderby("article_recommend.id","desc")
+						->limit(8)
+						->get();
+				$num = DB::table('article_recommend')
+						->where("article_id","<","$current")
+						->limit(8)
+						->count();
+				if($num == 0){
+					$data['msg']='没有最新的了！';
+				}else{
+					$data['msg']="页面已加载".$num."条数据";
+				}
+
 			}else{
-				$data['msg']="页面已加载".$num."条数据";
+				$article = DB::table("article")
+						->where($map)
+						->where("id","<","$current")
+						->select("title","author","compose","from","id","view","image")
+						->orderby("id","desc")
+						->limit(8)
+						->get();
+				$num = DB::table("article")
+						->where($map)
+						->where("id","<","$current")
+						->select("title","author","compose","from","id","view","image")
+						->limit(8)
+						->count();
+				if($num == 0){
+					$data['msg']='没有最新的了！';
+				}else{
+					$data['msg']="页面已加载".$num."条数据";
+				}
 			}
 			$data['num'] = $num;
 			$data['article']=$article;
@@ -428,19 +449,21 @@ Class ArticleController extends Controller{
 	}
 
 	public function ai_article(){
-		//var_dump($_GET);
-		$url = @$_GET['url'];
+		//var_dump($_POST);
+		$url = @$_POST['url'];
 //echo $url;
 		if(!empty($url)) {
 			$html = file_get_contents($url);
-			file_put_contents('/:/htmls/'.rand(1000,9999)*time().'.html',$html);
+			$a = date("YmdHis");
+			file_put_contents('htmls/'.$a.'.html',$html);
 
 //echo $html;
 			$pattern = "/<[img|IMG].*?data-src=[\'|\"](.*?(?:[\.gif|\.jpg|\.png|\.jpeg]))[\'|\"].*?[\/]?>/";
 
 			preg_match_all($pattern, $html, $match);
 			$count = sizeof($match[1]);
-			echo $count;
+			$a = 'htmls/'.$a.'.html';
+			echo $a;
 			/*$str1 = file_get_contents($match[1][0]);
             $str2 = file_get_contents($match[1][1]);
             file_put_contents('images/1.jpg',$str1);
@@ -451,9 +474,12 @@ Class ArticleController extends Controller{
 //file_put_contents('images/b.gif',$str);
 			for ($i = 0; $i < $count; $i++) {
 				$str[] = file_get_contents($match[1][$i]);
-				file_put_contents('/:images/'.$i . '.jpg', $str[$i]);
+				file_put_contents('image/'.$i . '.jpg', $str[$i]);
+				$b[]='image/'.$i.'.jpg';
 
 			}
+			$b['a']=$a;
+			echo json_encode($b);
 		}
 	}
 
