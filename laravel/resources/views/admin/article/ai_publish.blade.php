@@ -107,13 +107,29 @@
 
     <div id="publish-btn-box" class="publish-btn-box">
         <div class="publish-inner">
-            <!--排版选择-->
-            <div id="typeset">
-                <div class="banner-title">排版选择</div>
-
-
+            <div class="pb-arrow pb-up-arrow">
+                <i id="pb-opt-arrow" class="fa fa-caret-up"></i>  <!--fa-caret-down-->
             </div>
-            <button class="button confirm-button">确定发布</button>
+            <!--隐藏的主体内容 -->
+            <div class="pb-main">
+                <div class="images-box">
+                    <div class="banner-title">文章图片</div>
+                    <div class="imgs-box clear">
+                        <div class="imgs-item" style="background: url('http://www.modu.com/image/15079742197598.jpg') center / contain no-repeat"></div>
+                        <div class="imgs-item" style="background: url('http://www.modu.com/image/15079742233892.jpg') center / contain no-repeat"></div>
+                        <div class="imgs-item" style="background: url('http://www.modu.com/image/15079742255663.jpg') center / contain no-repeat"></div>
+                    </div>
+                </div>
+                <!--排版选择-->
+                <div id="typeset">
+                    <div class="banner-title">排版选择</div>
+                    <div class="typeset-box">
+                        <div class="typeset-item"></div>
+                    </div>
+                </div>
+                <button class="button confirm-button">确定发布</button>
+            </div>
+
         </div>
     </div>
 </div>

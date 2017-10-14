@@ -343,7 +343,7 @@ window.MD = {
     },
 
     /**
-     * 替换源页面中全部图片后台
+     * 替换源页面中全部图片
      */
     change_images: function ($doc, current_rule) {
         if(MD.rule_image && MD.rule_image.length > 0){

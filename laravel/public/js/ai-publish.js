@@ -36,7 +36,15 @@ $(function () {
      * 解析结果，参数：解析规则
      */
     var realist = function (rule) {
-
+        if(!rule){
+            var idxs = jeBox.alert('未识别的解析规则', {
+                icon: 3,
+                maskClose: true
+            }, function(){
+                jeBox.close(idxs);
+            });
+            return;
+        }
         var result = {};
         // 子页面的document
         var $doc = $($("#preview").contents()[0]);
@@ -100,7 +108,6 @@ $(function () {
                 }
             })
         }
-
         return MD.current_rule;
     }
 
@@ -138,7 +145,7 @@ $(function () {
 
         })
 
-        //
+        // 页面滚动，左侧预览框固定
         document.addEventListener('scroll', function (e) {
             var off = $(".release-box-posi").offset().top
             // console.log(off)
@@ -151,6 +158,22 @@ $(function () {
                 $(".release-box").removeClass('position_fix')
             }
         })
+
+        // 底部操作栏，箭头事件
+        $(".pb-arrow").on('click', function () {
+            var arrow = $("#pb-opt-arrow")
+            arrow.toggleClass('fa-caret-down').toggleClass('fa-caret-up')
+
+            if(arrow.hasClass('fa-caret-down')){
+
+                // $(".pb-main").animate({'height': 'auto'}, 500)
+            }else{
+
+                // $(".pb-main").animate({'height': '0px'}, 500)
+            }
+        })
+
+
     }
 
     /**
