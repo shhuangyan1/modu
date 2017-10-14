@@ -474,8 +474,9 @@ Class ArticleController extends Controller{
 //file_put_contents('images/b.gif',$str);
 			for ($i = 0; $i < $count; $i++) {
 				$str[] = file_get_contents($match[1][$i]);
-				file_put_contents('image/'.time().rand(1000,9999).'.jpg', $str[$i]);
-				$b['image'][]='image/'.time().rand(1000,9999).'.jpg';
+				$c = time().rand(1000,9999);
+				file_put_contents('image/'.$c.'.jpg', $str[$i]);
+				$b['image'][]='image/'.$c.'.jpg';
 
 			}
 			$b['file']=$a;
