@@ -475,10 +475,10 @@ Class ArticleController extends Controller{
 			for ($i = 0; $i < $count; $i++) {
 				$str[] = file_get_contents($match[1][$i]);
 				file_put_contents('image/'.$i . '.jpg', $str[$i]);
-				$b[]='image/'.$i.'.jpg';
+				$b['image'][]='image/'.time().rand(1000,9999).'.jpg';
 
 			}
-			$b['a']=$a;
+			$b['file']=$a;
 			echo json_encode($b);
 		}
 	}
