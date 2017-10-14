@@ -16,6 +16,8 @@
 
     <script type="text/javascript" src="{{asset('js/util.js')}}"></script>
     <script src="{{asset('lirary/jedate/jquery.jebox.js')}}" ></script>
+    <script src="{{asset('lirary/jedate/jedate.min.js')}}"></script>
+
 
     <link rel="stylesheet" href="{{asset('css/ai-publish.css')}}">
     <link rel="stylesheet" href="{{asset('css/mdForm.css')}}">
@@ -82,7 +84,7 @@
             <div class="result-item">
                 <label>
                     <span>日期：</span>
-                    <input type="text" class="date" name="date" placeholder="文章发布日期">
+                    <input type="text" id="date" class="date" readonly name="date" placeholder="文章发布日期">
                 </label>
             </div>
             <div class="result-item" id="category-box">

@@ -321,20 +321,27 @@ window.MD = {
     },
 
     /**
+     * iframe加载完成后（onload）
      * 页面解析时，是否需要特殊的解析规则
      * 如： 微信公众号文章中的figure标签为自定义标签，innerHTML无法解析，所以需要特殊处理
      * $doc 为目标iframe,document
      */
-    release_before: function ($doc, current_url) {
-        if(current_url == 'https://mp.weixin.qq.com'){
+    release_before: function ($doc, current_rule) {
+        if(current_rule.url == 'https://mp.weixin.qq.com'){
             // 解决微信 的figure标签无法解析问题
-            var f = $doc.find('figure')
+            var f = $doc.find(current_rule.content).find('figure')
             $.each(f, function (i, v) {
                 var wp = $(v).wrap("<div class='md-wrap'></div>")
                 $(v).find('img').attr({'src': MD.url+'/'+ MD.rule_image[i], 'width':'100%'})
                 wp.parent().html($(v).html())
+            });
+
+            var imgs = $doc.find(current_rule.content).find('img')
+            $.each(imgs, function (i, v) {
+                $(v).attr({'src': MD.url+'/'+ MD.rule_image[i], 'width':'100%'})
             })
         }
+
     }
 
 

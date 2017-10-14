@@ -13,6 +13,14 @@ $(function () {
      */
     MD.Form("#category-box",{type: "radio"});
     MD.Form(".recommend-item",{type: "checkbox"});
+    jeDate({
+        dateCell:"#date",
+        format:"YYYY-MM-DD",
+        isTime: false,
+        minDate:"2000-10-01",
+        maxDate:"2099-01-01"
+    });
+
     $("#editor-box").html('<script type="text/plain" id="myEditor" name="content" style="width:100%;height:240px;"><\/script>')
     //实例化编辑器
     //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
@@ -34,7 +42,7 @@ $(function () {
         var $doc = $($("#preview").contents()[0]);
 
         // 预处理
-        MD.release_before($doc, rule.url)
+        MD.release_before($doc, rule)
 
         // 解析结果赋值
         var title = $doc.get_ele(rule.title, rule.titleindex),
@@ -69,22 +77,31 @@ $(function () {
 
     // 通过url匹配目标规则
     var get_rule = function (url) {
-        var result_rule = {};
         // 获取全部解析规则
-        MD.ajax_get({
-            url: '/admin/article/showregular',
-            async: false
-        }, function (res) {
-
-            MD.rule = scope.rule = res;
-
-            for(var i=0; i<res.length; i++){
-                if(url.indexOf(res[i].url) >= 0){
-                    MD.current_rule = result_rule = res[i]
+        if(MD.rule){
+            for(var j=0; j<MD.rule.length; j++){
+                if(url.indexOf(MD.rule[j].url) >= 0){
+                    MD.current_rule  = MD.rule[j]
+                    return;
                 }
             }
-        })
-        return result_rule;
+        }else{
+            MD.ajax_get({
+                url: '/admin/article/showregular',
+                async: false
+            }, function (res) {
+
+                MD.rule  = res;
+
+                for(var i=0; i<res.length; i++){
+                    if(url.indexOf(res[i].url) >= 0){
+                        MD.current_rule  = res[i]
+                    }
+                }
+            })
+        }
+
+        return MD.current_rule;
     }
 
 
@@ -95,7 +112,7 @@ $(function () {
             var san = jeBox.loading(1,"正在解析…");
             // 通过url获取解析规则， {title: '#activity-name',titleindex: '0',...}
             if(typeof url == 'string'){
-                var result_rule = get_rule(url)
+                get_rule(url); // 通过url，将当前规则存放在MD.current_rule中
                 MD.ajax_post({
                     url: '/admin/article/ai_article',
                     data: {'url': url}
@@ -108,7 +125,7 @@ $(function () {
                     $("#preview").attr("src", MD.url+'/'+res.file);
                     var pre = document.getElementById('preview');
                     $(pre).load(function () {
-                        realist(result_rule);
+                        realist(MD.current_rule);
                         jeBox.close(san_2)
                     })
 
