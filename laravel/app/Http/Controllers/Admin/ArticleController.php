@@ -462,8 +462,8 @@ Class ArticleController extends Controller{
 
 			preg_match_all($pattern, $html, $match);
 			$count = sizeof($match[1]);
+			//var_dump($match[1]);die;
 			$a = 'htmls/'.$a.'.html';
-			//echo $a;
 			/*$str1 = file_get_contents($match[1][0]);
             $str2 = file_get_contents($match[1][1]);
             file_put_contents('images/1.jpg',$str1);
@@ -481,6 +481,7 @@ Class ArticleController extends Controller{
 			}
 			$b['file']=$a;
 			echo json_encode($b);
+
 		}
 	}
 	//回传全部规则，给智能发布文章页面
