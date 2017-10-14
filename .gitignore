@@ -5,3 +5,6 @@
 /laravel/public/storage/uploads/*
 /laravel/public/ueditor/php/upload/image/*
 /laravel/public/storage/activityvideo/*
+/laravel/public/storage/activity/*
+/laravel/public/htmls
+/laravel/public/image

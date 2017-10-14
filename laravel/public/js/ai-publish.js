@@ -40,6 +40,7 @@ $(function () {
         var title = $doc.get_ele(rule.title, rule.titleindex),
             author = $doc.get_ele(rule.author, rule.authorindex),
             from = $doc.get_ele(rule.from, rule.fromindex),
+            date = $doc.get_ele(rule.date, rule.dateindex),
             content = $doc.get_ele(rule.content, rule.contentindex)
 
         if(title){
@@ -48,6 +49,8 @@ $(function () {
             result.author = author.innerText.trim() || ''}
         if(from){
             result.from = from.innerText.trim() || ''}
+        if(date){
+            result.date = date.innerText.trim() || ''}
         if(content){
             result.content = content.innerHTML || ''}
 
@@ -98,7 +101,7 @@ $(function () {
                     data: {'url': url}
                 },function (res) {
                     jeBox.close(san)
-
+                    var san_2 = jeBox.loading(1,"等待目标页面加载完成…");
                     // 返回图片数据
                     MD.rule_image = res.image;
                     // 没有url，在iframe容器显示提示信息
@@ -106,6 +109,7 @@ $(function () {
                     var pre = document.getElementById('preview');
                     $(pre).load(function () {
                         realist(result_rule);
+                        jeBox.close(san_2)
                     })
 
                 },function () {
