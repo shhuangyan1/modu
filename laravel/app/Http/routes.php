@@ -29,6 +29,7 @@ Route::any('admin/article/addregular','Admin\ArticleController@addregular');
 Route::any('admin/article/showregular','Admin\ArticleController@showregular');
 Route::any('admin/article/modifyregular','Admin\ArticleController@modifyregular');
 Route::any('admin/article/article_format','Admin\ArticleController@article_format');
+Route::any('admin/article/confirm_release','Admin\ArticleController@confirm_release');
 Route::any('/','Admin\LoginController@login');
 Route::any('admin/login','Admin\LoginController@login');
 Route::get('code','Admin\LoginController@code');
