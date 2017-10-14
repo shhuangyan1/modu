@@ -482,6 +482,12 @@ Class ArticleController extends Controller{
 			echo json_encode($b);
 		}
 	}
+	//回传全部规则，给智能发布文章页面
+	public function showregular(){
+		$regular = DB::table("regular")
+				->get();
+		echo json_encode($regular);
+	}
 
 	//解析规则管理，添加规则
 	public function addregular(Request $request){
