@@ -463,7 +463,7 @@ Class ArticleController extends Controller{
 			preg_match_all($pattern, $html, $match);
 			$count = sizeof($match[1]);
 			$a = 'htmls/'.$a.'.html';
-			echo $a;
+			//echo $a;
 			/*$str1 = file_get_contents($match[1][0]);
             $str2 = file_get_contents($match[1][1]);
             file_put_contents('images/1.jpg',$str1);
@@ -474,7 +474,7 @@ Class ArticleController extends Controller{
 //file_put_contents('images/b.gif',$str);
 			for ($i = 0; $i < $count; $i++) {
 				$str[] = file_get_contents($match[1][$i]);
-				file_put_contents('image/'.$i . '.jpg', $str[$i]);
+				file_put_contents('image/'.time().rand(1000,9999).'.jpg', $str[$i]);
 				$b['image'][]='image/'.time().rand(1000,9999).'.jpg';
 
 			}
