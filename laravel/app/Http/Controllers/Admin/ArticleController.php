@@ -442,7 +442,10 @@ Class ArticleController extends Controller{
 		echo json_encode($detail,JSON_UNESCAPED_UNICODE);
 	}
 	public function ai_publish(){
-		return view('admin/article/ai_publish');
+		$category = DB::table("category")
+				->get();
+		//dump($category);die;
+		return view('admin/article/ai_publish',compact('category'));
 	}
 	public function preview(){
         return view('admin/article/preview');

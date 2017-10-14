@@ -86,14 +86,9 @@
                     <span>设置分类：</span>
                 </label>
                 <div style="margin-left: 90px;">
-                    <input class="cat_id" type="radio" name="cat_id" value="2" mdtext='分类1'>
-                    <input class="cat_id" type="radio" name="cat_id" value="3" mdtext='分类2'>
-                    <input class="cat_id" type="radio" name="cat_id" value="3" mdtext='分类2'>
-                    <input class="cat_id" type="radio" name="cat_id" value="3" mdtext='分类2'>
-                    <input class="cat_id" type="radio" name="cat_id" value="3" mdtext='分类2'>
-                    <input class="cat_id" type="radio" name="cat_id" value="3" mdtext='分类2'>
-                    <input class="cat_id" type="radio" name="cat_id" value="3" mdtext='分类2'>
-                    <input class="cat_id" type="radio" name="cat_id" value="3" mdtext='分类2'>
+                    @foreach($category as $v)
+                    <input class="cat_id" type="radio" name="cat_id" value="{{$v->id}}" mdtext='{{$v->cat_name}}'>
+                    @endforeach
                 </div>
             </div>
             <div class="result-item recommend-item">
