@@ -137,6 +137,20 @@ $(function () {
             }
 
         })
+
+        //
+        document.addEventListener('scroll', function (e) {
+            var off = $(".release-box-posi").offset().top
+            // console.log(off)
+            var this_off = $(document).scrollTop()
+            // console.log(this_off)
+
+            if(this_off >= off){
+                $(".release-box").addClass('position_fix')
+            }else{
+                $(".release-box").removeClass('position_fix')
+            }
+        })
     }
 
     /**

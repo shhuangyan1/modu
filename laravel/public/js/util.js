@@ -335,13 +335,23 @@ window.MD = {
                 $(v).find('img').attr({'src': MD.url+'/'+ MD.rule_image[i], 'width':'100%'})
                 wp.parent().html($(v).html())
             });
+        }
 
+
+        // 每个解析规则下，都执行
+        MD.change_images($doc, current_rule)
+    },
+
+    /**
+     * 替换源页面中全部图片后台
+     */
+    change_images: function ($doc, current_rule) {
+        if(MD.rule_image && MD.rule_image.length > 0){
             var imgs = $doc.find(current_rule.content).find('img')
             $.each(imgs, function (i, v) {
                 $(v).attr({'src': MD.url+'/'+ MD.rule_image[i], 'width':'100%'})
             })
         }
-
     }
 
 

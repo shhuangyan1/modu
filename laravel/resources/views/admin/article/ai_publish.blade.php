@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>智能抓取文章</title>
+    <title>智能发布文章</title>
     <link rel="stylesheet" href="{{asset('admin/style/css/ch-ui.admin.css')}}">
     <link rel="stylesheet" href="{{asset('admin/style/font/css/font-awesome.min.css')}}">
     <link rel="stylesheet" href="{{asset('lirary/jedate/skin/default.css')}}">
@@ -27,7 +27,7 @@
 <!--面包屑导航 开始-->
 <div class="crumb_warp">
     <!--<i class="fa fa-bell"></i> 欢迎使用登陆网站后台，建站的首选工具。-->
-    <i class="fa fa-home"></i> <a href="#">首页</a> &raquo; <a href="#">文章管理</a> &raquo; 智能抓取
+    <i class="fa fa-home"></i> <a href="#">首页</a> &raquo; <a href="#">文章管理</a> &raquo; 智能发布
 </div>
 <!--面包屑导航 结束-->
 
@@ -36,6 +36,7 @@
         <button id="start-release" class="button" >开始解析</button>
   <!--解析框-->
   <div class="result-box clear">
+    <div class="release-box-posi">
     <div class="release-box">
         <div class="banner-title">解析显示</div>
         <div class="error-box hide ">
@@ -47,16 +48,9 @@
             <iframe id="preview" name="preview" class="preview" src=""></iframe>
             <!--<iframe id="preview" name="preview" class="preview" src="{{url('admin/category/create')}}"></iframe>-->
             <div class="prev-cover hide"></div>
-
-            <!--排版选择-->
-            <div id="typeset">
-                <div class="banner-title">排版选择</div>
-
-
-            </div>
         </div>
     </div>
-
+    </div>
     <!--编辑框-->
     <div class="edit-box">
         <div class="banner-title banner-result-t">解析结果
@@ -88,10 +82,19 @@
                 </label>
             </div>
             <div class="result-item" id="category-box">
-                <p>设置分类：</p>
-
-                <input class="cat_id" type="radio" name="cat_id" value="2" mdtext='分类1'>
-                <input class="cat_id" type="radio" name="cat_id" value="3" mdtext='分类2'>
+                <label>
+                    <span>设置分类：</span>
+                </label>
+                <div style="margin-left: 90px;">
+                    <input class="cat_id" type="radio" name="cat_id" value="2" mdtext='分类1'>
+                    <input class="cat_id" type="radio" name="cat_id" value="3" mdtext='分类2'>
+                    <input class="cat_id" type="radio" name="cat_id" value="3" mdtext='分类2'>
+                    <input class="cat_id" type="radio" name="cat_id" value="3" mdtext='分类2'>
+                    <input class="cat_id" type="radio" name="cat_id" value="3" mdtext='分类2'>
+                    <input class="cat_id" type="radio" name="cat_id" value="3" mdtext='分类2'>
+                    <input class="cat_id" type="radio" name="cat_id" value="3" mdtext='分类2'>
+                    <input class="cat_id" type="radio" name="cat_id" value="3" mdtext='分类2'>
+                </div>
             </div>
             <div class="result-item recommend-item">
                 <label>
@@ -107,8 +110,16 @@
     </div>
   </div>
 
-    <div id="publish-btn-box">
-        <button class="button confirm-button">确定发布</button>
+    <div id="publish-btn-box" class="publish-btn-box">
+        <div class="publish-inner">
+            <!--排版选择-->
+            <div id="typeset">
+                <div class="banner-title">排版选择</div>
+
+
+            </div>
+            <button class="button confirm-button">确定发布</button>
+        </div>
     </div>
 </div>
 <script>

@@ -13,9 +13,13 @@
     padding-left: 15px;
     margin: 15px 0 15px;
 }
-.release-box{
+.release-box-posi, .release-box{
     width: 400px;
     float: left;
+    background: #fff;
+}
+.release-box-posi{
+    height: 745px;
 }
 .preview-box{
     position: relative;
@@ -39,13 +43,15 @@
 .edit-box{
     float: left;
     margin-left: 40px;
-    width: 600px;
+    width: 594px;
 }
 .banner-result-t span.red{
     margin-left: 8px;
 }
 .result-item{
     margin-bottom: 10px;
+    clear: both;
+    overflow: hidden;
 }
 .result-item>label>span{
     display: inline-block;
@@ -55,4 +61,18 @@
 
 .edit-error{
     margin-left: 15px;
+}
+.position_fix{
+    position: fixed;
+    top: 0;
+}
+/*publish-btn-box 排版选择框*/
+
+.publish-btn-box{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 100px;
+    background: #fff;
 }

@@ -492,7 +492,8 @@ input.button.default.confirm:hover, .button.confirm:hover{
 	left: 270px;
 	right: 0;
 	top: 50px;
-	bottom: 35px
+	/*bottom: 35px;*/
+	bottom: 0;
 }
 
 .bottom_box {
@@ -1119,6 +1120,7 @@ table.inner_list tr td input {
     bottom: 46px;
     font-size: 30px;
     color: #666;
+    z-index: 9999;
 }
 .fixed-arr{
     cursor: pointer;
