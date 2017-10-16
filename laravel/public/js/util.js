@@ -69,8 +69,8 @@ if(!window.MD)
 window.MD = {
     protocol: window.location.protocol,
     hostname: window.location.hostname,
-    url: window.location.protocol + "//" + window.location.hostname,
-    https: 'https://shtongnian.com',
+    url: window.location.protocol + "//" + window.location.hostname + "/",
+    https: 'https://shtongnian.com/',
 
     /**
      * 实现表单元素UI效果
@@ -276,7 +276,7 @@ window.MD = {
     // 为编辑器添加微信图标
     //
     wechat: function () {
-        var src = MD.url + '/storage/icons/uedit-wechat.png';
+        var src = MD.url + 'storage/icons/uedit-wechat.png';
         var img = $("<img id='wechat-preview' src=" + src +" title='微信编辑模式' alt='wechat'>")
 
         img.on("click", function () {
@@ -327,7 +327,7 @@ window.MD = {
      * $doc 为目标iframe,document
      */
     release_before: function ($doc, current_rule) {
-        if(current_rule.url == 'https://mp.weixin.qq.com'){
+        if(current_rule.url == 'https://mp.weixin.qq.com' || current_rule.url == 'http://mp.weixin.qq.com'){
             // 解决微信 的figure标签无法解析问题
             var f = $doc.find(current_rule.content).find('figure')
             $.each(f, function (i, v) {

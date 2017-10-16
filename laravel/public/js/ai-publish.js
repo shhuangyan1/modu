@@ -36,7 +36,15 @@ $(function () {
      * 解析结果，参数：解析规则
      */
     var realist = function (rule) {
-
+        if(!rule){
+            var idxs = jeBox.alert('未识别的解析规则', {
+                icon: 3,
+                maskClose: true
+            }, function(){
+                jeBox.close(idxs);
+            });
+            return;
+        }
         var result = {};
         // 子页面的document
         var $doc = $($("#preview").contents()[0]);
@@ -100,7 +108,6 @@ $(function () {
                 }
             })
         }
-
         return MD.current_rule;
     }
 
@@ -119,8 +126,12 @@ $(function () {
                 },function (res) {
                     jeBox.close(san)
                     var san_2 = jeBox.loading(1,"等待目标页面加载完成…");
-                    // 返回图片数据
+
+                    // 返回图片数据，并展示
                     MD.rule_image = res.image;
+                    show_images(MD.rule_image);
+
+
                     // 没有url，在iframe容器显示提示信息
                     $("#preview").attr("src", MD.url+'/'+res.file);
                     var pre = document.getElementById('preview');
@@ -138,7 +149,7 @@ $(function () {
 
         })
 
-        //
+        // 页面滚动，左侧预览框固定
         document.addEventListener('scroll', function (e) {
             var off = $(".release-box-posi").offset().top
             // console.log(off)
@@ -151,13 +162,99 @@ $(function () {
                 $(".release-box").removeClass('position_fix')
             }
         })
+
+        // 底部操作栏，箭头事件
+        $(".pb-arrow").on('click', function () {
+            var arrow = $("#pb-opt-arrow")
+            arrow.toggleClass('fa-caret-down').toggleClass('fa-caret-up')
+
+            if(arrow.hasClass('fa-caret-down')){
+                $(".pb-main").css({'display': 'block'})
+            }else{
+                $(".pb-main").css({'display': 'none'})
+            }
+        })
+
+
     }
 
     /**
      * 排版与封面选择
      */
-    var show_
+    var show_images = function (images) {
+        images = images || []
+        var img = ''
+        $.each(images, function (i, v) {
+            img += '<div class="imgs-item" data-index="'+ i +'" style="background: url('+ MD.url + v +') center / contain no-repeat"><div class="checked-tri"><i class="fa fa-check-square-o"></i></div></div>'
+        })
 
+        $("#res-img").html(img);
+        show_typeset(images.length)
+        choose_images();
+    }
+    /**
+     * 显示排版选择
+      */
+    var show_typeset = function (length) {
+        length = length || 0;
+
+        if(length == 0){
+            $(".typeset-none").removeClass('hide');
+        }else {
+            $(".typeset-none").addClass('hide');
+            if(length < 3){
+                show_single();
+            }
+            if(length >=3){
+                show_multi();
+            }
+        }
+
+        $(".typeset-box label").on("click", function () {
+            $(this).addClass("on").siblings().removeClass("on");
+            MD.ai_typeset = $(this).find('input').val()
+        })
+    }
+    // 显示单图排版选项，显示大图排版选项(一张图)
+    var show_single = function() {
+        $(".compose3").removeClass('hide')
+        $(".compose1").removeClass('hide')
+        $(".compose2").addClass('hide')
+
+    }
+    // 显示多图排版选项，和一张图
+    var show_multi = function () {
+        $(".compose3").removeClass('hide')
+        $(".compose1").removeClass('hide')
+        $(".compose2").removeClass('hide')
+    }
+
+    /**
+     * 从正文图片选择文章封面
+     */
+    var choose_images = function () {
+        MD.ai_cover = []; // 封面图片数组
+
+        $(".imgs-item").on("click", function () {
+            var that = $(this);
+            var this_ = this;
+            var index = parseInt(that.data('index'));
+            var src = MD.url + MD.rule_image[index]
+            that.toggleClass("imgs-item-on")
+
+            // var conf = {}
+            // conf[index] = src;
+
+            if(that.hasClass('imgs-item-on')){
+                that.find("i").addClass("fa-check-square").removeClass('fa-check-square-o')
+                var length = MD.ai_cover.push(src);  // 返回的是数组长度
+                this_.dataset.length = length - 1
+            }else {
+                that.find("i").addClass("fa-check-square-o").removeClass('fa-check-square')
+                MD.ai_cover.splice(this_.dataset.length,1,""); // 采用空字符串占位，该项在数组中的位置保持不变
+            }
+        })
+    }
     /**
      * 确认发布
      */
@@ -166,6 +263,117 @@ $(function () {
     bind();
 })
 
+/**
+ * 提交验证
+ */
+function onSubmit() {
+    return check_title() && check_author() && check_from() && check_date() && check_type() && check_typeset() && check_cover();
+}
+var check_title = function() {
+    var title = $(".title").val().trim();
+    if(title.length > 0){
+        return true;
+    }else{
+        $(".title").showTips("请填写文章标题")
+        jeBox.msg("请填写文章标题", {icon: 1,time:1});
+    }
+    return false;
+}
+var check_author = function() {
+    var title = $(".author").val().trim();
+    if(title.length > 0){
+        return true;
+    }else{
+        $(".author").showTips("请填写作者")
+        jeBox.msg("请填写作者", {icon: 1,time:1});
+    }
+    return false;
+}
+var check_from = function() {
+    var title = $(".from").val().trim();
+    if(title.length > 0){
+        return true;
+    }else{
+        $(".from").showTips("请填写文章来源")
+        jeBox.msg("请填写文章来源", {icon: 1,time:1});
+    }
+    return false;
+}
+var check_date = function() {
+    var title = $(".date").val().trim();
+    if(title.length > 0){
+        return true;
+    }else{
+        $(".date").showTips("请填写日期")
+        jeBox.msg("请填写日期", {icon: 1,time:1});
+    }
+    return false;
+}
+var check_type = function() {
+    var types = $("#category-box input"),
+        type = false;
+    $.each(types,function (i, v) {
+        if(v.checked){
+            type = true;
+            return;
+        }
+    })
+    if(!type){
+        $("#category-box").showTips("请选择文章分类")
+        jeBox.msg("请选择文章分类", {icon: 1,time:1});
+    }
+    return type;
+}
+var check_cover = function () {
+    var cover = MD.ai_cover; // 封面图片
+    var cov = true;
+    if(cover.length <= 0){
+        jeBox.msg("请选择封面图片", {icon: 1,time:1.5});
+        return false;
+    }else{
+        // 过滤掉数组中占位项
+        for(var i=0;i<cover.length; i++){
+            if(cover[i] == ""){
+                cover.splice(i,1)
+            }
+        }
+        $("#images").val(cover.join(",")); // 设置封面图片表单数据
+        // 封面图片数量限制
+        if(MD.ai_typeset == 1 || MD.ai_typeset == 3){
+            // 一张图片的选择
+            if(cover.length < 1){
+                jeBox.msg("请选择封面图片", {icon: 1,time:1.5});
+                cov = false;
+                return false
+            }
+            if(cover.length > 1){
+                jeBox.msg("封面图片最多为一张", {icon: 1,time:1.5});
+                cov = false;
+                return false
+            }
+        }else{
+            // 多图排版的选择
+            if(cover.length < 3){
+                jeBox.msg("请选择三张封面图片", {icon: 1,time:1.5});
+                cov = false;
+                return false;
+            }
+            if(cover.length > 3){
+                jeBox.msg("最多选择三张封面图片", {icon: 1,time:1.5});
+                cov = false;
+                return false;
+            }
+        }
+        return cov;
+    }
 
-
-
+}
+// check_typeset在check_cover之前执行
+var check_typeset = function () {
+    if(!MD.ai_typeset){
+        $(".typeset-box").showTips("请选择排版样式")
+        jeBox.msg("请选择排版样式", {icon: 1,time:1});
+        return false
+    }
+    return true;
+}

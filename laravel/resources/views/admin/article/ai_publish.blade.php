@@ -36,8 +36,8 @@
         <button id="start-release" class="button" >开始解析</button>
   <!--解析框-->
   <div class="result-box clear">
-    <div class="release-box-posi">
-    <div class="release-box">
+      <div class="release-box-posi">
+      <div class="release-box">
         <div class="banner-title">解析显示</div>
         <div class="error-box hide ">
             <p>解析失败，请重试！</p>
@@ -50,9 +50,10 @@
             <div class="prev-cover hide"></div>
         </div>
     </div>
-    </div>
+      </div>
     <!--编辑框-->
-    <div class="edit-box">
+      <form action="{{url('admin/article/confirm_release')}}" method="post" onsubmit="return onSubmit();">
+      <div class="edit-box">
         <div class="banner-title banner-result-t">解析结果
             <span class="edit-error red hide"><i class="fa fa-warning"></i>解析规则过期或暂未收录</span>
         </div>
@@ -60,13 +61,13 @@
             <div class="result-item">
                 <label>
                     <span>标题：</span>
-                    <input type="text" name="title" placeholder="文章标题">
+                    <input type="text" class="title" name="title" placeholder="文章标题">
                 </label>
             </div>
             <div class="result-item">
                 <label>
                     <span>作者：</span>
-                    <input type="text" name="author" placeholder="作者">
+                    <input type="text" class="author" name="author" placeholder="作者">
                 </label>
             </div>
             <div class="result-item">
@@ -103,19 +104,62 @@
             </div>
         </div>
     </div>
+
+      <div id="publish-btn-box" class="publish-btn-box">
+
+          <div class="publish-inner">
+              <div class="pb-arrow pb-up-arrow">
+                  <i id="pb-opt-arrow" class="fa fa-caret-up"></i>  <!--fa-caret-down-->
+              </div>
+              <!--隐藏的主体内容 -->
+              <div class="pb-main">
+                  <div class="images-box">
+                      <div class="banner-title">文章图片[选择封面] </div>
+                      <input type="hidden" name="image" id="images" value="">
+                      <div class="imgs-box" id="res-img">
+                          <!--<div class="imgs-item imgs-item-on" style="background: url('http://www.modu.com/image/15081246864078.jpg') center / contain no-repeat">-->
+                              <!--<div class="checked-tri"><i class="fa fa-check-square-o"></i></div>-->
+                          <!--</div>-->
+                      </div>
+                  </div>
+                  <!--排版选择-->
+                  <div id="typeset" class="clear">
+                      <div class="banner-title">排版选择</div>
+                      <div class="typeset-box compose-box clear">
+                          <p class="typeset-none hide">正文没有可选图片</p>
+                          <label class="compose3 hide">
+                              <input type="radio" name="compose" value="3">
+                              <div class="cmp single">
+                                  <p>文章标题</p>
+                                  <div class="cmp-img single-img"><i class="fa fa-photo"></i></div>
+                              </div>
+                          </label>
+                          <label class="compose1 hide">
+                              <input type="radio" name="compose" value="1">
+                              <div class="cmp poster">
+                                  <p>文章标题</p>
+                                  <div class="cmp-img poster-img"><i class="fa fa-photo"></i></div>
+                              </div>
+                          </label>
+                          <label class="compose2 hide">
+                              <input type="radio" name="compose" value="2">
+                              <div class="cmp multi">
+                                  <p>文章标题</p>
+                                  <div class="cmp-img multi-img"><i class="fa fa-photo"></i><i class="fa fa-photo"></i><i class="fa fa-photo"></i></div>
+                              </div>
+                          </label>
+                      </div>
+                  </div>
+                  <div id="aiPublishBox">
+                      <button type="submit" class="button confirm-button">确定发布</button>
+                  </div>
+              </div>
+
+          </div>
+      </div>
+      </form>
   </div>
 
-    <div id="publish-btn-box" class="publish-btn-box">
-        <div class="publish-inner">
-            <!--排版选择-->
-            <div id="typeset">
-                <div class="banner-title">排版选择</div>
-
-
-            </div>
-            <button class="button confirm-button">确定发布</button>
-        </div>
-    </div>
 </div>
 <script>
 </script>
