@@ -73,32 +73,6 @@
     bottom: 0;
     right: 0;
     left: 0;
-    height: auto;
-    background: #D9EDF7;
-    z-index: 999;
-    border-top: 1px solid #ccc;
-}
-.publish-inner{
-    padding: 10px 20px;
-}
-
-.pb-up-arrow{
-    font-size: 28px;
-    color: #666;
-    text-align: center;
-    cursor: pointer;
-}
-
-.pb-main{
-    height: 0px;
-}
-.imgs-box{
-
-}
-.imgs-item{
-    width: 100px;
     height: 100px;
-    float: left;
-    border: 1px solid #ccc;
-    margin-right: 15px;
+    background: #fff;
 }
