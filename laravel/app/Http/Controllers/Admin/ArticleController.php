@@ -517,6 +517,39 @@ Class ArticleController extends Controller{
 		echo json_encode($date);
 	}
 
+
+	//智能发布文章 ，确定发布接口
+	public function confirm_release(Request $request){
+		$input = $request->input();
+		if($input['recommend']==true){
+			unset($input['recommend']);
+			$data['article_id'] = DB::table("article")->insertGetId($input);
+			$data['time']=time();
+			$article_recommend = DB::table("article_recommend")
+					->insert($data);
+			if($article_recommend){
+				$date['code']="success";
+				$date['msg']="发布成功！";
+			}else{
+				$date['code']="fail";
+				$date['msg']="发布失败！";
+			}
+
+		}else{
+			$article = DB::table("article")->insert($input);
+			if($article){
+				$date['code']="success";
+				$date['msg']="发布成功！";
+			}else{
+				$date['code']="fail";
+				$date['msg']="发布失败！";
+			}
+		}
+		echo json_encode($date);
+	}
+
+
+
 }
 
 
