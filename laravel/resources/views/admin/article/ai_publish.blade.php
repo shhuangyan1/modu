@@ -58,6 +58,7 @@
             <span class="edit-error red hide"><i class="fa fa-warning"></i>解析规则过期或暂未收录</span>
         </div>
         <div class="result-items-box">
+
             <div class="result-item">
                 <label>
                     <span>标题：</span>
@@ -79,9 +80,10 @@
             <div class="result-item">
                 <label>
                     <span>日期：</span>
-                    <input type="text" id="date" class="date" readonly name="date" placeholder="文章发布日期">
+                    <input type="text" id="date" class="date" readonly name="time" placeholder="文章发布日期">
                 </label>
             </div>
+
             <div class="result-item" id="category-box">
                 <label>
                     <span>设置分类：</span>

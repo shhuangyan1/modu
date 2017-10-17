@@ -56,7 +56,7 @@ $(function () {
         var title = $doc.get_ele(rule.title, rule.titleindex),
             author = $doc.get_ele(rule.author, rule.authorindex),
             from = $doc.get_ele(rule.from, rule.fromindex),
-            date = $doc.get_ele(rule.date, rule.dateindex),
+            time = $doc.get_ele(rule.date, rule.dateindex),
             content = $doc.get_ele(rule.content, rule.contentindex)
 
         if(title){
@@ -65,8 +65,8 @@ $(function () {
             result.author = author.innerText.trim() || ''}
         if(from){
             result.from = from.innerText.trim() || ''}
-        if(date){
-            result.date = date.innerText.trim() || ''}
+        if(time){
+            result.time = time.innerText.trim() || ''}
         if(content){
             result.content = content.innerHTML || ''}
 

@@ -161,6 +161,7 @@ window.MD = {
     setValue: function ( container, data, callback) {
         var group = $(container).find("input,select,textarea") || []
         $.each(group,function (_,v) {
+            if(data[v.name])
             v.value = data[v.name] || ""
         })
 
