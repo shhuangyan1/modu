@@ -333,7 +333,7 @@ window.MD = {
             var f = $doc.find(current_rule.content).find('figure')
             $.each(f, function (i, v) {
                 var wp = $(v).wrap("<div class='md-wrap'></div>")
-                $(v).find('img').attr({'src': MD.url+'/'+ MD.rule_image[i], 'width':'100%'})
+                // $(v).find('img').attr({'src': MD.url+'/'+ MD.rule_image[i], 'width':'100%'})
                 wp.parent().html($(v).html())
             });
         }

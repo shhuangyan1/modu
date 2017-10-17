@@ -57,7 +57,7 @@
             <p>确认密码</p>
             <input type="text" class="admin_pwd_cf" name="admin_pwd" placeholder="请在这里确认密码">
         </section>
-        <section>
+        <section class="hide">
             <p>管理员权限设置</p>
             <div class="auth" id="auth">
                 <ul>

@@ -118,7 +118,7 @@
                   <div class="images-box">
                       <div class="banner-title">文章图片[选择封面] </div>
                       <input type="hidden" name="image" id="images" value="">
-                      <div class="imgs-box" id="res-img">
+                      <div class="imgs-box clear" id="res-img">
                           <!--<div class="imgs-item imgs-item-on" style="background: url('http://www.modu.com/image/15081246864078.jpg') center / contain no-repeat">-->
                               <!--<div class="checked-tri"><i class="fa fa-check-square-o"></i></div>-->
                           <!--</div>-->

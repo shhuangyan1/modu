@@ -100,7 +100,7 @@
     display: none;
 }
 .imgs-box{
-
+    padding: 5px 5px 0 0;
 }
 .imgs-item{
     width: 100px;

@@ -1,7 +1,7 @@
 $(function () {
     $(document).on("click",".delete",function () {
         var id = $(this).data("id");
-
+        var this_ = $(this);
         dialog_box({
             fun: function (index) {
                 $.post(
@@ -11,9 +11,8 @@ $(function () {
                         jeBox.close(index);
                         if(res.status == 1){
                             jeBox.msg(res.msg, {icon: 2,time:1});
-                            setTimeout(function () {
-                                location.reload();
-                            },1000)
+                            this_.removeClass("delete").text("已删除").css("color","#f40")
+                            this_.next().remove();
                         }else{
                             jeBox.msg(res.msg, {icon: 3,time:1.5});
                         }
@@ -28,17 +27,25 @@ $(function () {
 
     // 继续展示
     $(document).on("click",".refuse",function () {
+        var id = $(this).data("id");
+        var this_ = $(this);
+
         dialog_box({
             content: '<div class="jeBox-iconbox jeicon1">确定要恢复该文章吗？</div>',
             fun:function (index) {
-                /*$.post(
-                    MD.url + "",
-                    {'_token':"{{csrf_token()}}","id":id},
-                    function (res) {
-
-
+                MD.ajax_get({
+                    url: 'admin/article/article_recover',
+                    data: {"id": id}
+                },function (res) {
+                    jeBox.close(index);
+                    if(res.success){
+                        jeBox.msg(res.msg, {icon: 2,time:1});
+                        this_.removeClass("refuse").text("已恢复").css("color","#428bca")
+                        this_.prev().remove()
+                    }else{
+                        jeBox.msg(res.msg, {icon: 3,time:1.5});
                     }
-                )*/
+                })
             }
         })
     })
