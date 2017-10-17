@@ -245,7 +245,21 @@ Class ArticleController extends Controller{
 			echo json_encode($data);
 		}
 	}
-
+	//文章管理，恢复删除文章
+	public function article_recover(Request $request){
+		$id = $request->get("id");
+		$info= Article::where('id',$id)->update(['status' => 0]);
+		$articleconfirm = DB::table("articleconfirm")->delete("article_id",$id);
+		if($articleconfirm){
+			$data['status'] = 1000;
+			$data['msg'] = '文章恢复成功!';
+			echo json_encode($data);
+		}else{
+			$data['status'] = 1001;
+			$data['msg'] = '文章恢复失败!';
+			echo json_encode($data);
+		}
+	}
 	public function article_format(){
 
 		$cat_id = $_GET['cat_id'];
