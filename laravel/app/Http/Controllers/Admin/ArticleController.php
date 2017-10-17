@@ -249,13 +249,13 @@ Class ArticleController extends Controller{
 	public function article_recover(Request $request){
 		$id = $request->get("id");
 		$info= Article::where('id',$id)->update(['status' => 0]);
-		$articleconfirm = DB::table("articleconfirm")->delete("article_id",$id);
+		$articleconfirm = DB::table("articleconfirm")->where("article_id",$id)->delete();
 		if($articleconfirm){
-			$data['status'] = 1000;
+			$data['success'] = 'success';
 			$data['msg'] = '文章恢复成功!';
 			echo json_encode($data);
 		}else{
-			$data['status'] = 1001;
+			$data['fail'] = 'fail';
 			$data['msg'] = '文章恢复失败!';
 			echo json_encode($data);
 		}
