@@ -83,28 +83,35 @@
 </style>
 <div class="result_wrap">
     <div class="result_content clear">
-        <div class="user-box user-box-1" data-id="1">
+        @foreach($data as $v)
+        <div class="user-box user-box-{{$v->id}}" data-id="{{$v->id}}">
             <div class="user-inner clear">
-                <div class="face"><img src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJTibLpQMFX7NxuXcAB2tyboX6PdOPBme44JgxDJlrlxgoKnF28CzIowdib9UFQV58TEfCh1nySAV1w/0" alt="头像"></div>
+                <div class="face"><img src="{{$v->avatarUrl}}" alt="头像"></div>
                 <div class="name">
-                    <p>陈宝俊</p>
-                    <p class="time">2017-10-17 10:50</p>
+                    <p>{{$v->nickName}}</p>
+                    <p class="time">{{date("Y-m-d H:i",$v->time)}}</p>
                 </div>
             </div>
             <div class="user-outer hide">
                 <div class="outer-in">
                     <div class="face"><img src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJTibLpQMFX7NxuXcAB2tyboX6PdOPBme44JgxDJlrlxgoKnF28CzIowdib9UFQV58TEfCh1nySAV1w/0" alt="头像"></div>
-                    <div class="name"><p>陈宝俊</p></div>
+                    <div class="name"><p>{{$v->nickName}}</p></div>
                     <div class="info clear">
-                        <p>性别：男</p>
-                        <p>省份：上海</p>
-                        <p>加入时间：2017-10-17 10:50</p>
+                        <p>性别：
+                            @if($v->gender==1)
+                                男
+                            @elseif($v->gender==2)
+                                女
+                            @endif
+                            </p>
+                        <p>所在地：{{$v->province}} {{$v->city}}</p>
+                        <p>加入时间：{{date("Y-m-d H:i",$v->time)}}</p>
                     </div>
                 </div>
 
             </div>
         </div>
-
+        @endforeach
     </div>
 </div>
 

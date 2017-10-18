@@ -198,7 +198,7 @@ class ActivityController extends Controller
         $id = $_GET['id'];
         $join_activity = DB::table("join_activity")
             ->join("user","user.openid","=","join_activity.openid")
-            ->select("avatarUrl","nickName","userinfo","time")
+            ->select("avatarUrl","nickName","userinfo","join_activity.time")
             ->where("act_id",$id)
             ->get();
         foreach($join_activity as $v){
