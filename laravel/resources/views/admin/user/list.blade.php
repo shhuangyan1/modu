@@ -36,17 +36,102 @@
     </form>
 </div>
 <!--结果页快捷搜索框 结束-->
-
+<style>
+    .user-box{
+        border: 1px solid #ccc;
+        margin: 15px;
+        padding: 15px 10px;
+        float: left;
+        width: 210px;
+        height: 60px;
+    }
+    .face{
+        width: 60px;
+        float: left;
+    }
+    .face img{
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+    }
+    .name{
+        width: 140px;
+        font-size: 16px;
+        margin-left: 70px;
+        overflow: hidden;
+    }
+    .name .time{
+        font-size: 14px;
+        color: #666;
+    }
+    .outer-in{
+        padding: 8px;
+    }
+    .outer-in .face{
+        vertical-align: middle;
+    }
+    .outer-in .name{
+        width: 130px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        font-size: 20px;
+    }
+    .info{
+        padding: 8px 10px 0;
+    }
+</style>
 <div class="result_wrap">
-    <div class="result_content">
-        <div class="user-box">
-            
+    <div class="result_content clear">
+        <div class="user-box user-box-1" data-id="1">
+            <div class="user-inner clear">
+                <div class="face"><img src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJTibLpQMFX7NxuXcAB2tyboX6PdOPBme44JgxDJlrlxgoKnF28CzIowdib9UFQV58TEfCh1nySAV1w/0" alt="头像"></div>
+                <div class="name">
+                    <p>陈宝俊</p>
+                    <p class="time">2017-10-17 10:50</p>
+                </div>
+            </div>
+            <div class="user-outer hide">
+                <div class="outer-in">
+                    <div class="face"><img src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJTibLpQMFX7NxuXcAB2tyboX6PdOPBme44JgxDJlrlxgoKnF28CzIowdib9UFQV58TEfCh1nySAV1w/0" alt="头像"></div>
+                    <div class="name"><p>陈宝俊</p></div>
+                    <div class="info clear">
+                        <p>性别：男</p>
+                        <p>省份：上海</p>
+                        <p>加入时间：2017-10-17 10:50</p>
+                    </div>
+                </div>
+
+            </div>
         </div>
+
     </div>
 </div>
 
 <script>
+    $(function () {
 
+        $(".user-box").on('mouseover', function () {
+            var result_width =  $(".result_content").width();
+            var this_width = $(this).width();
+            var id = $(this).data('id')
+            var classname = ".user-box-"+id;
+            var cont = $(this).find(".user-outer").html();
+
+            var this_left = $(this).offset().left;
+            var direction = "right"
+            if((result_width - this_left - this_width) <= this_width){
+                direction = "left"
+            }
+
+            var index = jeBox.tips(classname, cont , {align: direction});
+            $(this).on("mouseout", function () {
+                jeBox.close(index)
+            })
+        })
+
+
+    })
 </script>
 </body>
 </html>

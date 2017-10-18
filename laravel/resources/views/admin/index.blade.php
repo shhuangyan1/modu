@@ -36,7 +36,7 @@
 		<ul>
 			<li>
 				<h3><i class="fa fa-fw fa-clipboard"></i>文章管理</h3>
-				<ul class="sub_menu">
+				<ul class="sub_menu" style="display: none;">
 					<li><a href="{{url('admin/article/create')}}" target="main">发布文章</a></li>
 					<li><a href="{{url('admin/article/ai_publish')}}" target="main">智能发布文章</a></li>
 					<li><a href="{{url('admin/article')}}" target="main">文章列表</a></li>
@@ -68,21 +68,21 @@
             </li>
 			<li>
 				<h3><i class="fa fa-fw fa-comments"></i>消息管理</h3>
-				<ul class="sub_menu">
+				<ul class="sub_menu" style="display: none;">
 					<li><a href="{{url('admin/message')}}" target="main">活动消息</a></li>
 					<li><a href="{{url('admin/message/back')}}" target="main">用户反馈</a></li>
 				</ul>
 			</li>
             <li>
             	<h3><i class="fa fa-fw fa-user"></i>管理员管理</h3>
-                <ul class="sub_menu" style="display: none;">
+                <ul class="sub_menu" >
                     <li><a href="{{url('admin/manager/create')}}" target="main">添加管理员</a></li>
                     <li><a href="{{url('admin/manager')}}" target="main">管理员列表</a></li>
                 </ul>
             </li>
             <li>
                 <h3><i class="fa fa-fw fa-users"></i>会员管理</h3>
-                <ul class="sub_menu" style="display: none;">
+                <ul class="sub_menu" >
                     <li><a href="{{url('admin/user/date')}}" target="main">会员数据分析</a></li>
                     <li><a href="{{url('admin/user')}}" target="main">会员列表</a></li>
                 </ul>
