@@ -20,19 +20,26 @@ class ActivityController extends Controller
         $select = $request->get('select');
         $title= $request->get('title');
 
-        $data =Activity::where(function($query)use($title){
-            if($title){
-                $query -> where('title', 'like', '%'.$title.'%');
-            }
-
-        })->where('status','!=',1)->where(function($query)use($select){
-            if($select){
-                if($select==3){
-                    return;
+        if($select == 3){
+            $data =Activity::where(function($query)use($title){
+                if($title){
+                    $query -> where('title', 'like', '%'.$title.'%');
                 }
+
+            })->orderby('id','desc')->paginate(5);
+        }else{
+            $data =Activity::where(function($query)use($title){
+                if($title){
+                    $query -> where('title', 'like', '%'.$title.'%');
+                }
+
+            })->where(function($query)use($select){
+
                 $query-> where('status','=',$select);
-            }
-        })->orderby('id','desc')->paginate(5);
+
+            })->orderby('id','desc')->paginate(5);
+        }
+
         //$data = Activity::where('status',0)->get();
         //dd($data);
         return view('admin.activity.list',compact('data'));
