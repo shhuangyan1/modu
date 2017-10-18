@@ -20,7 +20,7 @@ class ManagerController extends Controller
         $manage = $request->get('username');
         $data = Manager::where(function($query)use( $manage){
             if( $manage){
-                $query -> where('title', 'like', '%'. $manage.'%');
+                $query -> where('username', 'like', '%'. $manage.'%');
             }
         })->orderby('id','desc')->paginate(10);
 
@@ -48,6 +48,7 @@ class ManagerController extends Controller
     {
         //存储表单提交过来的信息
         $input = $request -> input();
+        $input['admin_pwd'] = md5($input['admin_pwd']);
         $admin = DB::table("admin")->insert($input);
         if($admin){
             return redirect('admin/manager');
@@ -98,6 +99,12 @@ class ManagerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //删除管理员
+        $info = Manager::where('id',$id)->delete();
+        if($info){
+            echo json_encode(array('success'=>"success",'msg'=>'删除成功'));
+        }else{
+            echo json_encode(array('fail'=>"fail",'msg'=>'删除失败'));
+        }
     }
 }
