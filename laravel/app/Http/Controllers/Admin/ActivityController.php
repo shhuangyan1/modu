@@ -19,8 +19,7 @@ class ActivityController extends Controller
     {
         $select = $request->get('select');
         $title= $request->get('title');
-
-        if($select == 3){
+        /*if($select == 3){
             $data =Activity::where(function($query)use($title){
                 if($title){
                     $query -> where('title', 'like', '%'.$title.'%');
@@ -28,6 +27,33 @@ class ActivityController extends Controller
 
             })->orderby('id','desc')->paginate(5);
         }else{
+            $data =Activity::where(function($query)use($title){
+                if($title){
+                    $query -> where('title', 'like', '%'.$title.'%');
+                }
+
+            })->where(function($query)use($select){
+
+                $query-> where('status','=',$select);
+
+            })->orderby('id','desc')->paginate(5);
+        }*/
+        if(!isset($select)){
+            $data =Activity::where(function($query)use($title){
+                if($title){
+                    $query -> where('title', 'like', '%'.$title.'%');
+                }
+
+            })->orderby('id','desc')->paginate(5);
+        }elseif($select==3){
+            $data =Activity::where(function($query)use($title){
+                if($title){
+                    $query -> where('title', 'like', '%'.$title.'%');
+                }
+
+            })->orderby('id','desc')->paginate(5);
+        }
+        else{
             $data =Activity::where(function($query)use($title){
                 if($title){
                     $query -> where('title', 'like', '%'.$title.'%');
