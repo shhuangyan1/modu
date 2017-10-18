@@ -48,7 +48,7 @@
 <!--面包屑导航 结束-->
 
 <div id="new-manager" class="result_wrap section-ctrl">
-    <form action="#" id="managerform" name="form" onsubmit="return newManager();">
+    <form action="{{url('admin/manager')}}" id="managerform" name="form" method="post" onsubmit="return newManager();">
         <section class="info">
             <p>管理员登录名称</p>
             <input type="text" class="username" name="username" placeholder="请在这里设置新管理员登录名">
