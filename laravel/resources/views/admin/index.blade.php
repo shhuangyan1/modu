@@ -93,7 +93,6 @@
                     <li><a href="http://www.yeahzan.com/fa/facss.html" target="main">图标调用</a></li>
                     <!--<li><a href="http://hemin.cn/jq/cheatsheet.html" target="main">Jquery手册</a></li>-->
                     <!--<li><a href="http://tool.c7sky.com/webcolor/" target="main">配色板</a></li>-->
-					<!--<i class="fa fa-fw fa-tags">-->
                 </ul>
             </li>
         </ul>
