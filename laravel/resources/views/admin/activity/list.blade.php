@@ -35,8 +35,8 @@
                 <td>
                     <select class="search-sel" name="select">
                         <option value="3">--全部--</option>
-                        <option value="1">已将结束</option>
-                        <option value="0">正在进行中</option>
+                        <option value="0">进行中</option>
+                        <option value="1">已结束</option>
                     </select>
                 </td>
                 <th width="70">关键字：</th>
@@ -67,13 +67,11 @@
                 <td class="tc">{{$v->limits}}</td>
                 <td class="tc">{{$v->time}}</td>
                 <td class="tc">
-                    <a class="cancel-a" data-id="{{$v->id}}" href="javascript:;">
-                        @if($v->status==0)
-                        取消活动
-                        @elseif($v->status==1)
-                        活动已取消
-                        @endif
-                    </a>
+                    @if($v->status==0)
+                    <a class="cancel-a" data-id="{{$v->id}}" href="javascript:;">结束活动</a>
+                    @elseif($v->status==1)
+                    <a>活动已结束</a>
+                    @endif
                 </td>
             </tr>
             @endforeach
@@ -93,9 +91,8 @@
             jeBox.open({
                 cell:"jbx",
                 title:"结束",
-//                boxSize:["300px","160px"],
                 padding:"25px 10px",
-                content:'<div class="jeBox-iconbox jeicon1">确定要取消该活动吗？</div>',
+                content:'<div class="jeBox-iconbox jeicon1">确定要结束该活动吗？</div>',
                 maskLock : true ,
                 btnAlign:"center",
                 button:[
