@@ -50,13 +50,10 @@ class ManagerController extends Controller
         $input = $request -> input();
         $admin = DB::table("admin")->insert($input);
         if($admin){
-            $date['success'] = "success";
-            $date['msg'] = "信息保存成功！";
+            return redirect('admin/manager');
         }else{
-            $date['fail'] = "fail";
-            $date['msg'] = "信息保存失败！";
+            return back()->with('error','数据添加失败!');
         }
-        echo json_encode($date);
     }
 
     /**
