@@ -46,7 +46,17 @@ class ManagerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //存储表单提交过来的信息
+        $input = $request -> input();
+        $admin = DB::table("admin")->insert($input);
+        if($admin){
+            $date['success'] = "success";
+            $date['msg'] = "信息保存成功！";
+        }else{
+            $date['fail'] = "fail";
+            $date['msg'] = "信息保存失败！";
+        }
+        echo json_encode($date);
     }
 
     /**
