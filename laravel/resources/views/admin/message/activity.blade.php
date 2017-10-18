@@ -89,7 +89,7 @@
                 </div>
                 <div class="limit">限额人数：<span data-content="limits"></span>人</div>
             </div>
-            <p>已报名：<span data-content="join"></span>人</p>
+            <p>已报名：<span data-content="joined"></span>人</p>
         </section>
         <section class="sec">
             <p class="act-info">活动费用：<span data-content="fee"></span></p>
@@ -116,8 +116,8 @@
                 <img class='user-head' data-src="avatarUrl">
             </div>
             <div class='com-right'>
-                <div class='com-name' data-content="nickName">2</div>
-                <div class='com-cont' data-content="content">2</div>
+                <div class='com-name' data-content="nickName"></div>
+                <div class='com-cont' data-content="content"></div>
             </div>
         </div>
 

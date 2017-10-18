@@ -21,6 +21,7 @@ Route::get('admin/activity/activity_format','Admin\ActivityController@activity_f
 Route::get('admin/activity/oldactivity_format','Admin\ActivityController@oldactivity_format');
 Route::get('admin/topic/topic_format','Admin\TopicController@topic_format');
 Route::get('admin/topic/oldtopic_format','Admin\TopicController@oldtopic_format');
+Route::get('admin/topic/info','Admin\TopicController@info');
 Route::any('admin/article/article_detail','Admin\ArticleController@article_detail');
 Route::any('admin/category/category_format','Admin\CategoryController@category_format');
 Route::any('admin/article/ai_article','Admin\ArticleController@ai_article');
