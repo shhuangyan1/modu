@@ -30,11 +30,15 @@ class WxController extends Controller
     //用户授权登陆之后，收集用户信息
     public function usersave(Request $request){
         $input = $request->input();
-        $nouser = DB::table("user")
-            ->where($input['openid'])
-            ->first();
+        $input['time'] = time();
+        if(isset($input['openid'])){
+            $map['openid'] = $input['openid'];
+            $nouser = DB::table("user")
+                ->where($map)
+                ->first();
+        }
         //判断用户信息是否已经收集了
-        if(!$nouser){
+        if($nouser){
             $date['code']='fail';
             $date['msg']='信息已经收集了';
             die;
