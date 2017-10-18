@@ -65,18 +65,16 @@
             @foreach($data as $v)
             <tr>
                 <td>
-                    <a href="#">{{$v->title}}</a>
+                    <a href="{{url('admin/topic/info')}}?id={{$v->id}}">{{$v->title}}</a>
                 </td>
                 <td class="tc">{{$v->view}}</td>
                 <td class="tc">{{$v->time}}</td>
                 <td class="tc">
-                    <a class="shut-down" data-id="{{$v->id}}" href="javascript:;">
-                        @if ($v->status==0)
-                            结束话题
-                        @elseif ($v->status==1)
-                            话题已结束
-                        @endif
-                    </a>
+                    @if ($v->status==0)
+                    <a class="shut-down" data-id="{{$v->id}}" href="javascript:;">结束话题</a>
+                    @elseif ($v->status==1)
+                    <a>话题已结束</a>
+                    @endif
                 </td>
             </tr>
             @endforeach
@@ -97,7 +95,6 @@
             jeBox.open({
                 cell:"jbx",
                 title:"结束",
-//                boxSize:["300px","160px"],
                 padding:"25px 10px",
                 content:'<div class="jeBox-iconbox jeicon1">确定要结束该话题吗？</div>',
                 maskLock : true ,
@@ -113,9 +110,7 @@
                                     res = JSON.parse(res);
                                     if(res.status == 1000){
                                         jeBox.msg(res.msg, {icon: 2,time:1});
-                                        setTimeout(function () {
-                                            location.reload();
-                                        },1000)
+                                        this_.parent().html('<a>话题已结束</a>')
                                     }else{
                                         jeBox.msg(res.msg, {icon: 3,time:1.5});
                                         // error
@@ -123,7 +118,6 @@
                                     jeBox.close(index);
                                 }
                             )
-
                         }
                     },
                     {

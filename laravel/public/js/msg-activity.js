@@ -2,7 +2,7 @@ $(function () {
     var scope = {}
     /**
      * 默认预览第一条
-     * @param
+     * @param id
      */
     var load_detail = function (id) {
         MD.ajax_get({
@@ -22,7 +22,9 @@ $(function () {
         })
     }
     var show_activity = function (item) {
-        $(".act-detail-box").loadTemplate($("#activity-tmp"),item)
+        $(".act-detail-box").loadTemplate($("#activity-tmp"),item);
+        var width = item.joined / item.limits * 100
+        $(".pro-inner").css({width: width+'%'})
     }
 
     /**

@@ -49,7 +49,11 @@ class TopicController extends Controller
 
         return view('admin.topic.new');
     }
+    public function info()
+    {
 
+        return view('admin.topic.info');
+    }
     /**
      * Store a newly created resource in storage.
      *
