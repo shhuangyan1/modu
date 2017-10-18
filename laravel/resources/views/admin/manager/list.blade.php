@@ -56,44 +56,44 @@
     </section>
 </div>
 <script>
-    $(function () {
-        $(document).on("click",".delete",function () {
-            var id = $(this).data("id");
-            var this_ = $(this)
-            jeBox.open({
-                cell:"jbx",
-                title:"删除",
-                padding:"25px 10px",
-                content:'<div class="jeBox-iconbox jeicon1">确定要删除该管理员吗？</div>',
-                maskLock : true ,
-                btnAlign:"center",
-                button:[
-                    {
-                        name: '确定',
-                        callback: function(index){
-                            MD.ajax_get({
-                                url: 'admin/manager/',
-                                data: {"id" : id}
-                            },function (res) {
-                                jeBox.close(index)
-                                jeBox.msg('删除成功', {icon: 1,time:1});
-                                setTimeout(function () {
-                                    location.reload()
-                                },800)
-                            },function () {
-                                jeBox.close(index)
-                                jeBox.msg('操作失败', {icon: 3,time:1.5});
-                            })
-                        }
-                    },
-                    {
-                        name: '取消'
-                    }
-                ]
-            })
 
-        })
-    })
+   $(function () {
+       $(document).on("click",".delete",function () {
+           var id = $(this).data("id");
+           var this_ = $(this)
+           jeBox.open({
+               cell:"jbx",
+               title:"结束",
+//                boxSize:["300px","160px"],
+               padding:"25px 10px",
+               content:'<div class="jeBox-iconbox jeicon1">确定要取消该活动吗？</div>',
+               maskLock : true ,
+               btnAlign:"center",
+               button:[
+                   {
+                       name: '确定',
+                       callback: function(index){
+                           $.post(
+                                   MD.url + "/admin/manager/" + id,
+                                   {"_method":"delete"},
+                                   function (res) {
+                                       res = JSON.parse(res);
+                                       jeBox.msg(res.msg, {icon: 2,time:1});
+                                       location.reload();
+                                       jeBox.close(index);
+                                   }
+                           )
+
+                       }
+                   },
+                   {
+                       name: '取消'
+                   }
+               ]
+           })
+
+       })
+   })
 </script>
 </body>
 </html>

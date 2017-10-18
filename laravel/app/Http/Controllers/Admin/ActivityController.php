@@ -220,7 +220,7 @@ class ActivityController extends Controller
     {
         $info = Activity::where('id',$id)->update(['status'=>1]);
         if($info){
-            echo json_encode(array('status'=>1004,'msg'=>'取消成功'));
+            echo json_encode(array('status'=>1008,'msg'=>'取消成功'));
         }else{
             echo json_encode(array('status'=>1001,'msg'=>'取消失败'));
         }
