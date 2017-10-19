@@ -60,13 +60,11 @@
    $(function () {
        $(document).on("click",".delete",function () {
            var id = $(this).data("id");
-           var this_ = $(this)
            jeBox.open({
                cell:"jbx",
                title:"结束",
-//                boxSize:["300px","160px"],
                padding:"25px 10px",
-               content:'<div class="jeBox-iconbox jeicon1">确定要取消该活动吗？</div>',
+               content:'<div class="jeBox-iconbox jeicon1">确定要删除该管理员账号吗？</div>',
                maskLock : true ,
                btnAlign:"center",
                button:[
@@ -77,10 +75,14 @@
                                    MD.url + "/admin/manager/" + id,
                                    {"_method":"delete"},
                                    function (res) {
-                                       res = JSON.parse(res);
-                                       jeBox.msg(res.msg, {icon: 2,time:1});
-                                       location.reload();
                                        jeBox.close(index);
+                                       res = JSON.parse(res)
+                                        if(res.success){
+                                            jeBox.msg(res.msg, {icon: 2,time:1});
+                                            setTimeout(function () {
+                                                location.reload();
+                                            },1000)
+                                        }
                                    }
                            )
 

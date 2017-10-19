@@ -56,7 +56,7 @@
             <thead>
             <tr>
                 <th>标题</th>
-                <th>互动回答量</th>
+                <th>浏览量</th>
                 <th>发布时间</th>
                 <th>操作</th>
             </tr>
