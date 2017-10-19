@@ -31,7 +31,7 @@ class UserController extends Controller{
             if( $user){
                 $query -> where('nickname', 'like', '%'. $user.'%');
             }
-        })->orderby('id','desc')->get();
+        })->orderby('id','desc')->paginate(5);
         //dump($data);die;
         echo json_encode($data);
     }
