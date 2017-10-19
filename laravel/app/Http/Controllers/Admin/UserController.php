@@ -48,10 +48,11 @@ class UserController extends Controller{
                 ->get();
         }else{
             $a = $input['current'] - 1;
+            $b = $input['pagesize'];
             $data = DB::table("user")
                 ->orderby("id","desc")
-                ->offset($a)
-                ->limit($input['pagesize'])
+                ->offset($a*$b)
+                ->limit($b)
                 ->get();
             //dump($data);die;
         }
