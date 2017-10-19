@@ -13,13 +13,13 @@
 }
 #new-activity .description{
     width: 100%;
-    height: 130px;
+    height: 110px;
     font-size: 16px;
     border-bottom: 1px solid #e7e7eb;
     resize: none;
 }
 #act-form{
-    min-width: 1039px;
+    /*min-width: 1039px;*/
     overflow: hidden;
 }
 input.button{
@@ -27,12 +27,15 @@ input.button{
     height: 30px;
 }
 .sec-left,.sec-right{
-    width: 30%;
+
     float: left;
     min-width: 240px;
 }
 .sec input{
     width: 258px;
+}
+.sec input.address{
+    width: 534px;
 }
 .sec input[type=radio]{
     width: 100%;
@@ -66,7 +69,7 @@ input.button{
 }
 .upload-img-box, .upload-video-box{
     width: auto;
-    margin-left: 300px;
+    /*margin-left: 300px;*/
     float: none;
 }
 

@@ -30,10 +30,15 @@
     <i class="fa fa-home"></i> <a href="#">首页</a> &raquo; <a href="#">文章管理</a> &raquo; 智能发布
 </div>
 <!--面包屑导航 结束-->
-
-<div class="result_wrap">
+<div class="search_wrap">
+    <div class="search_inner">
         <input type="text" id="url" name="url" placeholder="输入目标页面网址，http://...">
         <button id="start-release" class="button" >开始解析</button>
+    </div>
+
+</div>
+<div class="result_wrap">
+
   <!--解析框-->
   <div class="result-box clear">
       <div class="release-box-posi">

@@ -396,14 +396,38 @@ var city = [
         {"pinyin":"ZhouShan","name":"舟山"},
     ]}
 ]
+/**
+ *
+ * @param pro province的拼音
+ * @param cty city的拼音
+ */
+var get_name_bypinyin = function (pro, cty) {
+    pro = pro || "";
+    cty = cty || "";
+    var result = {"pid": "", "province": "", "city": ""}
 
-var get_city = function (province, city) {
-    province = province || "";
-    city = city || "";
-
-    for (var i in province){
-        if(province[i].pinyin == province){
-            
+    for (var i=0; i< province.length; i++){
+        if(province[i].pinyin.toLowerCase() == pro.toLowerCase()){
+            result.pid = province[i].id;
+            result.province = province[i].name;
+            break;
         }
     }
+
+    for(var j=0; j<city.length; j++){
+        if(city[j].pid == result.pid){
+            var citys = city[j].city;
+            for(var k=0; k<citys.length; k++){
+                if(citys[k].pinyin.toLowerCase() == cty.toLowerCase()){
+                    result.city = citys[k].name;
+                    break;
+                }
+            }
+            break;
+        }
+    }
+    // console.log(result);
+    return result;
 }
+
+// get_name_bypinyin("Jiangsu", "Nanjing")

@@ -60,6 +60,19 @@
 
 })(jQuery)
 
+/**
+ * 父级页面调整
+ */
+function resize_index() {
+    var height = $("body").height()
+    // console.log(height)
+    if(height > 1200)
+    $(".main_box",parent.document).css({height: height+'px'})
+}
+window.onload = function () {
+    resize_index()
+}
+
 
 
 /**
@@ -76,7 +89,6 @@ window.MD = {
      * 实现表单元素UI效果
      * @param elem
      * @param config
-     * @constructor
      */
     Form : function (elem,config) {
         var dom = $(elem);
@@ -350,7 +362,7 @@ window.MD = {
         if(MD.rule_image && MD.rule_image.length > 0){
             var imgs = $doc.find(current_rule.content).find('img')
             $.each(imgs, function (i, v) {
-                $(v).attr({'src': MD.url+'/'+ MD.rule_image[i], 'width':'100%'})
+                $(v).attr({'src': MD.url+'/'+ MD.rule_image[i]})
             })
         }
     }

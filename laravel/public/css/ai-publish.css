@@ -3,7 +3,7 @@
 }
 .result-box{
     margin-top: 20px;
-    min-width: 1000px;
+    /*min-width: 1000px;*/
 }
 .banner-title{
     font-size: 16px;
@@ -14,7 +14,7 @@
     margin: 15px 0 15px;
 }
 .release-box-posi, .release-box{
-    width: 400px;
+    width: 360px;
     float: left;
     background: #fff;
 }
@@ -25,7 +25,7 @@
     position: relative;
 }
 #preview{
-    width: 400px;
+    width: 360px;
     height: 650px;
     border: 1px solid #ddd;
     box-sizing: border-box;
@@ -43,7 +43,7 @@
 .edit-box{
     float: left;
     margin-left: 40px;
-    width: 594px;
+    width: 570px;
 }
 .banner-result-t span.red{
     margin-left: 8px;

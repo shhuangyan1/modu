@@ -11,13 +11,14 @@
 	<script type="text/javascript" src="{{asset('js/util.js')}}"></script>
 
 </head>
-<body>
+<body class="index_body">
 	<!--头部 开始-->
 	<div class="top_box">
+    <div class="top_box_inner clear">
 		<div class="top_left">
 			<div class="logo">掌上魔都</div>
 			<ul>
-				<li><a href="{{url('admin/info')}}"  target="main" class="active">首页</a></li>
+				<!--<li><a href="{{url('admin/info')}}"  target="main" class="active">首页</a></li>-->
 				<!--<li><a href="#">管理页</a></li>-->
 			</ul>
 		</div>
@@ -29,14 +30,19 @@
 			</ul>
 		</div>
 	</div>
+    </div>
 	<!--头部 结束-->
+
+    <div class="index_main">
+    <div class="index-inner">
+
 
 	<!--左侧导航 开始-->
 	<div class="menu_box">
 		<ul>
 			<li>
 				<h3><i class="fa fa-fw fa-clipboard"></i>文章管理</h3>
-				<ul class="sub_menu" style="display: none;">
+				<ul class="sub_menu">
 					<li><a href="{{url('admin/article/create')}}" target="main">发布文章</a></li>
 					<li><a href="{{url('admin/article/ai_publish')}}" target="main">智能发布文章</a></li>
 					<li><a href="{{url('admin/article')}}" target="main">文章列表</a></li>
@@ -46,7 +52,7 @@
 			</li>
 			<li>
 				<h3><i class="fa fa-fw fa-clipboard"></i>文章分类管理</h3>
-				<ul class="sub_menu" style="display: none;">
+				<ul class="sub_menu">
 					<li><a href="{{url('admin/category/create')}}" target="main">添加分类</a></li>
 					<li><a href="{{url('admin/category')}}" target="main">分类列表</a></li>
 
@@ -68,7 +74,7 @@
             </li>
 			<li>
 				<h3><i class="fa fa-fw fa-comments"></i>消息管理</h3>
-				<ul class="sub_menu" style="display: none;">
+				<ul class="sub_menu">
 					<li><a href="{{url('admin/message')}}" target="main">活动消息</a></li>
 					<li><a href="{{url('admin/message/back')}}" target="main">用户反馈</a></li>
 				</ul>
@@ -89,10 +95,10 @@
             </li>
             <li>
             	<h3><i class="fa fa-fw fa-thumb-tack"></i>工具导航</h3>
-                <ul class="sub_menu" style="display: none;">
+                <ul class="sub_menu" >
                     <li><a href="http://www.yeahzan.com/fa/facss.html" target="main">图标调用</a></li>
-                    <!--<li><a href="http://hemin.cn/jq/cheatsheet.html" target="main">Jquery手册</a></li>-->
-                    <!--<li><a href="http://tool.c7sky.com/webcolor/" target="main">配色板</a></li>-->
+                    <li><a href="http://hemin.cn/jq/cheatsheet.html" target="main">Jquery手册</a></li>
+                    <li><a href="http://tool.c7sky.com/webcolor/" target="main">配色板</a></li>
                 </ul>
             </li>
         </ul>
@@ -101,9 +107,11 @@
 
 	<!--主体部分 开始-->
 	<div class="main_box">
-		<iframe src="{{url('admin/info')}}" frameborder="0" width="100%" height="100%" name="main"></iframe>
+		<iframe id="mainIframe" src="{{url('admin/info')}}" frameborder="0" width="100%" height="100%" name="main"></iframe>
 	</div>
 	<!--主体部分 结束-->
+    </div>
+    </div>
 
 	<!--底部 开始-->
 	<!--<div class="bottom_box">-->

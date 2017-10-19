@@ -15,15 +15,16 @@ $(function(){
 	$('.sub_menu').find('li').click(function(){
 		$(this).parents('.menu_box').find('li').removeClass('on');
 		$(this).addClass('on');
+		$("body").animate({scrollTop: 0},0)
 	});
 })
 
 //左侧点击弹开子菜单
 $(function(){
-	$('.menu_box').find('ul').find('li').eq(0).find('.sub_menu').show();
-	$('.menu_box').find('ul').find('li').find('h3').click(function(){
-		$(this).parent('li').find('.sub_menu').slideToggle();
-	});
+	// $('.menu_box').find('ul').find('li').eq(0).find('.sub_menu').show();
+	// $('.menu_box').find('ul').find('li').find('h3').click(function(){
+	// 	$(this).parent('li').find('.sub_menu').slideToggle();
+	// });
 })
 
 //tab面板切换
@@ -62,5 +63,11 @@ function pic_minus(obj){
 	$(obj).parents('li').remove();
 }
 
-
+// 监听子页面加载完成，根据子页面高度，改变父页面高度
+// $(function () {
+//     var main = document.getElementById('mainIframe');
+//     $(main).load(function () {
+//
+//     })
+// })
 

@@ -447,11 +447,11 @@ input.button.default.confirm:hover, .button.confirm:hover{
 }
 
 .menu_box ul li ul.sub_menu li {
-	padding-left: 49px;
+
 }
 
 .menu_box ul li ul.sub_menu li a {
-	padding: 0 16px 0 20px;
+	padding: 0 16px 0 69px;
 	display: block;
 	height: 38px;
 	line-height: 38px;
@@ -527,8 +527,8 @@ input.button.default.confirm:hover, .button.confirm:hover{
 }
 
 .result_wrap {
-	padding: 10px 20px;
-	border-bottom: 1px solid #e5e5e5
+	padding: 30px 20px 10px;
+	/*border-bottom: 1px solid #e5e5e5*/
 }
 
 .result_wrap i {
@@ -636,7 +636,7 @@ table.add_tab tr td span i {
 	margin-right: 5px
 }
 .section-ctrl{
-	margin: 20px 0;
+	/*margin: 20px 0;*/
 }
 .section-ctrl section{
 	margin: 0 50px 20px;
@@ -935,7 +935,8 @@ table.list_tab tr td input[type='text'].lg {
 	border: none;
 	height: 30px;
 	line-height: 30px;
-	border-right: 1px solid #ddd
+	border-right: 1px solid #ddd;
+
 }
 
 .page_list ul li a {
@@ -946,7 +947,10 @@ table.list_tab tr td input[type='text'].lg {
 .page_list ul li a:hover {
 	background: #eee
 }
-
+.page_list ul li.active{
+    background: #428bca;
+    color: #fff;
+}
 .page_list ul li.active a {
 	color: #fff;
 	cursor: default;
@@ -1130,4 +1134,83 @@ table.inner_list tr td input {
 }
 .width_100{
     width: 100%;
+}
+.search_inner{
+    margin-left: 20px;
+}
+/*============== 主体页面的改版 ==============*/
+.index_body{
+    background: #e7e8eb;
+}
+.top_box{
+    z-index: 99;
+    background: #fff;
+    position: static;
+    border-top: 5px solid #428bca;
+}
+.top_box_inner{
+    width: 1250px;
+    margin: auto;
+}
+.top_box .top_left .logo{
+    text-align: left;
+    width: 220px;
+}
+.top_box .top_left .logo:hover{
+    color: #666;
+}
+.top_box .top_left ul li a.active{
+    color: #fff;
+    text-shadow: none;
+    background: #428bca;
+}
+.top_box .top_right ul li{
+    color: #666;
+}
+.top_box .top_right ul li a:hover{
+    color: #666;
+}
+.index_main{
+    width: 1250px;
+    margin: auto;
+}
+.index-inner{
+    margin: 40px 0 50px;
+    background: #fff;
+}
+.menu_box{
+    position: static;
+    width: 220px;
+    float: left;
+    box-sizing: border-box;
+    border-right: none;
+}
+.menu_box ul li:last-child ul.sub_menu{
+    border: none;
+}
+.menu_box ul li ul.sub_menu li.on{
+    color: #fff;
+    background-color: #428bca;
+}
+.menu_box ul li ul.sub_menu li.on a{
+    color: #fff;
+}
+.main_box{
+    position: static;
+    /*width: 1000px;*/
+    margin-left: 220px;
+    height: auto;
+    height: 1200px;
+    border-left: 1px solid #e7e7eb;
+    overflow-y: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,.3);
+}
+::-webkit-scrollbar-track {
+    background: rgba(0,0,0,.1);
 }

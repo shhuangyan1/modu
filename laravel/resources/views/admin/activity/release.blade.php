@@ -55,18 +55,23 @@
         </section>
 
         <section class="sec clear">
-            <div class="upload-opt-box" style="margin-bottom: 15px;">
-                <span class="banner-title">上传活动海报</span>
-                <!--<span class="banner-title">上传活动海报 或 宣传视频 （二选一）</span>-->
-                <div class="sec-opt">
-                    <input type="radio" class="up-image" checked name="restype" value="image" mdtext="上传活动海报">
-                    <!--<input type="radio" class="up-video" name="restype" value="video" mdtext="上传活动视频">-->
-                </div>
+            <div>
+                <span class="banner-title">上传活动海报</span><span>活动海报建议尺寸10：5 ~ 10：6 （最小横宽比 400px：200px）</span>
+                <input type="radio" class="up-image hide" checked name="restype" value="image" mdtext="上传活动海报">
             </div>
+
+            <!--<div class="upload-opt-box" style="margin-bottom: 15px;">-->
+                <!--<span class="banner-title">上传活动海报</span>-->
+                <!--&lt;!&ndash;<span class="banner-title">上传活动海报 或 宣传视频 （二选一）</span>&ndash;&gt;-->
+                <!--<div class="sec-opt">-->
+                    <!--<input type="radio" class="up-image" checked name="restype" value="image" mdtext="上传活动海报">-->
+                    <!--&lt;!&ndash;<input type="radio" class="up-video" name="restype" value="video" mdtext="上传活动视频">&ndash;&gt;-->
+                <!--</div>-->
+            <!--</div>-->
 
             <div class="upload-img-box">
                 <input id="file_upload" name="image" type="file" style="display: none;">
-                <p>话题海报建议尺寸10：5 ~ 10：6 （最小横宽比 400px：200px）</p>
+                <p class="hide">活动海报建议尺寸10：5 ~ 10：6 （最小横宽比 400px：200px）</p>
                 <div class="add-cover add-img">
                     <i class="fa fa-photo"></i>
                     <div class="tab">上传活动海报</div>
@@ -110,7 +115,7 @@
             </div>
             <div>
                 <p>请填写活动地址</p>
-                <input type="text" style="width: 480px;" class="address" name="address" placeholder="请填写活动地址">
+                <input type="text" class="address" name="address" placeholder="请填写活动地址">
             </div>
         </section>
         <section class="no-border collect-box">
@@ -138,7 +143,7 @@
             </div>
         </section>
 
-        <section class="no-border">
+        <section class="no-border" style="margin-bottom: 0;">
             <input class="button confirm" type="submit" value="确认发布">
             <!--<input class="button primary btn-preview" type="button" value="预览">-->
         </section>
