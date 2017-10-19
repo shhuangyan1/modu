@@ -40,14 +40,23 @@ class UserController extends Controller{
         //$map['current'] = $input['current'];
         if(!empty($input['nickname'])){
             $map['nickName'] = $input['nickname'];
+            $data = DB::table("user")
+                ->where($map)
+                ->orderby("id","desc")
+                ->offset($input['current'])
+                ->limit($input['pagesize'])
+                ->get();
+        }else{
+            $a = $input['current'] - 1;
+            $data = DB::table("user")
+                ->orderby("id","desc")
+                ->offset($a)
+                ->limit($input['pagesize'])
+                ->get();
+            //dump($data);die;
         }
 
-        $data = DB::table("user")
-            ->where($map)
-            ->orderby("id","desc")
-            ->offset($input['current'])
-            ->limit($input['pagesize'])
-            ->get();
+
         //dump($user);die;
         echo json_encode($data);
     }
