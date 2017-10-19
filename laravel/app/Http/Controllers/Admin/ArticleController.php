@@ -475,8 +475,8 @@ Class ArticleController extends Controller{
 			file_put_contents('htmls/'.$a.'.html',$html);
 
 //echo $html;
-			$pattern = "/<[img|IMG].*?data-src=[\'|\"](.*?(?:[\.gif|\.jpg|\.png|\.jpeg]))[\'|\"].*?[\/]?>/";
-
+			/*$pattern = "/<[img|IMG].*?data-src=[\'|\"](.*?(?:[\.gif|\.jpg|\.png|\.jpeg]))[\'|\"].*?[\/]?>/";*/
+			$pattern = "/<[img|IMG].*?data-src=[\'|\"](.*?(?:[\.gif|\.jpg|\.png|\.jpeg|\.0]))[\'|\"].*?[\/]?>/";
 			preg_match_all($pattern, $html, $match);
 			$count = sizeof($match[1]);
 			//var_dump($match[1]);die;
@@ -489,6 +489,7 @@ Class ArticleController extends Controller{
 //$str = file_get_contents($match[1][3]);
 //var_dump($match[1]) ;
 //file_put_contents('images/b.gif',$str);
+			//dump($match[1]);die;
 			for ($i = 0; $i < $count; $i++) {
 				$str[] = file_get_contents($match[1][$i]);
 				$c = time().rand(1000,9999);

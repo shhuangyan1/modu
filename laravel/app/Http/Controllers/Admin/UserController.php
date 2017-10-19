@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Model\User;
 use App\Http\Controllers\Controller;
+use DB;
 
 class UserController extends Controller{
 
@@ -26,13 +27,24 @@ class UserController extends Controller{
 
     //往user.list页面填充数据接口
     public function fill(Request $request){
-        $user = $request->get('nickname');
+        /*$user = $request->get('nickname');
         $data = User::where(function($query)use( $user){
             if( $user){
                 $query -> where('nickname', 'like', '%'. $user.'%');
             }
-        })->orderby('id','desc')->paginate(5);
-        //dump($data);die;
+        })->orderby('id','desc')->get();
+        dump($data);die;*/
+        $input = $request->input();
+        //$map['pagesize'] = $input['pagesize'];
+        // $map['nickName'] = $input['nickName'];
+        //$map['current'] = $input['current'];
+        $data = DB::table("user")
+            ->where(array("pagesize"=>$input['pagesize']))
+            ->orderby("id","desc")
+            ->offset($input['current'])
+            ->limit($input['pagesize'])
+            ->get();
+        //dump($user);die;
         echo json_encode($data);
     }
 }
