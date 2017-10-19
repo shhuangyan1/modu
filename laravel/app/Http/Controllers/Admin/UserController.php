@@ -15,7 +15,17 @@ use App\Http\Controllers\Controller;
 
 class UserController extends Controller{
 
-    public function index(Request $request){
+    public function index(){
+
+        return view('admin.user.list');
+    }
+
+    public function date(){
+        return view("admin/user/info");
+    }
+
+    //往user.list页面填充数据接口
+    public function fill(Request $request){
         $user = $request->get('nickname');
         $data = User::where(function($query)use( $user){
             if( $user){
@@ -23,10 +33,6 @@ class UserController extends Controller{
             }
         })->orderby('id','desc')->get();
         //dump($data);die;
-        return view('admin.user.list',compact('data'));
-    }
-
-    public function date(){
-        return view("admin/user/info");
+        echo json_encode($data);
     }
 }
