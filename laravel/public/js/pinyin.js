@@ -404,7 +404,7 @@ var city = [
 var get_name_bypinyin = function (pro, cty) {
     pro = pro || "";
     cty = cty || "";
-    var result = {"pid": "", "province": "", "city": ""}
+    var result = {"pid": "", "province": pro , "city": cty}
 
     for (var i=0; i< province.length; i++){
         if(province[i].pinyin.toLowerCase() == pro.toLowerCase()){
@@ -429,5 +429,3 @@ var get_name_bypinyin = function (pro, cty) {
     // console.log(result);
     return result;
 }
-
-// get_name_bypinyin("Jiangsu", "Nanjing")

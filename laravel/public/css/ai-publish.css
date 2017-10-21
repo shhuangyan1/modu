@@ -101,6 +101,8 @@
 }
 .imgs-box{
     padding: 5px 5px 0 0;
+    max-height: 400px;
+    overflow-y: auto;
 }
 .imgs-item{
     width: 100px;

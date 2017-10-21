@@ -64,13 +64,16 @@
  * 父级页面调整
  */
 function resize_index() {
-    var height = $("body").height()
+    var height = $("body").outerHeight()
     // console.log(height)
     if(height > 1200)
     $(".main_box",parent.document).css({height: height+'px'})
 }
 window.onload = function () {
-    resize_index()
+    resize_index();
+    // $("body").resize(function () {
+    //     resize_index();
+    // })
 }
 
 

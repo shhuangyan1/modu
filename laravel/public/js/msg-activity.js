@@ -84,8 +84,12 @@ $(function () {
                 url: '/admin/activity/act_commentreply',
                 data: {'id': id, 'reply': value},
             },function (res) {
-                if(res.success){
-                    jeBox.msg("回复成功",{"icon": 1, "time": 1})
+                if(res.msg == 'success'){
+                    jeBox.msg("回复成功",{"icon": 2, "time": 1})
+                }else if(res.msg == "fail" && value.length > 0){
+                    jeBox.msg("请不要重复回复",{"icon": 1, "time": 1})
+                }else{
+                    jeBox.msg("网络错误",{"icon": 3, "time": 1})
                 }
             })
         })

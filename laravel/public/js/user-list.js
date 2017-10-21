@@ -16,18 +16,24 @@ function get_sex(num) {
 }
 
 $(function () {
+    var scope = {list: []}
     var current_page = 1
 
     // 加载数据
     var load_user = function (current) {
         MD.ajax_get({
             url: 'admin/user/fill',
-            data: {"current": current, "pagesize": '5'}
+            data: {"current": current, "pagesize": '80'}
         },function (res) {
+            if(res.length>0 && scope.list.length > 0){
+                jeBox.msg("加载成功",{icon: 2, time: 1})
+            }
+            if(res.length == 0 && scope.list.length > 0){
+                jeBox.msg("暂无更多",{icon: 1, time: 1})
+            }
             current_page++;
-
-            var list = res.data;
-            show_user(list)
+            $.extend(scope.list, res)
+            show_user(res)
         })
     }
 

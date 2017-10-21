@@ -57,6 +57,10 @@
         .info{
             padding: 8px 10px 0;
         }
+        .loadmore{
+            text-align: center;
+            padding: 20px;
+        }
     </style>
 
 </head>
@@ -86,7 +90,7 @@
 
     </div>
 
-    <p class="loadmore">加载更多……</p>
+    <p class="loadmore"><button class="button">加载更多</button></p>
 </div>
 
 <script type="text/html" id="user-tmp">

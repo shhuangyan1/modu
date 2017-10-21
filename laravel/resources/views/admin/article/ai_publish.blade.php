@@ -103,6 +103,7 @@
                 <label>
                     <span>是否推荐：</span>
                     <input type="checkbox" name="recommend" value="true" mdtext="推荐">
+                    <input type="text" class="number" placeholder="设置初始阅读" name="view">
                 </label>
             </div>
             <div class="result-item">

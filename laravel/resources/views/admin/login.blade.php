@@ -6,10 +6,22 @@
 
 	<link rel="stylesheet" href="{{asset('admin/style/css/ch-ui.admin.css')}}">
 	<link rel="stylesheet" href="{{asset('admin/style/font/css/font-awesome.min.css')}}">
+
+    <link rel="stylesheet" href="{{asset('css/login.css')}}">
+
+    <script src="{{asset('lirary/uploadify/jquery1.11.3.min.js')}}" type="text/javascript"></script>
+
+    <script src="{{asset('lirary/common/jquery.particleground.min.js')}}"></script>
+    <script src="{{asset('lirary/common/demo.js')}}"></script>
+
 </head>
-<body style="background:#F3F3F4;">
+<body>
+<div id="particles">
+    <canvas class="pg-canvas" width="1920" height="923"></canvas>
+    <div class="intro" style="margin-top: -120.5px;">
+
 	<div class="login_box">
-		<h1></h1>
+		<!--<h1></h1>-->
 		<h2>掌上魔都 后台管理</h2>
 		<div class="form">
 			@if (session('msg'))
@@ -39,5 +51,10 @@
 			{{--<p><a href="#">返回首页</a> &copy; 2016 Powered by <a href="http://www.houdunwang.com" target="_blank">http://www.houdunwang.com</a></p>--}}
 		</div>
 	</div>
+
+    </div>
+</div>
+
+
 </body>
 </html>
