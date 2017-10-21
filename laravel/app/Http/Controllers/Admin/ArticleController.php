@@ -538,6 +538,8 @@ Class ArticleController extends Controller{
 		$input = $request->input();
 		if(isset($input['recommend'])){
 			unset($input['recommend']);
+			//dump($input['time']);die;
+			$input['time'] = strtotime($input['time']);
 			$data['article_id'] = DB::table("article")->insertGetId($input);
 			$data['time']=time();
 			$article_recommend = DB::table("article_recommend")
@@ -550,6 +552,7 @@ Class ArticleController extends Controller{
 			}
 
 		}else{
+			$input['time'] = strtotime($input['time']);
 			$article = DB::table("article")->insert($input);
 			if($article){
 				return redirect('admin/article');
