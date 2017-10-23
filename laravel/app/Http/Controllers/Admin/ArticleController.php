@@ -188,7 +188,7 @@ Class ArticleController extends Controller{
 				->select("id")
 				->where("article_id",$id)
 				->first();
-		if($article->id){
+		if($article){
 			$info=DB::table("article_recommend")
 					->where("article_id",$id)
 					->delete();
