@@ -95,6 +95,9 @@
 
 <script>
     $("#history").attr('href', document.referrer)
+    if(document.referrer.indexOf("admin/confirm") >= 0){
+        $("#history").text("删除确认")
+    }
     var para = MD.get_query('id')
     para = MD.merger(para,{openid: ''});
 

@@ -51,18 +51,20 @@ $(function () {
         var result_content = $("<div></div>")
 
         $.each(list, function (i, v) {
-            var box = '<div class="user-box user-box-'+ v.id +'" data-id="'+ v.id +'"></div>'
-            //
-            var addr = get_name_bypinyin(v.province, v.city);
-            v.time = getLocalTime(v.time);
-            // console.log(v.time);
-            v.time_pre = v.time.split(" ")[0]
-            v.address = addr.province + " " + addr.city;
-            v.sex = get_sex(v.gender);
+            if(v.avatarUrl != ""){
+                var box = '<div class="user-box user-box-'+ v.id +'" data-id="'+ v.id +'"></div>'
+                //
+                var addr = get_name_bypinyin(v.province, v.city);
+                v.time = getLocalTime(v.time);
+                // console.log(v.time);
+                v.time_pre = v.time.split(" ")[0]
+                v.address = addr.province + " " + addr.city;
+                v.sex = get_sex(v.gender);
 
-            $(box).loadTemplate($("#user-tmp"),v);
+                $(box).loadTemplate($("#user-tmp"),v);
 
-            $(result_content).append($(box).loadTemplate($("#user-tmp"),v))
+                $(result_content).append($(box).loadTemplate($("#user-tmp"),v))
+            }
         })
 
         $(".result_content").append(result_content);
