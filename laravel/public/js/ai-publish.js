@@ -135,6 +135,7 @@ $(function () {
 
                     // 返回图片数据，并展示
                     MD.rule_image = res.image;
+                    MD.cover_num = MD.rule_image.length;
                     show_images(MD.rule_image);
 
 
@@ -185,40 +186,71 @@ $(function () {
          * 点击添加图片，先预览，再上传，最后切换显示dom
          */
         $(".add-cover").on("click",function () {
+            if(MD.ai_cover)
             $("#coverInput").click();
         })
         $("#coverInput").on("change", function () {
+            var changeScope = {}
             // 预览
             MD.upload_preview(this, function (e) {
                 var op = $('<div class="imgs-prev-item imgs-prev-item-on">\n' +
-                    '          <div class="checked-tri delete-cover" data-index=""><i class="fa fa-check-square-o"></i></div>\n' +
+                    '          <div class="checked-tri"><i class="fa fa-check-square-o"></i></div>\n' +
                     '               <img class="imgs-pre" src="'+ e.target.result +'">\n' +
                     '               <div class="loading-cover"\n' +
                     '                     style="background: rgba(255,255,255, 0.5) url(\'http://www.modu.com/storage/icons/loading.gif\') no-repeat center">\n' +
                     '               </div>'+
                     '      </div>');
-                op.mouseover(function () {
-                    $(this).find(".fa").addClass("fa-minus-circle")
-                })
-                op.mouseout(function () {
-                    $(this).find(".fa").removeClass("fa-minus-circle")
-                })
                 op.insertBefore(".add-cover");
+                changeScope.op = op;
             })
 
             // 上传
-            MD.form_submit("coverForm", "/admin/article/upload", function (res) {
+            MD.form_submit("coverForm", "/admin/article/cursor_img", function (res) {
                 // 返回被上传图片的路径
-                // var path = res.path;
-                // var length = MD.ai_cover.push(path)
+                var path = res;
+                var length = MD.ai_cover.push(path);
+                var len = length - 1;
+                // 上传后封面数量 +1
+                MD.cover_num++;
+
+                var $op = $('<div class="imgs-prev-item imgs-prev-item-on" style="background: url('+ path +') center / contain no-repeat">' +
+                    '           <div class="checked-tri delete-cover" data-length="'+ len +'"><i class="fa fa-check-square"></i></div>' +
+                    '</div>');
+                $op.mouseover(function () {
+                    $(this).find(".fa").addClass("fa-minus-circle").removeClass('fa-check-square')
+                })
+                $op.mouseout(function () {
+                    $(this).find(".fa").addClass('fa-check-square').removeClass("fa-minus-circle")
+                })
+                changeScope.op.replaceWith($op);
+
+                // 每次上传图片后，对封面选择项的更新
+                show_typeset(MD.cover_num)
+
+                // 上传完成后，添加删除事件
+                delete_cover();
             })
+
+
         })
 
     } // bind结束
 
     /**
-     *
+     *  自定义封面后事件处理
      */
+    var delete_cover = function () {
+        $(".delete-cover").on("click", function () {
+
+            var index = $(this).data("length");
+            MD.ai_cover.splice(index,1,""); // 采用空字符串占位，该项在数组中的位置保持不变
+            $(this).parent().remove();
+
+            // 每次删除图片后，对封面选择项的更新
+            MD.cover_num--
+            show_typeset(MD.cover_num)
+        })
+    }
 
 
     /**
@@ -273,7 +305,7 @@ $(function () {
     }
 
     /**
-     * 从正文图片选择文章封面
+     * 从正文图片选择文章封面，事件
      */
     var choose_images = function () {
         MD.ai_cover = []; // 封面图片数组
@@ -284,9 +316,6 @@ $(function () {
             var index = parseInt(that.data('index'));
             var src = MD.url + MD.rule_image[index]
             that.toggleClass("imgs-item-on")
-
-            // var conf = {}
-            // conf[index] = src;
 
             if(that.hasClass('imgs-item-on')){
                 that.find("i").addClass("fa-check-square").removeClass('fa-check-square-o')
@@ -304,7 +333,23 @@ $(function () {
 
 
     bind();
+
+
 })
+
+/**
+ * 过滤数组中空项
+ */
+var arr_filter = function (arr) {
+    arr = arr || [];
+    var re = []
+    for(var i=0;i<arr.length; i++){
+        if(arr[i] != ""){
+            re.push(arr[i])
+        }
+    }
+    return re;
+}
 
 /**
  * 提交验证
@@ -378,13 +423,8 @@ var check_cover = function () {
         jeBox.msg("请选择封面图片", {icon: 1,time:1.5});
         return false;
     }else{
-        var res_cover = [];
         // 过滤掉数组中占位项
-        for(var i=0;i<cover.length; i++){
-            if(cover[i] != ""){
-                res_cover.push(cover[i])
-            }
-        }
+        var res_cover = arr_filter(MD.ai_cover);
 
         $("#images").val(res_cover.join(",")); // 设置封面图片表单数据
         // 封面图片数量限制

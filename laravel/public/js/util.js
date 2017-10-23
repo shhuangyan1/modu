@@ -415,14 +415,7 @@ window.MD = {
     form_submit: function (formid, action, callback) {
         var formDom = document.getElementById(formid);
         var formData = new FormData(formDom);
-
-        /*MD.ajax_post({
-            url: action,
-            data: formData
-        }, function (res) {
-            typeof callback == "function" && callback(res)
-        })*/
-
+        //
         var req = new XMLHttpRequest();
         req.open("POST", MD.url + action);
         req.onreadystatechange = function() {
@@ -435,6 +428,8 @@ window.MD = {
         req.send(formData);
         //避免内存泄漏
         req = null;
+
+        return req;
     }
 
 

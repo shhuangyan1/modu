@@ -179,8 +179,8 @@
       </form>
   </div>
     <section class="hide">
-        <form id="coverForm" action="" method="post">
-            <input id="coverInput" class="hide" type="file" accept="image/*" name="cover">
+        <form id="coverForm" action="" method="post" enctype="multipart/form-data">
+            <input id="coverInput" class="hide" type="file" accept="image/*" name="img">
         </form>
     </section>
 </div>
