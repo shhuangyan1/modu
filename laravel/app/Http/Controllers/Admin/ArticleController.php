@@ -193,6 +193,9 @@ Class ArticleController extends Controller{
 					->where("article_id",$id)
 					->delete();
 		}
+		$articleconfirm = DB::table("articleconfirm")
+				->where("article_id",$id)
+				->delete();
 		$collect = DB::table("collect")
 				->where(array("resourceid"=>$id,"type"=>1))
 				->delete();
