@@ -570,7 +570,7 @@ Class ArticleController extends Controller{
 			return ['error' => 'You may only upload png, jpg or gif.'];
 		}
 
-		$destinationPath = 'storage/uploads/'; //public 文件夹下面建 storage/uploads 文件夹
+		$destinationPath = 'image/'; //public 文件夹下面建 storage/uploads 文件夹
 		$extension = $file->getClientOriginalExtension();
 		$fileName = str_random(10).'.'.$extension;
 		$file->move($destinationPath, $fileName);
