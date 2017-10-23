@@ -140,8 +140,8 @@ class WxController extends Controller
 
     //魔都小程序个人中心我的活动接口
     public function my_activities(){
-        //$map['openid'] = $_GET['openid'];
-        $map['openid'] = 'o81b50LEXGR1jWLgImzDcm0eNHp4';
+        $map['openid'] = $_GET['openid'];
+        //$map['openid'] = 'o81b50LEXGR1jWLgImzDcm0eNHp4';
         //join("article","article.id","=","article_recommend.article_id")
         if(empty($_GET['current'])){
             $join_activity = DB::table("join_activity")
@@ -156,7 +156,7 @@ class WxController extends Controller
             $current = $_GET['current'];
             $join_activity = DB::table("join_activity")
                 ->join("activity","activity.id","=","join_activity.act_id")
-                ->select("activity.id","image","title","activity.time")
+                ->select("activity.id","image","title","activity.time","status")
                 ->where($map)
                 ->where("id","<",$current)
                 ->limit(5)
@@ -167,15 +167,18 @@ class WxController extends Controller
             $join = get_object_vars($v);
             $acttimestart = strtotime($join['time']);
             $acttimeend = $acttimestart+3600*6;
-            if(time() > $acttimeend){
+            if($v->status = 1){
                 $v->msg="活动已经结束！";
-            }elseif($acttimestart<=time()&&time()<=$acttimeend){
-                $v->msg="活动正在进行！";
-            }elseif(time()<$acttimestart){
-                $resttime = $acttimestart - time();
-                $rest = floor($resttime/86400);
-                $v->msg="活动开始剩余".$rest."天";
+            }else{
+                if($acttimestart<=time()&&time()<=$acttimeend){
+                    $v->msg="活动正在进行！";
+                }elseif(time()<$acttimestart){
+                    $resttime = $acttimestart - time();
+                    $rest = floor($resttime/86400);
+                    $v->msg="活动开始剩余".$rest."天";
+                }
             }
+
         }
 
         echo json_encode($join_activity);

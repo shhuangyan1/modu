@@ -116,6 +116,7 @@ class ActivityController extends Controller
         }else{
 
         }
+        $data['time'] = strtotime($data['time']);
         $data['addtime']=date('Y-m-d H:i',time());
         $info = Activity::create($data);
         if($info){
@@ -302,14 +303,31 @@ class ActivityController extends Controller
     }
 
     public function activity_format(){
+        /*$join = get_object_vars($v);
+            $acttimestart = strtotime($join['time']);
+            $acttimeend = $acttimestart+3600*6;
+            if(time() > $acttimeend){
+                $v->msg="活动已经结束！";
+            }elseif($acttimestart<=time()&&time()<=$acttimeend){
+                $v->msg="活动正在进行！";
+            }elseif(time()<$acttimestart){
+                $resttime = $acttimestart - time();
+                $rest = floor($resttime/86400);
+                $v->msg="活动开始剩余".$rest."天";
+            }*/
+        $map['status'] = 0;
         $activity = DB::table("activity")
-            ->where("status",0)
             ->select("id","title","description","time","address","view","image","key")
+            ->where($map)
+            ->where('time'<time())
             ->orderBy('id','desc')
             ->get();
         //dump($activity);die;
         foreach($activity as $v){
-            $v->join=0;
+            $join = DB::table("join_activity")
+                ->where("act_id",$v->id)
+                ->count();
+            $v->join=$join;
         }
         echo json_encode($activity,JSON_UNESCAPED_UNICODE);
     }
@@ -336,7 +354,10 @@ class ActivityController extends Controller
                 ->get();
         }
         foreach($activity as $v){
-            $v->join=0;
+            $join = DB::table("join_activity")
+                ->where("act_id",$v->id)
+                ->count();
+            $v->join=$join;
         }
         echo json_encode($activity,JSON_UNESCAPED_UNICODE);
     }
