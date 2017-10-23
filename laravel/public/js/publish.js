@@ -239,5 +239,9 @@ var check_img = function() {
     return true
 }
 var publish_article = function () {
-    return check_type() && check_title() && check_html() && check_img();
+    var result =  check_type() && check_title() && check_html() && check_img();
+    if(result){
+        var san = jeBox.loading(3,"文章发布中…");
+    }
+    return result;
 }

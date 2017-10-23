@@ -358,6 +358,14 @@ window.MD = {
         MD.change_images($doc, current_rule)
     },
 
+    //
+    release_after: function ($doc, current_rule) {
+        var f = $doc.find('img')
+        $.each(f, function (i, v) {
+            $(v).css({'max-width':'100%'})
+        });
+    },
+
     /**
      * 替换源页面中全部图片后台
      */
@@ -365,9 +373,68 @@ window.MD = {
         if(MD.rule_image && MD.rule_image.length > 0){
             var imgs = $doc.find(current_rule.content).find('img')
             $.each(imgs, function (i, v) {
-                $(v).attr({'src': MD.url+'/'+ MD.rule_image[i]})
+                $(v).attr({'src': MD.url + MD.rule_image[i]})
+
             })
         }
+    },
+
+    /**
+     * 上传图片，实现图片预览
+     * @param that 需要上传图片的input
+     * @param callback 回调函数
+     * @param config 可能需要的额外数据
+     */
+    upload_preview: function (that,callback,config) {
+        var file = that.files[0];
+        var fileReader = new FileReader();
+        // 监听
+        fileReader.onabort = function(){
+            jeBox.msg("图片读取中断，请重试", {icon: 2,time:1});
+        }
+        fileReader.onerror = function(){
+            jeBox.msg("图片读取失败，请重试", {icon: 2,time:1});
+        }
+        fileReader.onload = function(e){
+            // $(".banner-img-prev").attr("src",e.target.result);
+            typeof callback == "function" && callback(e)
+        }
+        try{
+            fileReader.readAsDataURL(file);
+        }catch (Exception){
+            console.log(Exception.name +":"+ Exception.message);
+        }
+    },
+
+    /**
+     * JS自定义表单提交
+     * @param formid
+     * @param action 表单提交路径
+     * @param callback
+     */
+    form_submit: function (formid, action, callback) {
+        var formDom = document.getElementById(formid);
+        var formData = new FormData(formDom);
+
+        /*MD.ajax_post({
+            url: action,
+            data: formData
+        }, function (res) {
+            typeof callback == "function" && callback(res)
+        })*/
+
+        var req = new XMLHttpRequest();
+        req.open("POST", MD.url + action);
+        req.onreadystatechange = function() {
+            if (this.status === 200 && this.readyState === 4) {
+                var res = this.response;
+                typeof callback == "function" && callback(res)
+            }
+        };
+        //将form数据发送出去
+        req.send(formData);
+        //避免内存泄漏
+        req = null;
     }
 
 

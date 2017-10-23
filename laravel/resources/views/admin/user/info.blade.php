@@ -12,6 +12,7 @@
     <script src="{{asset('lirary/uploadify/jquery1.11.3.min.js')}}" type="text/javascript"></script>
     <script type="text/javascript" src="{{asset('js/util.js')}}"></script>
     <script src="{{asset('lirary/jedate/jquery.jebox.js')}}" ></script>
+    <script src="{{asset('lirary/common/echarts.common.min.js')}}" ></script>
 
     <style>
 

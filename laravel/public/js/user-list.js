@@ -55,7 +55,7 @@ $(function () {
             //
             var addr = get_name_bypinyin(v.province, v.city);
             v.time = getLocalTime(v.time);
-            console.log(v.time);
+            // console.log(v.time);
             v.time_pre = v.time.split(" ")[0]
             v.address = addr.province + " " + addr.city;
             v.sex = get_sex(v.gender);

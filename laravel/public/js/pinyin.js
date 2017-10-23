@@ -24,7 +24,7 @@ var province = [
     {id: '23', pinyin: 'NeiMengGu', name: '内蒙古'},
     {id: '24', pinyin: 'NingXia', name: '宁夏'},
     {id: '25', pinyin: 'QingHai', name: '青海'},
-    {id: '26', pinyin: 'ShanXi', name: '陕西'},
+    {id: '26', pinyin: 'ShaanXi', name: '陕西'},
     {id: '27', pinyin: 'ShanXi', name: '山西'},
     {id: '28', pinyin: 'ShanDong', name: '山东'},
     {id: '29', pinyin: 'SiChuan', name: '四川'},
@@ -36,6 +36,26 @@ var province = [
 ]
 
 var city = [
+    {
+        pid: '2', city: [
+        {"pinyin":"baoshan","name":"宝山"},
+        {"pinyin":"changning","name":"长宁"},
+        {"pinyin":"chongming","name":"崇明"},
+        {"pinyin":"fengxian","name":"奉贤"},
+        {"pinyin":"Hongkou","name":"虹口"},
+        {"pinyin":"huangpu","name":"黄埔"},
+        {"pinyin":"Jiading","name":"嘉定"},
+        {"pinyin":"jinshan","name":"金山"},
+        {"pinyin":"jingan","name":"静安"},
+        {"pinyin":"Minhang","name":"闵行"},
+        {"pinyin":"songjiang","name":"松江"},
+        {"pinyin":"Pudong New District","name":"浦东新区"},
+        {"pinyin":"Po","name":"普陀"},
+        {"pinyin":"qingpu","name":"青浦"},
+        {"pinyin":"xuhui","name":"徐汇"},
+        {"pinyin":"yangpu","name":"杨浦"},
+    ]
+    },
     {
         pid: '7', city: [
         {pinyin: "AnQing", name: "安庆"},
@@ -298,7 +318,8 @@ var city = [
         {"pinyin":"HanZhong","name":"汉中"},
         {"pinyin":"ShangLuo","name":"商洛"},
         {"pinyin":"TongChuan","name":"铜川"},
-        {"pinyin":"WeiNan","name":"渭南"}, {"pinyin":"Xi'An","name":"西安"},
+        {"pinyin":"WeiNan","name":"渭南"},
+        {"pinyin":"Xi'An","name":"西安"},
         {"pinyin":"YaNan","name":"延安"},
         {"pinyin":"XianYang","name":"咸阳"},
         {"pinyin":"YuLin","name":"榆林"},

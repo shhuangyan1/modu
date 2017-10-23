@@ -128,6 +128,17 @@
                           <!--<div class="imgs-item imgs-item-on" style="background: url('http://www.modu.com/image/15081246864078.jpg') center / contain no-repeat">-->
                               <!--<div class="checked-tri"><i class="fa fa-check-square-o"></i></div>-->
                           <!--</div>-->
+                          <span id="imgs-name"></span>
+                          <!--<div class="imgs-prev-item imgs-prev-item-on">
+                              <div class="checked-tri delete-icon" data-index=""><i class="fa fa-check-square-o "></i></div>
+                              <img class="imgs-pre" src="http://www.modu.com/image/15087276417045.jpg">
+                              <div class="loading-cover"
+                                   style="background: rgba(255,255,255, 0.5) url('http://www.modu.com/storage/icons/loading.gif') no-repeat center">
+                              </div>
+                          </div>-->
+                          <div class="imgs-prev-item add-cover">
+                              <i class="fa fa-plus"></i>
+                          </div>
                       </div>
                   </div>
                   <!--排版选择-->
@@ -167,7 +178,11 @@
       </div>
       </form>
   </div>
-
+    <section class="hide">
+        <form id="coverForm" action="" method="post">
+            <input id="coverInput" class="hide" type="file" accept="image/*" name="cover">
+        </form>
+    </section>
 </div>
 <script>
 </script>

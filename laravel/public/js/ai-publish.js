@@ -79,8 +79,14 @@ $(function () {
         // 显示解析值
         $(".result-items-box").setValue(result);
         // 编辑器赋值
+        $.each($(result.content).find('img'), function (i, v) {
+            $(v).css({"max-width": "100%"})
+        })
+        // result.content
         ue.setContent(result.content)
 
+        // 后处理
+        MD.release_after($($("#ueditor_0").contents()[0]), rule)
     }
 
     // 通过url匹配目标规则
@@ -175,8 +181,45 @@ $(function () {
             }
         })
 
+        /**
+         * 点击添加图片，先预览，再上传，最后切换显示dom
+         */
+        $(".add-cover").on("click",function () {
+            $("#coverInput").click();
+        })
+        $("#coverInput").on("change", function () {
+            // 预览
+            MD.upload_preview(this, function (e) {
+                var op = $('<div class="imgs-prev-item imgs-prev-item-on">\n' +
+                    '          <div class="checked-tri delete-cover" data-index=""><i class="fa fa-check-square-o"></i></div>\n' +
+                    '               <img class="imgs-pre" src="'+ e.target.result +'">\n' +
+                    '               <div class="loading-cover"\n' +
+                    '                     style="background: rgba(255,255,255, 0.5) url(\'http://www.modu.com/storage/icons/loading.gif\') no-repeat center">\n' +
+                    '               </div>'+
+                    '      </div>');
+                op.mouseover(function () {
+                    $(this).find(".fa").addClass("fa-minus-circle")
+                })
+                op.mouseout(function () {
+                    $(this).find(".fa").removeClass("fa-minus-circle")
+                })
+                op.insertBefore(".add-cover");
+            })
 
-    }
+            // 上传
+            MD.form_submit("coverForm", "/admin/article/upload", function (res) {
+                // 返回被上传图片的路径
+                // var path = res.path;
+                // var length = MD.ai_cover.push(path)
+            })
+        })
+
+    } // bind结束
+
+    /**
+     *
+     */
+
 
     /**
      * 排版与封面选择
@@ -188,7 +231,7 @@ $(function () {
             img += '<div class="imgs-item" data-index="'+ i +'" style="background: url('+ MD.url + v +') center / contain no-repeat"><div class="checked-tri"><i class="fa fa-check-square-o"></i></div></div>'
         })
 
-        $("#res-img").html(img);
+        $("#imgs-name").html(img);
         show_typeset(images.length)
         choose_images();
     }
@@ -222,7 +265,7 @@ $(function () {
         $(".compose2").addClass('hide')
 
     }
-    // 显示多图排版选项，和一张图
+    // 显示多图排版选项
     var show_multi = function () {
         $(".compose3").removeClass('hide')
         $(".compose1").removeClass('hide')
@@ -267,7 +310,11 @@ $(function () {
  * 提交验证
  */
 function onSubmit() {
-    return check_title() && check_author() && check_from() && check_date() && check_type() && check_typeset() && check_cover();
+    var result = check_title() && check_author() && check_from() && check_date() && check_type() && check_typeset() && check_cover();
+    if(result){
+        var san = jeBox.loading(3,"文章发布中…");
+    }
+    return result;
 }
 var check_title = function() {
     var title = $(".title").val().trim();
@@ -325,40 +372,42 @@ var check_type = function() {
     return type;
 }
 var check_cover = function () {
-    var cover = MD.ai_cover; // 封面图片
+    var cover = MD.ai_cover.slice(); // 封面图片
     var cov = true;
     if(cover.length <= 0){
         jeBox.msg("请选择封面图片", {icon: 1,time:1.5});
         return false;
     }else{
+        var res_cover = [];
         // 过滤掉数组中占位项
         for(var i=0;i<cover.length; i++){
-            if(cover[i] == ""){
-                cover.splice(i,1)
+            if(cover[i] != ""){
+                res_cover.push(cover[i])
             }
         }
-        $("#images").val(cover.join(",")); // 设置封面图片表单数据
+
+        $("#images").val(res_cover.join(",")); // 设置封面图片表单数据
         // 封面图片数量限制
         if(MD.ai_typeset == 1 || MD.ai_typeset == 3){
             // 一张图片的选择
-            if(cover.length < 1){
+            if(res_cover.length < 1){
                 jeBox.msg("请选择封面图片", {icon: 1,time:1.5});
                 cov = false;
                 return false
             }
-            if(cover.length > 1){
+            if(res_cover.length > 1){
                 jeBox.msg("封面图片最多为一张", {icon: 1,time:1.5});
                 cov = false;
                 return false
             }
         }else{
             // 多图排版的选择
-            if(cover.length < 3){
+            if(res_cover.length < 3){
                 jeBox.msg("请选择三张封面图片", {icon: 1,time:1.5});
                 cov = false;
                 return false;
             }
-            if(cover.length > 3){
+            if(res_cover.length > 3){
                 jeBox.msg("最多选择三张封面图片", {icon: 1,time:1.5});
                 cov = false;
                 return false;
