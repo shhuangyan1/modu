@@ -25,6 +25,7 @@ Route::get('admin/topic/info','Admin\TopicController@info');
 Route::any('admin/article/article_detail','Admin\ArticleController@article_detail');
 Route::any('admin/category/category_format','Admin\CategoryController@category_format');
 Route::any('admin/article/ai_article','Admin\ArticleController@ai_article');
+Route::any('admin/article/cursor_img','Admin\ArticleController@cursor_img');
 Route::any('admin/article/ai_publish','Admin\ArticleController@ai_publish');
 Route::any('admin/article/addregular','Admin\ArticleController@addregular');
 Route::any('admin/article/showregular','Admin\ArticleController@showregular');

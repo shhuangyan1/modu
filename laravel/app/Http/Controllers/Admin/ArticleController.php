@@ -562,6 +562,27 @@ Class ArticleController extends Controller{
 		}
 	}
 
+	//智能发布文章，手动添加封面图片
+	public function cursor_img(Request $request){
+		$file = $request->file('img');
+		$allowed_extensions = ["png", "jpg", "gif"];
+		if ($file->getClientOriginalExtension() && !in_array($file->getClientOriginalExtension(), $allowed_extensions)) {
+			return ['error' => 'You may only upload png, jpg or gif.'];
+		}
+
+		$destinationPath = 'storage/uploads/'; //public 文件夹下面建 storage/uploads 文件夹
+		$extension = $file->getClientOriginalExtension();
+		$fileName = str_random(10).'.'.$extension;
+		$file->move($destinationPath, $fileName);
+
+		$filePath = asset($destinationPath.$fileName);
+		if($filePath){
+			echo $filePath;
+		}else{
+			echo '网络错误！';
+		}
+	}
+
 }
 
 
