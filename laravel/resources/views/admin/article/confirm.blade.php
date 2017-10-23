@@ -38,7 +38,7 @@
                 @foreach ($info as $v)
                 <tr>
                     <td>
-                        <a href="#">{{$v->title}}</a>
+                        <a href="{{url('admin/article/detail')}}?id={{$v->id}}">{{$v->title}}</a>
                     </td>
                     <td class="tc">{{$v->cat_name}}</td>
                     <td class="tc">{{$v->author}}</td>
