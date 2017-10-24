@@ -11,4 +11,7 @@ Class IndexController extends Controller{
 	public function info(){
 		return view('admin.info');
 	}
+	public function modify(){
+		return view('admin.password');
+	}
 }

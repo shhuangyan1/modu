@@ -25,7 +25,7 @@
 		<div class="top_right">
 			<ul>
 				<li>管理员：{{session('user')->username}}</li>
-				<li><a href="javascript:void(0)" target="main">修改密码</a></li>
+				<li><a href="{{url("admin/index/modify")}}" target="main">修改密码</a></li>
 				<li><a href="{{url('admin/logout')}}">退出</a></li>
 			</ul>
 		</div>
