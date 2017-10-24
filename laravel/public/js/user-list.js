@@ -23,7 +23,7 @@ $(function () {
     var load_user = function (current) {
         MD.ajax_get({
             url: 'admin/user/fill',
-            data: {"current": current, "pagesize": '80'}
+            data: {"current": current, "pagesize": '40'}
         },function (res) {
             if(res.length>0 && scope.list.length > 0){
                 jeBox.msg("加载成功",{icon: 2, time: 1})
@@ -48,7 +48,7 @@ $(function () {
         if(para.nickname == ""){
             return;
         }
-        MD.ajax_get({
+        MD.ajax_post({
             url: 'admin/user/fill',
             data: para
         },function (res) {
