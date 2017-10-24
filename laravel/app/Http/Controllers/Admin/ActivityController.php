@@ -303,23 +303,12 @@ class ActivityController extends Controller
     }
 
     public function activity_format(){
-        /*$join = get_object_vars($v);
-            $acttimestart = strtotime($join['time']);
-            $acttimeend = $acttimestart+3600*6;
-            if(time() > $acttimeend){
-                $v->msg="活动已经结束！";
-            }elseif($acttimestart<=time()&&time()<=$acttimeend){
-                $v->msg="活动正在进行！";
-            }elseif(time()<$acttimestart){
-                $resttime = $acttimestart - time();
-                $rest = floor($resttime/86400);
-                $v->msg="活动开始剩余".$rest."天";
-            }*/
         $map['status'] = 0;
+        $time = time();
         $activity = DB::table("activity")
             ->select("id","title","description","time","address","view","image","key")
             ->where($map)
-            ->where('time'<time())
+            ->where("time","<",$time)
             ->orderBy('id','desc')
             ->get();
         //dump($activity);die;

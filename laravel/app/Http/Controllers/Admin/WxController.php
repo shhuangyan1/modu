@@ -38,7 +38,7 @@ class WxController extends Controller
                 ->first();
         }
         //判断用户信息是否已经收集了
-        if($nouser){
+        if(!empty($nouser)){
             $date['code']='fail';
             $date['msg']='信息已经收集了';
             die;
@@ -146,7 +146,7 @@ class WxController extends Controller
         if(empty($_GET['current'])){
             $join_activity = DB::table("join_activity")
                 ->join("activity","activity.id","=","join_activity.act_id")
-                ->select("activity.id","image","title","activity.time")
+                ->select("activity.id","image","title","activity.time","status")
                 ->where($map)
                 ->limit(5)
                 ->orderby("id","desc")
@@ -165,14 +165,16 @@ class WxController extends Controller
         }
         foreach($join_activity as $v){
             $join = get_object_vars($v);
+            //dump($join);die;
             $acttimestart = strtotime($join['time']);
             $acttimeend = $acttimestart+3600*6;
-            if($v->status = 1){
+
+            if($join['status'] == 1){
                 $v->msg="活动已经结束！";
             }else{
-                if($acttimestart<=time()&&time()<=$acttimeend){
+                if($acttimestart<=time()){
                     $v->msg="活动正在进行！";
-                }elseif(time()<$acttimestart){
+                }elseif($acttimestart>time()){
                     $resttime = $acttimestart - time();
                     $rest = floor($resttime/86400);
                     $v->msg="活动开始剩余".$rest."天";
