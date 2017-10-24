@@ -40,10 +40,15 @@ class UserController extends Controller{
         //$map['current'] = $input['current'];
 
         if(!empty($input['nickname'])){
-            $map['nickName'] = $input['nickname'];
+            //$map['nickName'] = $input['nickname'];
             $data = DB::table("user")
-                ->where($map)
-                ->first();
+                ->where(array("nickName","like",'%'.$input['nickname'].'%'))
+                ->get();
+            if($data){
+                $data = $data;
+            }else{
+                $data['msg'] = "当前查询下没有数据！";
+            }
         }else{
             $a = $input['current'] - 1;
             $b = $input['pagesize'];
