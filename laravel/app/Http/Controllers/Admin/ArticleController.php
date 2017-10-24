@@ -271,21 +271,32 @@ Class ArticleController extends Controller{
 
 		if(!empty($_GET['current'])){
 			$current = $_GET['current'];
-			$current = $current - 8;
+			//$current = $current - 8;
 			$map['cat_id'] = $cat_id;
+			$map['status'] = 0;
 			if($map['cat_id']==0){
+				$k['article.status'] = 0;
 				//$info = DB::table('articleconfirm')->join('article','article.id','=','articleconfirm.article_id')->join('category','article.cat_id','=','category.id')->select('articleconfirm.*','article.title','article.author','category.cat_name')->paginate(10);
 				$article = DB::table("article_recommend")
 						->join("article","article.id","=","article_recommend.article_id")
 						->select("title","author","compose","from","article.id","view","image")
 						->where("article_id","<","$current")
+						->where($k)
 						->orderby("article_recommend.id","desc")
 						->limit(8)
 						->get();
-				$num = DB::table('article_recommend')
+				$num = DB::table("article_recommend")
+						->join("article","article.id","=","article_recommend.article_id")
 						->where("article_id","<","$current")
+						->where($k)
 						->limit(8)
 						->count();
+				if($num<8){
+					$num = $num;
+				}else{
+					$num=8;
+				}
+
 				if($num == 0){
 					$data['msg']='没有最新的了！';
 				}else{
@@ -306,6 +317,12 @@ Class ArticleController extends Controller{
 						->select("title","author","compose","from","id","view","image")
 						->limit(8)
 						->count();
+				if($num<8){
+					$num = $num;
+				}else{
+					$num=8;
+				}
+
 				if($num == 0){
 					$data['msg']='没有最新的了！';
 				}else{
@@ -318,15 +335,20 @@ Class ArticleController extends Controller{
 			echo json_encode($data,JSON_UNESCAPED_UNICODE);
 		}else{
 			$map['cat_id'] = $cat_id;
+			$map['status'] = 0;
 			if($map['cat_id']==0){
+				$k['article.status'] = 0;
 			//$info = DB::table('articleconfirm')->join('article','article.id','=','articleconfirm.article_id')->join('category','article.cat_id','=','category.id')->select('articleconfirm.*','article.title','article.author','category.cat_name')->paginate(10);
 			$article = DB::table("article_recommend")
 					->join("article","article.id","=","article_recommend.article_id")
 					->select("title","author","compose","from","article.id","view","image")
+					->where($k)
 					->orderby("article_recommend.id","desc")
 					->limit(8)
 					->get();
 				$num = DB::table('article_recommend')
+						->join("article","article.id","=","article_recommend.article_id")
+						->where($k)
 						->limit(8)
 						->count();
 				if($num<8){

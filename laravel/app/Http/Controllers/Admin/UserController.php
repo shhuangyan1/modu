@@ -38,14 +38,12 @@ class UserController extends Controller{
         //$map['pagesize'] = $input['pagesize'];
         // $map['nickName'] = $input['nickName'];
         //$map['current'] = $input['current'];
+
         if(!empty($input['nickname'])){
             $map['nickName'] = $input['nickname'];
             $data = DB::table("user")
                 ->where($map)
-                ->orderby("id","desc")
-                ->offset($input['current'])
-                ->limit($input['pagesize'])
-                ->get();
+                ->first();
         }else{
             $a = $input['current'] - 1;
             $b = $input['pagesize'];

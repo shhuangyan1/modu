@@ -31,14 +31,14 @@ class WxController extends Controller
     public function usersave(Request $request){
         $input = $request->input();
         $input['time'] = time();
-        if(isset($input['openid'])){
+        //if(isset($input['openid'])){
             $map['openid'] = $input['openid'];
             $nouser = DB::table("user")
                 ->where($map)
                 ->first();
-        }
+       // }
         //判断用户信息是否已经收集了
-        if(!empty($nouser)){
+        if($nouser){
             $date['code']='fail';
             $date['msg']='信息已经收集了';
             die;
@@ -149,7 +149,7 @@ class WxController extends Controller
                 ->select("activity.id","image","title","activity.time","status")
                 ->where($map)
                 ->limit(5)
-                ->orderby("id","desc")
+                ->orderby("join_activity.id","desc")
                 ->get();
 
         }else{
@@ -158,9 +158,9 @@ class WxController extends Controller
                 ->join("activity","activity.id","=","join_activity.act_id")
                 ->select("activity.id","image","title","activity.time","status")
                 ->where($map)
-                ->where("id","<",$current)
+                ->where("activity.id","<",$current)
                 ->limit(5)
-                ->orderby("id","desc")
+                ->orderby("join_activity.id","desc")
                 ->get();
         }
         foreach($join_activity as $v){

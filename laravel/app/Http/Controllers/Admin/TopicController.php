@@ -220,7 +220,7 @@ class TopicController extends Controller
             ->where($map)
             ->update(array("view"=>$view));
         $detail = DB::table("topic")
-            ->select("id","image","title","content","view","addtime")
+            ->select("id","image","title","content","view","time")
             ->where($map)
             ->limit(5)
             ->get();

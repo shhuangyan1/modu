@@ -394,7 +394,7 @@ class ActivityController extends Controller
 
     //魔都后台活动列表，点击活动接口1
     public function act_id(){
-        $id = 15;//$_GET['id'];
+        $id = $_GET['id'];
         $activity  = DB::table("activity")
             ->select("title","addtime","limits")
             ->where("id",$id)
