@@ -40,9 +40,8 @@ class UserController extends Controller{
         //$map['current'] = $input['current'];
 
         if(!empty($input['nickname'])){
-            //$map['nickName'] = $input['nickname'];
             $data = DB::table("user")
-                ->where(array("nickName","like",'%'.$input['nickname'].'%'))
+                ->where("nickName","like",'%'.$input['nickname'].'%')
                 ->get();
             if($data){
                 $data = $data;
