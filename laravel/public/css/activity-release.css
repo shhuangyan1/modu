@@ -22,8 +22,8 @@
     /*min-width: 1039px;*/
     overflow: hidden;
 }
-input.button{
-    width: 150px;
+.button{
+    width: 250px;
     height: 30px;
 }
 .sec-left,.sec-right{
@@ -85,4 +85,8 @@ input.button{
     font-size: 16px;
     color: #428bca;
 }
-
+.confirm{
+    width: 250px;
+    display: inline-block;
+    margin: auto;
+}

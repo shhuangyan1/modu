@@ -16,7 +16,7 @@
     <style>
         .user-box{
             border: 1px solid #ccc;
-            margin: 15px 15px 0 0;
+            margin: 15px 12px 0 0;
             padding: 15px 10px;
             float: left;
             width: 210px;
@@ -73,15 +73,13 @@
 <!--面包屑导航 结束-->
 
 <div class="search_wrap">
-    <form action="#" method="post">
         <table class="search_tab">
             <tr>
                 <th width="100">会员昵称：</th>
-                <td><input type="text" name="username" placeholder="搜索会员"></td>
-                <td><input type="submit" value="查询"></td>
+                <td><input type="text" name="nickname" placeholder="搜索会员"></td>
+                <td><button class="button search"><i class="fa fa-search"></i>查询</button></td>
             </tr>
         </table>
-    </form>
 </div>
 <!--结果页快捷搜索框 结束-->
 

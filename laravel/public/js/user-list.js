@@ -37,13 +37,32 @@ $(function () {
         })
     }
 
-    $(".loadmore").on("click",function () {
+    // 加载更多
+    $(".loadmore .button").on("click",function () {
         load_user(current_page)
-
     })
-    // var load_more = function () {
-    //     load_user(current_page)
-    // }
+
+    // 点击查询
+    $(".search").on("click", function () {
+        var para = MD.getValue(".search_tab")
+        if(para.nickname == ""){
+            return;
+        }
+        MD.ajax_get({
+            url: 'admin/user/fill',
+            data: para
+        },function (res) {
+            if(res.length>0){
+                jeBox.msg("",{icon: 2, time: 1})
+            }
+            if(res.length == 0 ){
+                jeBox.msg("未查询到数据",{icon: 1, time: 1})
+            }
+            $(".result_content").html("")
+            show_user(res)
+        })
+    })
+
 
     // 处理数据
     var show_user = function (list) {
@@ -55,7 +74,7 @@ $(function () {
                 var box = '<div class="user-box user-box-'+ v.id +'" data-id="'+ v.id +'"></div>'
                 //
                 var addr = get_name_bypinyin(v.province, v.city);
-                v.time = getLocalTime(v.time);
+                v.time = MD.time_format(v.time);
                 // console.log(v.time);
                 v.time_pre = v.time.split(" ")[0]
                 v.address = addr.province + " " + addr.city;

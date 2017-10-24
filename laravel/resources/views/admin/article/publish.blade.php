@@ -199,7 +199,7 @@
                 </section>
                 <section class="no-border submit">
                     <input type="submit" value="确认发布">
-                    <input class="default preview-button" type="button" value="预览">
+                    <!--<input class="default preview-button" type="button" value="预览">-->
                 </section>
             </div>
 

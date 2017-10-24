@@ -143,7 +143,7 @@
             </div>
         </section>
 
-        <section class="no-border" style="margin-bottom: 0;">
+        <section class="no-border" style="text-align: center">
             <input class="button confirm" type="submit" value="确认发布">
             <!--<input class="button primary btn-preview" type="button" value="预览">-->
         </section>

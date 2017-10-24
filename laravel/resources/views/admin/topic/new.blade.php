@@ -76,7 +76,7 @@
 
     </section>
         <section class="no-border">
-            <input class="button default confirm" type="submit" value="确认发布">
+            <input class="button submit confirm" type="submit" value="确认发布">
             <!--<input class="button primary btn-preview" type="button" value="预览">-->
         </section>
     </form>

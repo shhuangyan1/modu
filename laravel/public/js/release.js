@@ -105,7 +105,8 @@ $(function () {
 
         //
         $("#collect").on("click",function () {
-            $(".cl-items-box").toggleClass("hide")
+            $(".cl-items-box").toggleClass("hide");
+            resize_index()
         })
 
         // 字数统计

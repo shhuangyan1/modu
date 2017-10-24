@@ -14,10 +14,6 @@
     <script src="{{asset('lirary/jedate/jquery.jebox.js')}}" ></script>
     <script src="{{asset('lirary/common/echarts.common.min.js')}}" ></script>
 
-    <style>
-
-    </style>
-
 </head>
 <body>
 <!--面包屑导航 开始-->

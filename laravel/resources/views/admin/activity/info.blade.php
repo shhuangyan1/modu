@@ -28,6 +28,13 @@
         .user-name{
             font-size: 14px;
         }
+        .table.list_tab tr td{
+            line-height: 20px;
+        }
+        .time-td{
+            width: 140px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -66,7 +73,7 @@
             <tbody>
            @foreach($join_activity as $v)
             <tr>
-                <td class="tc">
+                <td class="">
                     <img class="user-head" src="{{$v->avatarUrl}}">
                     <span class="user-name">{{$v->nickName}}</span>
                 </td>
@@ -76,7 +83,7 @@
                     @endforeach
 
                 </td>
-                <td class="tc">{{$v->time}}</td>
+                <td class="tc time-td">{{$v->time}}</td>
             </tr>
             @endforeach
             </tbody>

@@ -8,7 +8,7 @@
 		
 	<script type="text/javascript" src="style/js/jquery.js"></script>
     <script type="text/javascript" src="style/js/ch-ui.admin.js"></script>
-	<script type="text/javascript" src="{{asset('js/util.js')}}"></script>
+	<!--<script type="text/javascript" src="{{asset('js/util.js')}}"></script>-->
 
 </head>
 <body class="index_body">
@@ -40,6 +40,11 @@
 	<!--左侧导航 开始-->
 	<div class="menu_box">
 		<ul>
+            <li>
+                <ul class="sub_menu">
+                    <li class="on menu_index"><a href="{{url('admin/info')}}" target="main"><i class="fa fa-fw fa-home"></i>首页</a></li>
+                </ul>
+            </li>
 			<li>
 				<h3><i class="fa fa-fw fa-clipboard"></i>文章管理</h3>
 				<ul class="sub_menu">
@@ -114,9 +119,10 @@
     </div>
 
 	<!--底部 开始-->
-	<!--<div class="bottom_box">-->
-		<!--CopyRight © 企牛牛  <a href="http://www.qiniuniu.com" target="_blank"><img style="vertical-align: middle;margin: 0 5px;" src="{{asset('storage/icons/qiniuniu.png')}}"></a>-->
-	<!--</div>-->
+	<div class="bottom_box">
+		CopyRight &copy; 2017-  <a href="http://www.qiniuniu.com" target="_blank"><img style="vertical-align: middle;margin: 0 5px;" src="{{asset('storage/icons/qiniuniu.png')}}"></a>
+         All Rights Reserved.
+	</div>
 	<!--底部 结束-->
 
 </body>

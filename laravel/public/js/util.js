@@ -66,14 +66,16 @@
 function resize_index() {
     var height = $("body").outerHeight()
     // console.log(height)
-    if(height > 1200)
+    if(height > 1277)
     $(".main_box",parent.document).css({height: height+'px'})
 }
+
 window.onload = function () {
     resize_index();
-    // $("body").resize(function () {
-    //     resize_index();
-    // })
+    var main = document.getElementById("mainIframe")
+    $(main).load(function () {
+        resize_index();
+    })
 }
 
 
@@ -430,9 +432,37 @@ window.MD = {
         req = null;
 
         return req;
+    },
+
+    /**
+     * 将时间戳转化为标准时间，时间戳数量级问题*1000
+     */
+    time_format: function (timestamp) {
+        if (/^\d{10}$/.test(timestamp)) {
+            timestamp *= 1000;
+        } else if (/^\d{13}$/.test(timestamp)) {
+            timestamp = parseInt(timestamp);
+        } else {
+            console.log('时间戳格式不正确！'+ timestamp);
+            return;
+        }
+        var time = new Date(timestamp);
+        var year = time.getFullYear();
+        var month = (time.getMonth() + 1) > 9 && (time.getMonth() + 1) || ('0' + (time.getMonth() + 1))
+        var date = time.getDate() > 9 && time.getDate() || ('0' + time.getDate())
+        var hour = time.getHours() > 9 && time.getHours() || ('0' + time.getHours())
+        var minute = time.getMinutes() > 9 && time.getMinutes() || ('0' + time.getMinutes())
+        var second = time.getSeconds() > 9 && time.getSeconds() || ('0' + time.getSeconds())
+        var YmdHis = year + '-' + month + '-' + date + ' ' + hour + ':' + minute + ':' + second;
+        return YmdHis;
+    },
+
+    /**
+     * 将时间转换为时间戳，前提（必须已经加载了lirary/common/moment.js）
+     */
+    date_format: function (date) {
+        return (moment(date, 'YYYY-MM-DD HH:mm:ss')).unix();
     }
-
-
 
 }
 
