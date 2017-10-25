@@ -65,9 +65,13 @@
  */
 function resize_index() {
     var height = $("body").outerHeight()
-    // console.log(height)
-    if(height > 1277)
-    $(".main_box",parent.document).css({height: height+'px'})
+    var menu_height = $(".menu_box",parent.document).outerHeight()
+
+    if(height > menu_height){
+        $(".main_box",parent.document).css({height: height+'px'})
+    }else{
+        $(".main_box",parent.document).css({height: menu_height +'px'})
+    }
 }
 
 window.onload = function () {

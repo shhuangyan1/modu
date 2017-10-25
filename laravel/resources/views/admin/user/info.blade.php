@@ -6,12 +6,16 @@
     <link rel="stylesheet" href="{{asset('admin/style/css/ch-ui.admin.css')}}">
     <link rel="stylesheet" href="{{asset('admin/style/font/css/font-awesome.min.css')}}">
     <link rel="stylesheet" href="{{asset('lirary/jedate/skin/default.css')}}">
+    <link rel="stylesheet" href="{{asset('lirary/jedate/skin/jquery.jedate.css')}}">
 
-    <link rel="stylesheet" href="{{asset('js/user-info.css')}}">
+    <link rel="stylesheet" href="{{asset('css/info.css')}}">
 
     <script src="{{asset('lirary/uploadify/jquery1.11.3.min.js')}}" type="text/javascript"></script>
+    <script type="text/javascript" src="{{asset('lirary/common/moment.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/util.js')}}"></script>
     <script src="{{asset('lirary/jedate/jquery.jebox.js')}}" ></script>
+    <script src="{{asset('lirary/jedate/jquery.jedate.min.js')}}" ></script>  <!-- 此处的jedate为最新版 -->
+
     <script src="{{asset('lirary/common/echarts.common.min.js')}}" ></script>
 
 </head>
@@ -24,28 +28,52 @@
 <!--面包屑导航 结束-->
 
 <div class="result_wrap">
-    <div class="result_title">
-        <h3>会员数据分析</h3>
-    </div>
+
     <div class="result_content">
+    <div class="echarts-box">
+        <section>
+            <div class="block-box">
+                <div class="block">
+                    <p class="block_t">累计会员数量</p>
+                    <p class="block_num">252</p>
+                </div>
+                <div class="block">
+                    <p class="block_t">今日新增会员</p>
+                    <p class="block_num">36</p>
+                </div>
+            </div>
+        </section>
 
-        <div class="map-box">
-            <div class="map-title">累计会员数量</div>
-        </div>
+        <!--会员增长统计图-->
+        <section>
+            <div class="result_title">
+                <h3>掌上魔都会员增长数据分析</h3>
+            </div>
+            <div class="echarts-opt">
+                <label class="time-label range-label"><span>日期范围：</span><input type="text" id="range" name="range" readonly></label>
+                <button class="button user-add-btn"><i class="fa fa-search"></i> 查询</button>
+            </div>
+            <div class="echarts" id="user-add-line">
+            </div>
+        </section>
 
-        <div class="map-box">
-            <div class="map-title">会员增长走势图</div>
-        </div>
+        <section>
+            <div class="result_title">
+                <h3>掌上魔都会员条件匹配对比分析</h3>
+            </div>
+            <div class="echarts-opt"></div>
+            <!--会员数据条件对比图-->
+            <div class="echarts" id="user-sex-pie">
+                <!--性别-->
+            </div>
 
-        <div class="map-box">
-            <div class="map-title">会员月度增长统计图</div>
-        </div>
+            <div class="echarts" id="user-area">
+                <!--区域分布-->
+            </div>
+        </section>
 
-        <div class="map-box">
-            <div class="map-title">会员数据条件对比图</div>
-            <p>性别</p>
-            <p>分布</p>
-        </div>
+
+    </div>
     </div>
 </div>
 

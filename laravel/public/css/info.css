@@ -1,6 +1,13 @@
+/*=================admin/info.css && user-info.css===============*/
+
 .result_title h3{
     font-size: 20px;
     font-weight: 400;
+    color: #428bca;
+    padding-left: 10px;
+    border-left: 4px solid #428bca;
+    height: 20px;
+    line-height: 20px;
 }
 .block-box{
     display: flex;
@@ -23,10 +30,13 @@
     font-size: 43px;
 }
 /**/
+.echarts-box section{
+    margin-bottom: 30px;
+}
 .echarts{
     width: 100%;
     height: 360px;
-    margin: 15px;
+    margin: 15px 0;
 }
 .echarts-opt{
     margin: 15px 10px;
@@ -37,4 +47,10 @@
 .time-label input{
     width: 150px;
     padding: 4px 5px;
+}
+
+
+/*================= user-info.css ===============*/
+.range-label input{
+    width: 200px;
 }

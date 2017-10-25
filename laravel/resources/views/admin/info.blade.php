@@ -5,6 +5,7 @@
     <title>信息首页</title>
     <link rel="stylesheet" href="style/css/ch-ui.admin.css">
 	<link rel="stylesheet" href="style/font/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{asset('lirary/jedate/skin/default.css')}}">
 
 	<link rel="stylesheet" href="{{asset('css/info.css')}}">
 
@@ -59,19 +60,19 @@
             <div class="block-box">
                 <div class="block">
                     <p class="block_t">文章数</p>
-                    <p class="block_num">252</p>
+                    <p class="block_num articlenums">0</p>
                 </div>
                 <div class="block">
                     <p class="block_t">话题数</p>
-                    <p class="block_num">5</p>
+                    <p class="block_num topicnums">0</p>
                 </div>
                 <div class="block">
                     <p class="block_t">活动数</p>
-                    <p class="block_num">1</p>
+                    <p class="block_num activitynums">0</p>
                 </div>
                 <div class="block">
                     <p class="block_t">总用户数</p>
-                    <p class="block_num">86</p>
+                    <p class="block_num usernums">0</p>
                 </div>
             </div>
         </div>
@@ -83,7 +84,7 @@
         </div>
         <div class="result_content">
             <div class="echarts-box">
-                <!-- 文章增长走势图 -->
+                <!-- 文章阅读量走势图 -->
                 <section>
                     <div class="echarts-opt">
                         <label class="time-label"><span>起始时间：</span><input type="text" class="time" name="from" readonly></label>
@@ -96,9 +97,8 @@
 
                 <!-- 各分类文章占比饼形图 -->
                 <section>
-                    <div class="echarts-opt">各分类文章占比饼形图</div>
-                    <div class="echarts">
-
+                    <div class="echarts-opt"></div>
+                    <div class="echarts" id="user-pie">
                     </div>
                 </section>
 
