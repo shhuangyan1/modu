@@ -49,6 +49,8 @@ Route::any('admin/activity/info','Admin\ActivityController@info');
 Route::any('admin/activity/act_id','Admin\ActivityController@act_id');
 Route::any('admin/activity/act_ids','Admin\ActivityController@act_ids');
 Route::get('admin/index/modify','Admin\IndexController@modify');
+Route::get('admin/index/nums','Admin\IndexController@nums');
+Route::get('admin/index/totalviews','Admin\IndexController@totalviews');
 
 Route::any("admin/wx/getopenid","Admin\WxController@getopenid");
 Route::any("admin/wx/collect","Admin\WxController@collect");

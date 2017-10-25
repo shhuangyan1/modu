@@ -470,7 +470,7 @@ Class ArticleController extends Controller{
 				->first();
 		$detail = DB::table("article")
 				->where($map)
-				->select("title","content","author","from")
+				->select("title","content","author","from","image")
 				->first();
 		if($collect){
 			$detail->collect=1;
