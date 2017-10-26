@@ -459,6 +459,19 @@ Class ArticleController extends Controller{
 				->select("view")
 				->first();
 		$view = $view->view +1;
+
+		$views = DB::table("article")
+				->sum('view');
+		$k['views'] = $views;
+		$k['date'] = date("Y-m-d",time());
+		$date = DB::table("article_total_nums")
+				->where(array("date"=>$k['date']))
+				->first();
+		if(!$date){
+			$id = DB::table("article_total_nums")
+					->insertGetId($k);
+		}
+
 		/*$article = DB::table("article")
 				->where($map)
 				->update(array("view"=>$view));*/

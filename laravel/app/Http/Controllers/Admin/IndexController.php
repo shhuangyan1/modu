@@ -32,19 +32,11 @@ Class IndexController extends Controller{
 		echo json_encode($nums);
 	}
 
-	//记录文章总阅读数接口
+	//首页文章阅读量走势图接口
 	public function totalviews(){
-		$views = DB::table("article")
-				->sum('view');
-		$map['views'] = $views;
-		$map['time'] = time();
-		$id = DB::table("article_total_nums")
-				->insertGetId($map);
-		if($id){
-			echo "success";
-		}else{
-			echo "fail";
-		}
+		$articel_total_nums = DB::table("article_total_nums")
+				->get();
+		echo json_encode($articel_total_nums);
 	}
 
 }
