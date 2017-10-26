@@ -24,7 +24,7 @@ $(function () {
         xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: ['10-01','10-02','10-03','10-04','10-05','10-06','10-07','10-08','10-09','10-10','10-01','10-02','10-03','10-04','10-05','10-06','10-07','10-08','10-09','10-10']
+            data: []
         },
         yAxis: {
             type: 'value'
@@ -34,7 +34,7 @@ $(function () {
                 name:'全站文章增长走势',
                 type:'line',
                 stack: '',
-                data:[420, 885, 923, 934, 1290, 1330, 1400, 1405, 1420, 1448,420, 885, 923, 934, 1290, 1330, 1400, 1405, 1420, 1448]
+                data: []
             }
         ]
     };
@@ -76,7 +76,6 @@ $(function () {
     };
 
     var art_line_chart = echarts.init(document.getElementById("article-line"));
-    art_line_chart.setOption(article_option);
     var user_pie_chart = echarts.init(document.getElementById("user-pie"));
     user_pie_chart.setOption(user_option);
 
@@ -88,15 +87,28 @@ $(function () {
         console.log(data) // 此处时间戳长度为10，转换后为0:0:0
         art_line_chart.showLoading();
 
-        /*MD.ajax_get({
-            url: "admin/sdfdf",
+        MD.ajax_get({
+            url: "admin/index/totalviews",
             data: data
         },function (res) {
-            // article_option.xAxis.data =
-            // article_option.series.data =
-            // art_line_chart.setOption(article_option);
+            var list = res;
+            var x = [], y = []
 
-        })*/
+            for(var i=0; i<list.length; i++){
+                x.push(list[i].date);
+                if(i == 0){
+                    y.push(list[i].views)
+                }else{
+                    y.push(list[i].views - list[i-1].views)
+                }
+            }
+
+            article_option.xAxis.data = x;
+            article_option.series[0].data = y;
+            // console.log(article_option)
+            art_line_chart.setOption(article_option);
+            art_line_chart.hideLoading();
+        })
     }
 
     var show_pie_chart = function (data) {

@@ -1,6 +1,6 @@
 /*=================admin/info.css && user-info.css===============*/
 
-.result_title h3{
+.result_title h3, .sec-title{
     font-size: 20px;
     font-weight: 400;
     color: #428bca;
@@ -53,4 +53,66 @@
 /*================= user-info.css ===============*/
 .range-label input{
     width: 200px;
+}
+
+
+
+
+/*=============== 个人中心person.css ===============*/
+.person-num{
+    font-size: 16px;
+    padding: 30px 15px;
+}
+.person-num span{
+    display: inline-block;
+    vertical-align: middle;
+}
+.art_num{
+    font-size: 30px;
+}
+.step_wrap{
+    margin-bottom: 10px;
+}
+.step-box{
+    margin: 30px 0 15px;
+}
+.step_title{
+    padding: 0 0 15px;
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 10px;
+    display: inline-block;
+    border-bottom: 2px solid #f0f0f0;
+}
+/*.step_title:before{
+    content: " ";
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-right: 12px solid #428bca;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    margin-right: 25px;
+}*/
+/*.step_title:after{
+    content: " ";
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 12px solid #428bca;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    margin-left: 25px;
+}*/
+.step_wrap label>span{
+    display: inline-block;
+    width: 80px;
+    text-align: right;
+    letter-spacing: 1px;
+}
+.submit-btn{
+    margin: 15px 0 0 130px;
+}
+.step_wrap input[type=password]{
+
 }

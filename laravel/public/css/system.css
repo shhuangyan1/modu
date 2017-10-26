@@ -1,0 +1,69 @@
+.attention{
+    color: #666;
+    text-align: center;
+}
+#myEditor{
+    border-top: 1px solid #e7e7eb;
+}
+.msg-opt{
+    margin: 40px 0 15px;
+}
+.opt-select{
+    display: inline-block;
+    border: 1px solid #e7e7eb;
+    padding: 4px 15px;
+    color: #999;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-size: 16px;
+    position: relative;
+}
+.opt-select i{
+    margin-right: 5px;
+    color: #999;
+}
+.opt-select.on{
+    color: #000;
+}
+.opt-select.on i{
+    color: #000;
+}
+.opt-select .type{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+#myText{
+    border: 1px solid #e7e7eb;
+    border-radius: 0;
+    width: 98%;
+    height: 298px;
+    padding: 5px 1%;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 16px;
+    box-shadow: none;
+    transition: none;
+    resize: none;
+}
+.nums-box p{
+    height: 19px;
+    line-height: 19px;
+    text-align: right;
+    color: #999;
+    font-size: 12px;
+    margin: 0;
+}
+
+/**/
+#list-table{
+    margin-top: 50px;
+}
