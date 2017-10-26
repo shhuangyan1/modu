@@ -13,7 +13,7 @@ Class IndexController extends Controller{
 		return view('admin.info');
 	}
 	public function modify(){
-		return view('admin.password');
+		return view('admin.person');
 	}
 	//掌上魔都整体情况接口
 	public function nums(){

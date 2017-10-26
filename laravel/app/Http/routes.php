@@ -71,6 +71,8 @@ Route::any("admin/wx/usersave","Admin\WxController@usersave");
 Route::any("admin/user/date","Admin\UserController@date");
 Route::any("admin/user/fill","Admin\UserController@fill");
 
+Route::any("admin/message/system_msg","Admin\MessageController@system_msg");
+
 Route::group(['middleware' => ['web','admin.login'],'prefix'=>'admin','namespace'=>'Admin'], function () {
 
     Route::any('article','ArticleController@article');

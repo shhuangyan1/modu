@@ -46,7 +46,8 @@
                     <th width="70">关键字：</th>
                     <td><input type="text" name="title" placeholder="搜索文章标题关键字"></td>
                     <td><input type="submit"  value="查询"></td>
-                    <td><button type="button" class="button down-all"><i class="fa fa-warning"></i>全部下架</button></td>
+                    <td><button type="button" class="button down-all">全部下架</button></td>
+                    <td><button type="button" class="button up-all">全部恢复</button></td>
                 </tr>
             </table>
         </form>
@@ -146,7 +147,8 @@
                 cell:"jbx",
                 title:"提示",
                 padding:"25px 10px",
-                content:'<div class="jeBox-iconbox jeicon1" style="text-align: center;">确定要将<span class="red">全部文章下架</span>吗？</div>',
+                content:'<div class="jeBox-iconbox jeicon1" style="text-align: center;">确定要将<span class="red">全部文章下架</span>吗？' +
+                '<br><span>下架前请先清空删除确认！</span></div>',
                 maskLock : true ,
                 btnAlign:"center",
                 button:[
@@ -157,6 +159,39 @@
                             MD.ajax_post({url: ""}, function (res) {
 
                                 jeBox.msg('全部文章已下架', {icon: 2,time:1.5});
+                                setTimeout(function () {
+                                    location.reload();
+                                },1400)
+
+                            })
+                        }
+                    },
+                    {
+                        name: '取消'
+                    }
+                ]
+            })
+        })
+
+        /**
+         * 全部恢复
+         */
+        $(".up-all").on("click", function () {
+            jeBox.open({
+                cell:"jbx",
+                title:"提示",
+                padding:"25px 10px",
+                content:'<div style="text-align: center;">确定要将全部文章恢复吗？</div>',
+                maskLock : true ,
+                btnAlign:"center",
+                button:[
+                    {
+                        name: '下架',
+                        callback: function(index){
+                            jeBox.close(index);
+                            MD.ajax_post({url: ""}, function (res) {
+
+                                jeBox.msg('全部文章已恢复', {icon: 2,time:1.5});
                                 setTimeout(function () {
                                     location.reload();
                                 },1400)

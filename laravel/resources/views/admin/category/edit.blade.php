@@ -56,9 +56,9 @@
         $(function () {
 
             $.each($(".category-list"),function (i, v) {
-                category.push(v.innerText);
+                category.push(v.innerText.trim());
             })
-            console.log(category)
+//            console.log(category)
 
         })
         function add_category() {

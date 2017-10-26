@@ -76,10 +76,10 @@ function resize_index() {
 
 window.onload = function () {
     resize_index();
-    var main = document.getElementById("mainIframe")
+    /*var main = document.getElementById("mainIframe")
     $(main).load(function () {
         resize_index();
-    })
+    })*/
 }
 
 
@@ -315,6 +315,11 @@ window.MD = {
         })
 
         $(".edui-editor-toolbarboxinner ").append(img)
+
+        setTimeout(function(){
+            resize_index()
+            console.log("123466")
+        },500)
     },
 
     // 回到顶部

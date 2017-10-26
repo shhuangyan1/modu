@@ -25,7 +25,7 @@
 		<div class="top_right">
 			<ul>
 				<li>管理员：{{session('user')->username}}</li>
-				<li><a href="{{url('admin/index/modify')}}" target="main">修改密码</a></li>
+				<li><a href="{{url('admin/index/modify')}}" target="main">个人中心</a></li>
 				<li><a href="{{url('admin/logout')}}">退出</a></li>
 			</ul>
 		</div>
@@ -80,6 +80,7 @@
 			<li>
 				<h3><i class="fa fa-fw fa-comments"></i>消息管理</h3>
 				<ul class="sub_menu">
+					<li><a href="{{url('admin/message/system_msg')}}" target="main">群发系统消息</a></li>
 					<li><a href="{{url('admin/message')}}" target="main">活动消息</a></li>
 					<li><a href="{{url('admin/message/back')}}" target="main">用户反馈</a></li>
 				</ul>
@@ -100,7 +101,7 @@
             </li>
             <li>
             	<h3><i class="fa fa-fw fa-thumb-tack"></i>工具导航</h3>
-                <ul class="sub_menu" >
+                <ul class="sub_menu">
                     <li><a href="http://www.yeahzan.com/fa/facss.html" target="main">图标调用</a></li>
                     <li><a href="http://hemin.cn/jq/cheatsheet.html" target="main">Jquery手册</a></li>
                     <li><a href="http://tool.c7sky.com/webcolor/" target="main">配色板</a></li>

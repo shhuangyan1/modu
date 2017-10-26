@@ -37,8 +37,11 @@
                         <td class="tc">
                             <a href="{{url('admin/category/'.$v->id.'/edit')}}">修改</a>
                             <a class="delete" data-id="{{$v->id}}" href="javascript:void(0);">删除</a>
+
                             <a class="down" data-id="{{$v->id}}" href="javascript:void(0);">下架</a>
-                            <a class="up" data-id="{{$v->id}}" href="javascript:void(0);">回复</a>
+
+                            <a class="cate_up" data-id="{{$v->id}}" href="javascript:void(0);">恢复</a>
+
                         </td>
                     </tr>
                     @endforeach
@@ -113,7 +116,7 @@
                         callback: function(index){
                             MD.ajax_post({
                                 url: "",
-                                data: {}
+                                data: {"id": id}
                             }, function (res) {
                                 jeBox.close(index);
 
@@ -126,6 +129,39 @@
                 ]
             })
         });
+
+        /**
+         * 恢复
+         */
+        $(document).on("click", ".cate_up", function () {
+            var id = $(this).data("id");
+            var this_ = $(this)
+            jeBox.open({
+                cell:"jbx",
+                title:"提示",
+                padding:"25px 10px",
+                content:'<div class="jeBox-iconbox jeicon1">确定要将该分类恢复吗？</div>',
+                maskLock : true ,
+                btnAlign:"center",
+                button:[
+                    {
+                        name: '确定',
+                        callback: function(index){
+                            MD.ajax_post({
+                                url: "",
+                                data: {"id": id}
+                            }, function (res) {
+                                jeBox.close(index);
+
+                            })
+                        }
+                    },
+                    {
+                        name: '取消'
+                    }
+                ]
+            })
+        })
     })
 </script>
 

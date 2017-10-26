@@ -30,9 +30,10 @@ class MessageController extends Controller{
             ->paginate(5);
         return view('admin.message.back',compact('data'));
     }
-    //用户反馈内容
 
-    public function userback(){
 
+    public function system_msg(){
+
+        return view('admin.message.system');
     }
 }
