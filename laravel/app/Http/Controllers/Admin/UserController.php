@@ -70,4 +70,10 @@ class UserController extends Controller{
         echo json_encode($info);
     }
 
+    //会员区域分布统计图
+    public function area_barchart(){
+        $info = DB::select('select province,count("province") as num from user GROUP by province');
+        echo json_encode($info);
+    }
+
 }
