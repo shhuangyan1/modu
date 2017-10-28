@@ -458,7 +458,7 @@ Class ArticleController extends Controller{
 				->where($map)
 				->select("view")
 				->first();
-		$view = $view->view +1;
+		$view = $view->view +9;
 
 		/*$views = DB::table("article")
 				->sum('view');
