@@ -107,4 +107,10 @@ class ManagerController extends Controller
             echo json_encode(array('fail'=>"fail",'msg'=>'删除失败'));
         }
     }
+
+
+    public function menus(){
+
+        return view('admin.manager.menus');
+    }
 }

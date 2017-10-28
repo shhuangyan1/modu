@@ -1,13 +1,21 @@
 $(function () {
-    $(".publish").on("click",function () {
-        $(".article_cat").toggleClass("hide",!$(".publish").is(":checked"))
-    })
 
-    $(".admin_pwd_cf").on("blur",function () {
-        if(!($(".admin_pwd").val() == $(this).val())){
-            $(".admin_pwd_cf").showTips("两次密码不一致")
-        }
-    })
+    var init = function () {
+
+    }
+
+    var bind_event = function () {
+        $(".admin_pwd_cf").on("blur",function () {
+            if(!($(".admin_pwd").val() == $(this).val())){
+                $(".admin_pwd_cf").showTips("两次密码不一致")
+            }
+        })
+
+
+    }
+
+    init();
+    bind_event();
 
 })
 function newManager() {
