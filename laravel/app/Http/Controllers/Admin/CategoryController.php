@@ -90,6 +90,23 @@ class CategoryController extends Controller{
 			}
 
 		}
+	//下架分类类目
+
+		public function off_category(){
+			$id = 38;//$_GET['id'];
+			$category = DB::table("category")
+					->where("id",$id)
+					->update(array("status"=>1));
+		}
+	//恢复分类类目
+
+		public function recover_category(){
+
+			$id = $_GET['id'];
+			$category = DB::table("category")
+					->where("id",$id)
+					->update(array("status"=>0));
+		}
 
 }
 

@@ -51,6 +51,8 @@ Route::any('admin/activity/act_ids','Admin\ActivityController@act_ids');
 Route::get('admin/index/modify','Admin\IndexController@modify');
 Route::get('admin/index/nums','Admin\IndexController@nums');
 Route::get('admin/index/totalviews','Admin\IndexController@totalviews');
+Route::get('admin/category/off_category','Admin\CategoryController@off_category');
+Route::get('admin/category/recover_category','Admin\CategoryController@recover_category');
 Route::get('admin/index/article_piechart','Admin\IndexController@article_piechart');
 
 Route::any("admin/wx/getopenid","Admin\WxController@getopenid");
