@@ -46,7 +46,10 @@ class MessageController extends Controller{
         $input['sendby']= session('user')->username;
         $message = DB::table("message")
             ->insertGetId($input);
-        return view('admin.message.system');
+        $data = DB::table("message")
+            ->orderby('id','desc')
+            ->paginate(5);
+        return view('admin.message.system',compact('data'));
     }
 
     public function destroy($id)
