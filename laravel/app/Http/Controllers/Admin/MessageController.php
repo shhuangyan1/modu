@@ -46,10 +46,11 @@ class MessageController extends Controller{
         $input['sendby']= session('user')->username;
         $message = DB::table("message")
             ->insertGetId($input);
-        $data = DB::table("message")
-            ->orderby('id','desc')
-            ->paginate(5);
-        return view('admin.message.system',compact('data'));
+        if($message){
+            return redirect('admin/message/system_msg');
+        }else{
+            return back()->with('error','数据添加失败!');
+        }
     }
 
     public function destroy($id)
