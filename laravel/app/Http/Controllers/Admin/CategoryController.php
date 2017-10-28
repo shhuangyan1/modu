@@ -93,7 +93,7 @@ class CategoryController extends Controller{
 	//下架分类类目
 
 		public function off_category(){
-			$id = 38;//$_GET['id'];
+			$id = $_GET['id'];
 			$category = DB::table("category")
 					->where("id",$id)
 					->update(array("status"=>1));
