@@ -9,7 +9,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Http\Model\Activity;
+use App\Http\Model\Message;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
@@ -42,13 +42,21 @@ class MessageController extends Controller{
 
     public function store(Request $request){
         $input = $request->input();
-
+        $input->time = time();
+        $input->sendby = session('user')->username;
         $message = DB::table("message")
             ->insertGetId($input);
-        if($message){
-            echo $date['success'] = 'success!';
+        return view('admin.message.system');
+    }
+
+    public function destroy($id)
+    {
+        //删除系统消息
+        $info = Message::where('id',$id)->delete();
+        if($info){
+            echo json_encode(array('success'=>"success",'msg'=>'删除成功'));
         }else{
-            echo $date['fail'] = 'fail';
+            echo json_encode(array('fail'=>"fail",'msg'=>'删除失败'));
         }
     }
 }
