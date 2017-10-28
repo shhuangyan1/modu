@@ -63,24 +63,22 @@
                     <th>消息内容</th>
                     <th>发送时间</th>
                     <th>发送人</th>
+                    <th>操作</th>
                 </tr></thead>
                 <tbody>
+                @foreach($data as $v)
                 <tr>
-                    <td><a>祝贺掌上魔都成为优秀小程序</a></td>
-                    <td class="tc">2017-10-26 10:15:25</td>
-                    <td class="tc">Bragg</td>
+                    <td><a>{{$v->words}}</a></td>
+                    <td class="tc">{{date("Y-m-d H:i:s",$v->time)}}</td>
+                    <td class="tc">{{$v->sendby}}</td>
+                    <td class="tc" value="{{$v->id}}">删除</td>
                 </tr>
-                <tr><td><a>春节快乐</a></td><td class="tc">2017-02-24 00:00:00</td><td class="tc">Bragg</td></tr>
-                <tr><td><a>春节快乐</a></td><td class="tc">2017-02-24 00:00:00</td><td class="tc">Bragg</td></tr>
-                <tr><td><a>春节快乐</a></td><td class="tc">2017-02-24 00:00:00</td><td class="tc">Bragg</td></tr>
-                <tr><td><a>春节快乐</a></td><td class="tc">2017-02-24 00:00:00</td><td class="tc">Bragg</td></tr>
-                <tr><td><a>春节快乐</a></td><td class="tc">2017-02-24 00:00:00</td><td class="tc">Bragg</td></tr>
-                <tr><td><a>春节快乐</a></td><td class="tc">2017-02-24 00:00:00</td><td class="tc">Bragg</td></tr>
-                <tr><td><a>春节快乐</a></td><td class="tc">2017-02-24 00:00:00</td><td class="tc">Bragg</td></tr>
-                <tr><td><a>春节快乐</a></td><td class="tc">2017-02-24 00:00:00</td><td class="tc">Bragg</td></tr>
-                <tr><td><a>春节快乐</a></td><td class="tc">2017-02-24 00:00:00</td><td class="tc">Bragg</td></tr>
+                @endforeach
                 </tbody>
             </table>
+            <div class="page_list">
+                {{$data->appends(Request::all())->render()}}
+            </div>
         </div>
 
     </div>

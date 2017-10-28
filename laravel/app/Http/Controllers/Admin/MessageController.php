@@ -33,7 +33,22 @@ class MessageController extends Controller{
 
 
     public function system_msg(){
+        $data = DB::table("message")
+            ->orderby('id','desc')
+            ->paginate(5);
 
-        return view('admin.message.system');
+        return view('admin.message.system',compact('data'));
+    }
+
+    public function store(Request $request){
+        $input = $request->input();
+
+        $message = DB::table("message")
+            ->insertGetId($input);
+        if($message){
+            echo $date['success'] = 'success!';
+        }else{
+            echo $date['fail'] = 'fail';
+        }
     }
 }

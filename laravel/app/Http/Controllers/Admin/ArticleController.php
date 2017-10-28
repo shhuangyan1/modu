@@ -23,7 +23,7 @@ Class ArticleController extends Controller{
 				if($cat_id){
 					$query ->where('cat_id', $cat_id);
 				}
-		})->where('status','0')->join('category','article.cat_id','=','category.id')->select('article.*','category.cat_name')->orderby('article.id','desc')->paginate(20);
+		})->where('article.status','0')->join('category','article.cat_id','=','category.id')->select('article.*','category.cat_name')->orderby('article.id','desc')->paginate(20);
 
 		//dd($data);
 		return view('admin.article.list',compact('data','info'));
