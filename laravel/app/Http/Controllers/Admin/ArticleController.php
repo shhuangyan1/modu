@@ -460,7 +460,7 @@ Class ArticleController extends Controller{
 				->first();
 		$view = $view->view +1;
 
-		$views = DB::table("article")
+		/*$views = DB::table("article")
 				->sum('view');
 		$k['views'] = $views;
 		$k['date'] = date("Y-m-d",time());
@@ -470,7 +470,7 @@ Class ArticleController extends Controller{
 		if(!$date){
 			$id = DB::table("article_total_nums")
 					->insertGetId($k);
-		}
+		}*/
 
 		/*$article = DB::table("article")
 				->where($map)

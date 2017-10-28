@@ -116,7 +116,7 @@ class ActivityController extends Controller
         }else{
 
         }
-        $data['time'] = strtotime($data['time']);
+        //$data['time'] = strtotime($data['time']);
         $data['addtime']=date('Y-m-d H:i',time());
         $info = Activity::create($data);
         if($info){
@@ -317,6 +317,7 @@ class ActivityController extends Controller
                 ->where("act_id",$v->id)
                 ->count();
             $v->join=$join;
+            $v->time=date("Y-m-d H:i",$v->time);
         }
         echo json_encode($activity,JSON_UNESCAPED_UNICODE);
     }
@@ -347,6 +348,7 @@ class ActivityController extends Controller
                 ->where("act_id",$v->id)
                 ->count();
             $v->join=$join;
+            $v->time=date("Y-m-d H:i",$v->time);
         }
         echo json_encode($activity,JSON_UNESCAPED_UNICODE);
     }
@@ -379,12 +381,14 @@ class ActivityController extends Controller
                     $v->joinedList='';
                     $v->collect=1;
                     $v->collectid=$collect->id;
+                    $v->time=date("Y-m-d H:i",$v->time);
                 }
             }else{
                 foreach($detail as $v){
                     $v->joined=$join;
                     $v->joinedList='';
                     $v->collect=0;
+                    $v->time=date("Y-m-d H:i",$v->time);
                 }
             }
 
