@@ -97,6 +97,11 @@ class CategoryController extends Controller{
 			$category = DB::table("category")
 					->where("id",$id)
 					->update(array("status"=>1));
+			if($category){
+				echo $data['success']='success';
+			}else{
+				echo $data['fail']='fail';
+			}
 		}
 	//恢复分类类目
 
@@ -106,6 +111,11 @@ class CategoryController extends Controller{
 			$category = DB::table("category")
 					->where("id",$id)
 					->update(array("status"=>0));
+			if($category){
+				echo $data['success']='success';
+			}else{
+				echo $data['fail']='fail';
+			}
 		}
 
 }
