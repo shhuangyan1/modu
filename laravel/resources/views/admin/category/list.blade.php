@@ -37,11 +37,11 @@
                         <td class="tc">
                             <a href="{{url('admin/category/'.$v->id.'/edit')}}">修改</a>
                             <a class="delete" data-id="{{$v->id}}" href="javascript:void(0);">删除</a>
-
+                            @if ($v->status==0)
                             <a class="down" data-id="{{$v->id}}" href="javascript:void(0);">下架</a>
-
+                            @elseif ($v->status==1)
                             <a class="cate_up" data-id="{{$v->id}}" href="javascript:void(0);">恢复</a>
-
+                            @endif
                         </td>
                     </tr>
                     @endforeach
@@ -114,12 +114,15 @@
                     {
                         name: '确定',
                         callback: function(index){
-                            MD.ajax_post({
-                                url: "",
+                            MD.ajax_get({
+                                url: "admin/category/off_category",
                                 data: {"id": id}
                             }, function (res) {
-                                jeBox.close(index);
-
+                                if(res){
+                                    jeBox.close(index);
+                                    jeBox.msg("下架成功", {icon: 2, time: 1})
+                                    this_.addClass("cate_up").removeClass("down").text("恢复")
+                                }
                             })
                         }
                     },
@@ -147,12 +150,15 @@
                     {
                         name: '确定',
                         callback: function(index){
-                            MD.ajax_post({
-                                url: "",
+                            MD.ajax_get({
+                                url: "admin/category/recover_category",
                                 data: {"id": id}
                             }, function (res) {
-                                jeBox.close(index);
-
+                                if(res){
+                                    jeBox.close(index);
+                                    jeBox.msg("恢复成功", {icon: 2, time: 1})
+                                    this_.addClass("down").removeClass("cate_up").text("下架")
+                                }
                             })
                         }
                     },

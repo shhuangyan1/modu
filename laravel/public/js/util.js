@@ -471,6 +471,21 @@ window.MD = {
      */
     date_format: function (date) {
         return (moment(date, 'YYYY-MM-DD HH:mm:ss')).unix();
+    },
+
+    /**
+     * 性别转换
+     */
+    sex_format: function (num) {
+        var sex = "";
+        if(num == 2){
+            sex = "女"
+        }else if(num == 1){
+            sex = "男"
+        }else {
+            sex = "未知"
+        }
+        return sex;
     }
 
 }

@@ -62,7 +62,7 @@
            var id = $(this).data("id");
            jeBox.open({
                cell:"jbx",
-               title:"结束",
+               title:"提示",
                padding:"25px 10px",
                content:'<div class="jeBox-iconbox jeicon1">确定要删除该管理员账号吗？</div>',
                maskLock : true ,

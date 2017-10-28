@@ -51,7 +51,7 @@ $(function () {
         legend: {
             orient: 'vertical',
             left: 'right',
-            data: ['男','女','未知']
+            data: []
         },
         series : [
             {
@@ -59,11 +59,7 @@ $(function () {
                 type: 'pie',
                 radius : '85%',
                 center: ['50%', '50%'],
-                data:[
-                    {value:335, name:'男'},
-                    {value:480, name:'女'},
-                    {value:24, name:'未知'}
-                ],
+                data:[],
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -125,7 +121,6 @@ $(function () {
     var user_add_chart = echarts.init(document.getElementById("user-add-line"))
     user_add_chart.setOption(user_add_option);
     var user_sex_chart = echarts.init(document.getElementById("user-sex-pie"))
-    user_sex_chart.setOption(analyse_sex_option);
     var user_area_chart = echarts.init(document.getElementById("user-area"))
     user_area_chart.setOption(analyse_area_option);
 
@@ -152,9 +147,17 @@ $(function () {
     // 用户性别分析
     var show_user_sex = function () {
 
-        MD.ajax_get({url: ""}, function (res) {
+        MD.ajax_get({url: "admin/user/user_piechart"}, function (res) {
+            var list = res;
+            var legend = [], series = [];
+            for(var i in list){
+                var cof = {"value": list[i].num, "name": MD.sex_format(list[i].gender)}
+                series.push(cof)
+                legend.push(MD.sex_format(list[i].gender))
+            }
 
-            // analyse_sex_option.series.data =
+            analyse_sex_option.series[0].data = series;
+            analyse_sex_option.legend.data = legend;
 
             user_sex_chart.setOption(analyse_sex_option)
         })
@@ -173,6 +176,7 @@ $(function () {
          * 统计图初始化
          */
         show_user_add();
+        show_user_sex();
     }
 
     var bind_event = function () {

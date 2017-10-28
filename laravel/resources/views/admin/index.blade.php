@@ -86,10 +86,11 @@
 				</ul>
 			</li>
             <li>
-            	<h3><i class="fa fa-fw fa-user"></i>管理员管理</h3>
+            	<h3><i class="fa fa-fw fa-user"></i>权限管理</h3>
                 <ul class="sub_menu" >
                     <li><a href="{{url('admin/manager/create')}}" target="main">添加管理员</a></li>
                     <li><a href="{{url('admin/manager')}}" target="main">管理员列表</a></li>
+                    <li><a href="{{url('admin/可访问页面')}}" target="main">菜单页列表</a></li>
                 </ul>
             </li>
             <li>

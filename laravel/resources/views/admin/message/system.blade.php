@@ -5,6 +5,7 @@
     <title>群发系统消息</title>
     <link rel="stylesheet" href="{{asset('admin/style/css/ch-ui.admin.css')}}">
     <link rel="stylesheet" href="{{asset('admin/style/font/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{asset('lirary/jedate/skin/default.css')}}">
 
     <script src="{{asset('lirary/uploadify/jquery1.11.3.min.js')}}" type="text/javascript"></script>
 
@@ -13,6 +14,7 @@
     <script type="text/javascript" charset="utf-8" src="{{asset('lirary/ueditor2/ueditor.all.js')}}"></script>
     <script type="text/javascript" src="{{asset('lirary/ueditor2/lang/zh-cn/zh-cn.js')}}"></script>
 
+    <script src="{{asset('lirary/jedate/jquery.jebox.js')}}" ></script>
     <script type="text/javascript" src="{{asset('js/util.js')}}"></script>
 
     <link rel="stylesheet" href="{{asset('css/system.css')}}">
@@ -29,8 +31,10 @@
 
 <div class="result_wrap">
     <div class="result_content">
-        <form action="" method="post" enctype="multipart/form-data" onsubmit="return sysSend();">
-        <p class="attention">注意：群发消息将通过小程序中 【我的】 — 【系统消息】 栏显示</p>
+        <form action="{{url('admin/message')}}" method="post" enctype="multipart/form-data" onsubmit="return sysSend();">
+        <p class="attention"><b>注意：</b></p>
+        <p class="attention">（1）群发消息将通过小程序中 【我的】 — 【系统消息】 栏显示</p>
+        <p class="attention">（2）群发图文消息，将从正文选取第一张图片作为消息封面，若无图片则无消息封面</p>
         <div class="msg-opt">
             <div class="opt-inner">
                 <span class="opt-select on">
@@ -46,13 +50,20 @@
         <div class="msg-box">
             <div id="editor-box" class="editor-box hide"></div>
             <div class="text-box">
-                <textarea id="myText" name="messageText" maxlength="800"></textarea>
+                <textarea id="myText" name="content" maxlength="800"></textarea>
                 <div class="nums-box">
                     <p>当前输入<span id="curNum">0</span>个字符，最多输入800字符</p>
                 </div>
             </div>
         </div>
-            <textarea class="preview hide" name="preview"></textarea>
+            <section class="hide">
+                <!-- 隐藏数据 -->
+                <!--消息预览：文本消息预览，前90个字符；
+                        图文消息预览，前30个字符；
+                图文消息中首张图片地址，源自编辑器主体内容-->
+                <textarea class="preview hide" name="words"></textarea>
+                <input type="text" class="image hide" name="image">
+            </section>
             <button type="submit" class="button primary"><i class="fa fa-paper-plane-o"></i>&nbsp;群&nbsp;发</button>
         </form>
 
@@ -71,7 +82,9 @@
                     <td><a>{{$v->words}}</a></td>
                     <td class="tc">{{date("Y-m-d H:i:s",$v->time)}}</td>
                     <td class="tc">{{$v->sendby}}</td>
-                    <td class="tc" value="{{$v->id}}">删除</td>
+                    <td class="tc">
+                        <a data-id="{{$v->id}}" class="delete">删除</a>
+                    </td>
                 </tr>
                 @endforeach
                 </tbody>
@@ -84,7 +97,7 @@
     </div>
 </div>
 <script>
-    $("#editor-box").html('<script type="text/plain" id="myEditor" name="message" style="width:100%;height:240px;"><\/script>')
+    $("#editor-box").html('<script type="text/plain" id="myEditor" name="content" style="width:100%;height:240px;"><\/script>')
     var ue = UE.getEditor('myEditor',{
         elementPathEnabled: false
     });

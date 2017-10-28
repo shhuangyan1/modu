@@ -49,7 +49,7 @@ $(function () {
         legend: {
             orient: 'vertical',
             left: 'right',
-            data: ['最美民宿','魔都景点','创业必读','美食舆情','鸡汤美文']
+            data: []
         },
         series : [
             {
@@ -58,11 +58,7 @@ $(function () {
                 radius : '85%',
                 center: ['50%', '50%'],
                 data:[
-                    {value:335, name:'最美民宿'},
-                    {value:310, name:'魔都景点'},
-                    {value:234, name:'创业必读'},
-                    {value:135, name:'美食舆情'},
-                    {value:1548, name:'鸡汤美文'}
+                    // {value:335, name:'最美民宿'},
                 ],
                 itemStyle: {
                     emphasis: {
@@ -77,7 +73,6 @@ $(function () {
 
     var art_line_chart = echarts.init(document.getElementById("article-line"));
     var user_pie_chart = echarts.init(document.getElementById("user-pie"));
-    user_pie_chart.setOption(user_option);
 
 
     var show_line_chart = function (data) {
@@ -114,14 +109,21 @@ $(function () {
     var show_pie_chart = function (data) {
         user_pie_chart.showLoading();
 
-        /*MD.ajax_get({
-            url: ""
+        MD.ajax_get({
+            url: "admin/index/article_piechart"
         },function (res) {
-            user_pie_chart.hideLoading();
-            // user_option.legend.data =
-            // user_option.series[0].data =
+            var list = res;
+            var legend = [], series = [];
+            for(var i in list){
+                legend.push(list[i].cat_name);
+                series.push({"value": list[i].num, "name": list[i].cat_name})
+            }
+            user_option.legend.data = legend
+            user_option.series[0].data = series
 
-        })*/
+            user_pie_chart.setOption(user_option);
+            user_pie_chart.hideLoading();
+        })
     }
 
 
