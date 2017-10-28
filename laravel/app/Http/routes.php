@@ -73,6 +73,7 @@ Route::any("admin/wx/usersave","Admin\WxController@usersave");
 
 Route::any("admin/user/date","Admin\UserController@date");
 Route::any("admin/user/fill","Admin\UserController@fill");
+Route::any("admin/user/user_piechart","Admin\UserController@user_piechart");
 
 Route::any("admin/message/system_msg","Admin\MessageController@system_msg");
 

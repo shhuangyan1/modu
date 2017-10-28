@@ -42,8 +42,8 @@ class MessageController extends Controller{
 
     public function store(Request $request){
         $input = $request->input();
-        $input->time = time();
-        $input->sendby = session('user')->username;
+        $input['time'] = time();
+        $input['sendby']= session('user')->username;
         $message = DB::table("message")
             ->insertGetId($input);
         return view('admin.message.system');
@@ -59,4 +59,5 @@ class MessageController extends Controller{
             echo json_encode(array('fail'=>"fail",'msg'=>'删除失败'));
         }
     }
+
 }

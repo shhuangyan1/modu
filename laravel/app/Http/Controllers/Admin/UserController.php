@@ -63,4 +63,11 @@ class UserController extends Controller{
         //dump($user);die;
         echo json_encode($data);
     }
+
+    //会员性别比统计图
+    public function user_piechart(){
+        $info = DB::select('select gender,count("gender") as num from user GROUP by gender');
+        echo json_encode($info);
+    }
+
 }
