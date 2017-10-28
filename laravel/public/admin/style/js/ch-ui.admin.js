@@ -37,11 +37,18 @@ $(function(){
 	});
 });
 
-//列表页点击全选按钮
 $(function(){
-	$('.list_tab').find('tr').find('[type=checkbox]').click(function(){
+    //列表页点击全选按钮
+    $('.list_tab').find('tr').find('[type=checkbox]').click(function(){
 		$('.list_tab').find('td').find('[type=checkbox]').prop('checked',$(this).prop('checked'));
 	});
+
+
+
+    // 右上角点击个人中心，清除左侧导航
+    $(".head-link").on("click", function () {
+        $(".sub_menu li").removeClass("on")
+    })
 })
 
 //删除图片列表
@@ -70,4 +77,3 @@ function pic_minus(obj){
 //
 //     })
 // })
-
