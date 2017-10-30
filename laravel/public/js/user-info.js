@@ -112,6 +112,7 @@ $(function () {
                 name:'人数',
                 type:'bar',
                 barWidth: '60%',
+                itemStyle : { normal: {label : {show: true, position: 'top'}}},
                 data:[10, 52, 200, 34, 30, 330, 220, 50, 100, 52, 210, 314, 190, 339, 150, 59]
             }
         ]
@@ -122,7 +123,6 @@ $(function () {
     user_add_chart.setOption(user_add_option);
     var user_sex_chart = echarts.init(document.getElementById("user-sex-pie"))
     var user_area_chart = echarts.init(document.getElementById("user-area"))
-    user_area_chart.setOption(analyse_area_option);
 
 
     // 用户数据增长
@@ -163,6 +163,42 @@ $(function () {
         })
     }
 
+    // 用户区域分析
+    var show_user_area = function () {
+        MD.ajax_get({url: "admin/user/area_barchart"}, function (res) {
+            var list = res, arr = [];
+            var xAxis = [], series = [];
+            var no_prov = {"province": "未知", "num": 0},
+                foreign = {"province": "海外", "num": 0}
+            for(var i in list){
+                if(list[i].province == ""){
+                    no_prov.num = list[i].num;
+                    arr.push(no_prov);
+                }else{
+                    var result = get_name_bypinyin(list[i].province);
+
+                    if(result.province == list[i].province){
+                        foreign.num += list[i].num;
+                    }else{
+                        list[i].province = result.province;
+                        arr.push(list[i]);
+                    }
+                }
+            }
+            arr.push(foreign);
+
+            $.each(arr, function (i, v) {
+                xAxis.push(v.province);
+                series.push(v.num)
+            })
+
+            analyse_area_option.xAxis[0].data = xAxis;
+            analyse_area_option.series[0].data = series;
+
+            user_area_chart.setOption(analyse_area_option)
+        })
+    }
+
     // 页面初始化设置
     var init = function () {
 
@@ -177,6 +213,7 @@ $(function () {
          */
         show_user_add();
         show_user_sex();
+        show_user_area();
     }
 
     var bind_event = function () {

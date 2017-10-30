@@ -78,6 +78,7 @@ Route::any("admin/user/area_barchart","Admin\UserController@area_barchart");
 Route::any("admin/user/run_chart","Admin\UserController@run_chart");
 
 Route::any("admin/message/system_msg","Admin\MessageController@system_msg");
+Route::any("admin/manager/menus","Admin\ManagerController@menus");
 
 Route::group(['middleware' => ['web','admin.login'],'prefix'=>'admin','namespace'=>'Admin'], function () {
 
