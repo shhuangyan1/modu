@@ -76,4 +76,24 @@ class UserController extends Controller{
         echo json_encode($info);
     }
 
+    //会员增长走势图接口
+    public function run_chart(){
+       $from = $_GET['from'];
+        $to = $_GET['to'];
+
+        $user = DB::table('user')
+            ->select('time')
+            ->where('time','<',$to+1)
+            ->where('time','>',$from-1)
+            ->get();
+        $arr = array();
+        foreach($user as $v){
+            $v->time = date("Y-m-d",$v->time);
+            $arr[] = $v->time;
+        }
+        $date['result'] = array_count_values ($arr);
+        echo json_encode($date);
+
+    }
+
 }
