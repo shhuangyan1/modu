@@ -116,9 +116,10 @@
                         callback: function(index){
                             MD.ajax_get({
                                 url: "admin/category/off_category",
+                                dataType: 'text',
                                 data: {"id": id}
                             }, function (res) {
-                                if(res){
+                                if(res == 'success'){
                                     jeBox.close(index);
                                     jeBox.msg("下架成功", {icon: 2, time: 1})
                                     this_.addClass("cate_up").removeClass("down").text("恢复")
@@ -152,9 +153,10 @@
                         callback: function(index){
                             MD.ajax_get({
                                 url: "admin/category/recover_category",
+                                dataType: 'text',
                                 data: {"id": id}
                             }, function (res) {
-                                if(res){
+                                if(res == 'success'){
                                     jeBox.close(index);
                                     jeBox.msg("恢复成功", {icon: 2, time: 1})
                                     this_.addClass("down").removeClass("cate_up").text("下架")

@@ -120,33 +120,40 @@ $(function () {
 
     // user_add_option
     var user_add_chart = echarts.init(document.getElementById("user-add-line"))
-    user_add_chart.setOption(user_add_option);
     var user_sex_chart = echarts.init(document.getElementById("user-sex-pie"))
     var user_area_chart = echarts.init(document.getElementById("user-area"))
 
 
     // 用户数据增长
     var show_user_add = function (range) {
+        user_add_chart.showLoading()
         var now = Math.round(new Date() / 1000);
         var before_tenDays = MD.date_format(MD.time_format(now - 864000).split(" ")[0]);   // 十天前的0点
         range = MD.merger({'from': before_tenDays, 'to': now},range)
         console.log(range) //
 
-        /*MD.ajax_get({
-            url: "",
+        MD.ajax_get({
+            url: "admin/user/run_chart",
             data: range
         }, function (res) {
+            var list = res.result;
+            var x = [], y = [];
             // 数据处理
-            // user_add_option.xAxis.data =
-            // user_add_option.series.data =
+            $.each(list, function (i, v) {
+                x.push(i);
+                y.push(v);
+            })
 
+            user_add_option.xAxis.data = x;
+            user_add_option.series[0].data = y;
+            user_add_chart.hideLoading();
             user_add_chart.setOption(user_add_option)
-        })*/
+        })
     }
-
+//https://mp.weixin.qq.com/s/yjhqXyNABZ1n7IbNwb95yA
     // 用户性别分析
     var show_user_sex = function () {
-
+        user_sex_chart.showLoading()
         MD.ajax_get({url: "admin/user/user_piechart"}, function (res) {
             var list = res;
             var legend = [], series = [];
@@ -158,13 +165,14 @@ $(function () {
 
             analyse_sex_option.series[0].data = series;
             analyse_sex_option.legend.data = legend;
-
+            user_sex_chart.hideLoading();
             user_sex_chart.setOption(analyse_sex_option)
         })
     }
 
     // 用户区域分析
     var show_user_area = function () {
+        user_area_chart.showLoading();
         MD.ajax_get({url: "admin/user/area_barchart"}, function (res) {
             var list = res, arr = [];
             var xAxis = [], series = [];
@@ -194,7 +202,7 @@ $(function () {
 
             analyse_area_option.xAxis[0].data = xAxis;
             analyse_area_option.series[0].data = series;
-
+            user_area_chart.hideLoading();
             user_area_chart.setOption(analyse_area_option)
         })
     }

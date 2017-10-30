@@ -148,7 +148,7 @@
                 title:"提示",
                 padding:"25px 10px",
                 content:'<div class="jeBox-iconbox jeicon1" style="text-align: center;">确定要将<span class="red">全部文章下架</span>吗？' +
-                '<br><span>下架前请先清空删除确认！</span></div>',
+                '<br><span>下架前请先<span class="red">清空</span>删除确认！</span></div>',
                 maskLock : true ,
                 btnAlign:"center",
                 button:[
@@ -156,12 +156,12 @@
                         name: '下架',
                         callback: function(index){
                             jeBox.close(index);
-                            MD.ajax_post({url: ""}, function (res) {
+                            MD.ajax_post({url: "admin/article/undercarriage_all", dataType: 'text'}, function (res) {
 
                                 jeBox.msg('全部文章已下架', {icon: 2,time:1.5});
                                 setTimeout(function () {
                                     location.reload();
-                                },1400)
+                                },1200)
 
                             })
                         }
@@ -186,15 +186,15 @@
                 btnAlign:"center",
                 button:[
                     {
-                        name: '下架',
+                        name: '恢复',
                         callback: function(index){
                             jeBox.close(index);
-                            MD.ajax_post({url: ""}, function (res) {
+                            MD.ajax_post({url: "admin/article/topcarriage_all", dataType: 'text'}, function (res) {
 
                                 jeBox.msg('全部文章已恢复', {icon: 2,time:1.5});
                                 setTimeout(function () {
                                     location.reload();
-                                },1400)
+                                },1200)
 
                             })
                         }

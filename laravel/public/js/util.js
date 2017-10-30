@@ -75,11 +75,8 @@ function resize_index() {
 }
 
 window.onload = function () {
+    if(location.href.indexOf("/admin/index") < 0)
     resize_index();
-    /*var main = document.getElementById("mainIframe")
-    $(main).load(function () {
-        resize_index();
-    })*/
 }
 
 
@@ -486,6 +483,102 @@ window.MD = {
             sex = "未知"
         }
         return sex;
+    },
+
+
+    /**
+     * 获取全部菜单项
+     */
+    getMenusJson: function(callback){
+        $.getJSON( MD.url+"admin/menus.json", function (data) {
+            callback(data)
+        })
+    },
+
+
+    /**
+     * 实现用户菜单的动态显示
+     */
+    showMenu: function (all,menu) {
+        // menu = [9,10,11,16,18]
+        // var all = MD.menus;
+        var result = [], rmenu = []
+        // 获取可展示菜单
+        $.each(menu, function (i, v) {
+            $.each(all.child, function (j, k) {
+                if(v == k.id){
+                    rmenu.push(k);
+                    return;
+                }
+            })
+        })
+
+        // 父级与子级整合
+        $.each(all.parent, function (j, k) {
+            var p = {id: k.id,pname: k.name,child: []}
+            $.each(rmenu, function (i, v) {
+                if(v.pid == k.id){
+                    p.child.push(v);
+                }
+            })
+
+            // 父级图标
+            $.each(all.fa, function (x, y) {
+                if(k.id == y.forid){
+                    p.fa = y.cls;
+                }
+            })
+
+            if(p.child.length>0)
+                result.push(p);
+        })
+
+        MD.show_menu_list(result)
+    },
+    /**
+     * 通过最终result数组，输出菜单
+     */
+    show_menu_list: function (result) {
+        var def = '<li>\n' +
+            '                <ul class="sub_menu">\n' +
+            '                    <li class="on menu_index"><a href="'+MD.url+"admin/info"+'" target="main"><i class="fa fa-fw fa-home"></i>首页</a></li>\n' +
+            '                </ul>\n' +
+            '            </li>';
+        var m_html = ""
+        $.each(result, function (i, v) {
+            var p_menu ='<li>\n' +
+                        '    <h3><i class="'+ v.fa +'"></i>'+ v.pname +'</h3>\n' +
+                        '<ul class="sub_menu">\n';
+
+            var c_menu = '';
+
+            $.each(v.child, function (_, k) {
+                var href = k.url.indexOf("http") < 0 ? (MD.url + k.url) : k.url;
+                c_menu += '<li><a href="'+ href +'" target="main">'+ k.name +'</a></li>'
+            });
+
+
+            m_html += p_menu + c_menu + '</ul></li>'
+        })
+        $(".menu_box_ul").html(def + m_html);
+        resize_index();
+    },
+
+    /**
+     * 父级与子级整合
+     */
+    menu_result: function (all) {
+        var result = []
+        $.each(all.parent, function (j, k) {
+            var p = {id: k.id,pname: k.name,child: []}
+            $.each(all.child, function (i, v) {
+                if(v.pid == k.id){
+                    p.child.push(v);
+                }
+            })
+            result.push(p);
+        })
+        return result;
     }
 
 }

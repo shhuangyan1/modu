@@ -6,9 +6,10 @@
 	<link rel="stylesheet" href="style/css/ch-ui.admin.css">
 	<link rel="stylesheet" href="style/font/css/font-awesome.min.css">
 		
-	<script type="text/javascript" src="style/js/jquery.js"></script>
+	<!--<script type="text/javascript" src="style/js/jquery.js"></script>-->
+    <script src="{{asset('lirary/uploadify/jquery1.11.3.min.js')}}"></script>
     <script type="text/javascript" src="style/js/ch-ui.admin.js"></script>
-	<!--<script type="text/javascript" src="{{asset('js/util.js')}}"></script>-->
+	<script type="text/javascript" src="{{asset('js/util.js')}}"></script>
 
 </head>
 <body class="index_body">
@@ -39,8 +40,8 @@
 
 	<!--左侧导航 开始-->
 	<div class="menu_box">
-		<ul>
-            <li>
+		<ul class="menu_box_ul">
+            <!--<li>
                 <ul class="sub_menu">
                     <li class="on menu_index"><a href="{{url('admin/info')}}" target="main"><i class="fa fa-fw fa-home"></i>首页</a></li>
                 </ul>
@@ -56,7 +57,7 @@
 				</ul>
 			</li>
 			<li>
-				<h3><i class="fa fa-fw fa-clipboard"></i>文章分类管理</h3>
+				<h3><i class="fa fa-fw fa-navicon"></i>文章分类管理</h3>
 				<ul class="sub_menu">
 					<li><a href="{{url('admin/category/create')}}" target="main">添加分类</a></li>
 					<li><a href="{{url('admin/category')}}" target="main">分类列表</a></li>
@@ -105,9 +106,8 @@
                 <ul class="sub_menu">
                     <li><a href="http://www.yeahzan.com/fa/facss.html" target="main">图标调用</a></li>
                     <li><a href="http://hemin.cn/jq/cheatsheet.html" target="main">Jquery手册</a></li>
-                    <li><a href="http://tool.c7sky.com/webcolor/" target="main">配色板</a></li>
                 </ul>
-            </li>
+            </li>-->
         </ul>
 	</div>
 	<!--左侧导航 结束-->
@@ -127,5 +127,20 @@
 	</div>
 	<!--底部 结束-->
 
+<script>
+    // 权限实际获取接口
+    var getList = function (all) {
+        MD.ajax_get({url: "admin/activity/activity_detail?id=19&openid=&_=1509334277080"}, function (res) {
+            var menu = [9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29];
+            setTimeout(function () {
+                MD.showMenu(all,menu);
+            },1000)
+        })
+    }
+
+    MD.getMenusJson(function (data) {
+        getList(data)
+    })
+</script>
 </body>
 </html>

@@ -12,11 +12,16 @@
 
 //左侧点击事件
 $(function(){
-	$('.sub_menu').find('li').click(function(){
+    $(document).on("click",".sub_menu li", function () {
+        $(this).parents('.menu_box').find('li').removeClass('on');
+        $(this).addClass('on');
+        $("body").animate({scrollTop: 0},0)
+    })
+	/*$('.sub_menu').find('li').click(function(){
 		$(this).parents('.menu_box').find('li').removeClass('on');
 		$(this).addClass('on');
 		$("body").animate({scrollTop: 0},0)
-	});
+	});*/
 })
 
 //左侧点击弹开子菜单

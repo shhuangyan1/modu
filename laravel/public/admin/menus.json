@@ -1,0 +1,52 @@
+{
+  "parent": [
+    { "id": 1, "name": "文章管理"},
+    { "id": 2, "name": "文章分类管理"},
+    { "id": 3, "name": "话题管理"},
+    { "id": 4, "name": "活动管理"},
+    { "id": 5, "name": "消息管理"},
+    { "id": 6, "name": "权限管理"},
+    { "id": 7, "name": "会员管理"},
+    { "id": 8, "name": "工具导航"}
+  ],
+  "child": [
+    { "id": 9, "name": "发布文章", "pid": 1, "url": "admin/article/create"},
+    { "id": 10, "name": "智能发布文章", "pid": 1, "url": "admin/article/ai_publish"},
+    { "id": 11, "name": "文章列表", "pid": 1, "url": "admin/article"},
+    { "id": 12, "name": "删除确认", "pid": 1, "url": "admin/confirm"},
+    { "id": 13, "name": "解析规则管理", "pid": 1, "url": "admin/article/rule"},
+
+    { "id": 14, "name": "添加分类", "pid": 2, "url": "admin/category/create"},
+    { "id": 15, "name": "分类列表", "pid": 2, "url": "admin/category"},
+
+    { "id": 16, "name": "新增话题", "pid": 3, "url": "admin/topic/create"},
+    { "id": 17, "name": "话题列表", "pid": 3, "url": "admin/topic"},
+
+    { "id": 18, "name": "发布活动", "pid": 4, "url": "admin/activity/create"},
+    { "id": 19, "name": "活动列表", "pid": 4, "url": "admin/activity"},
+
+    { "id": 20, "name": "群发系统消息", "pid": 5, "url": "admin/message/system_msg"},
+    { "id": 21, "name": "活动消息", "pid": 5, "url": "admin/message"},
+    { "id": 22, "name": "用户反馈", "pid": 5, "url": "admin/message/back"},
+
+    { "id": 23, "name": "添加管理员", "pid": 6, "url": "admin/manager/create"},
+    { "id": 24, "name": "管理员列表", "pid": 6, "url": "admin/manager"},
+    { "id": 25, "name": "菜单列表", "pid": 6, "url": "admin/manager/menus"},
+
+    { "id": 26, "name": "会员数据分析", "pid": 7, "url": "admin/user/date"},
+    { "id": 27, "name": "会员列表", "pid": 7, "url": "admin/user"},
+
+    { "id": 28, "name": "图标调用", "pid": 8, "url": "http://www.yeahzan.com/fa/facss.html"},
+    { "id": 29, "name": "Jquery手册", "pid": 8, "url": "http://hemin.cn/jq/cheatsheet.html"}
+  ],
+  "fa": [
+    { "forid": 1, "cls": "fa fa-fw fa-clipboard"},
+    { "forid": 2, "cls": "fa fa-fw fa-navicon"},
+    { "forid": 3, "cls": "fa fa-fw fa-weixin"},
+    { "forid": 4, "cls": "fa fa-fw fa-flag"},
+    { "forid": 5, "cls": "fa fa-fw fa-comments"},
+    { "forid": 6, "cls": "fa fa-fw fa-user"},
+    { "forid": 7, "cls": "fa fa-fw fa-users"},
+    { "forid": 8, "cls": "fa fa-fw fa-thumb-tack"}
+  ]
+}
