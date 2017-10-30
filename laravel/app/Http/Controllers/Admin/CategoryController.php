@@ -25,6 +25,7 @@ class CategoryController extends Controller{
 	public function category_format(){
 		$data=DB::table("category")
 				->select("id","cat_name")
+				->where("status",0)
 				->get();
 		foreach($data as $v){
 			$v->name = $v->cat_name;

@@ -121,14 +121,18 @@ class WxController extends Controller
                     }
                 }
                 if($v->type==3){
+                    $resourceid = $v ->resourceid;
                     $activity = DB::table("activity")
                         ->where("id",$v->resourceid)
                         ->select("image","title")
                         ->get();
+                    $num = DB::table("join_activity")
+                        ->where("act_id",$resourceid)
+                        ->count();
                     foreach($activity as $k){
                         $v->title=$k->title;
                         $v->image=$k->image;
-                        $v->join=0;
+                        $v->join=$num;
                     }
                 }
                 $v->time=date("Y-m-d H:i",$v->time);
@@ -419,6 +423,21 @@ class WxController extends Controller
         dump($res);
 
     }*/
+
+    //个人中心 文章收藏数 和活动参与数接口
+    public function pieces(){
+        $openid = $_GET['openid'];
+        $join_activity = DB::table("join_activity")
+            ->where("openid",$openid)
+            ->count();
+        $article_comment = DB::table("article_comment")
+            ->where("openid",$openid)
+            ->count();
+        $date['articlenum'] = $article_comment;
+        $date['actnum'] = $join_activity;
+        echo json_encode($date);
+    }
+
 
 }
 

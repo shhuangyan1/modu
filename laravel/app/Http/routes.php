@@ -72,6 +72,7 @@ Route::any("admin/wx/act_comment","Admin\WxController@act_comment");
 Route::any("admin/wx/act_commentlist","Admin\WxController@act_commentlist");
 Route::any("admin/wx/my_activities","Admin\WxController@my_activities");
 Route::any("admin/wx/usersave","Admin\WxController@usersave");
+Route::any("admin/wx/pieces","Admin\WxController@pieces");
 
 Route::any("admin/user/date","Admin\UserController@date");
 Route::any("admin/user/fill","Admin\UserController@fill");
