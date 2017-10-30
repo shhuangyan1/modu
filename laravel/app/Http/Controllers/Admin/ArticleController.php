@@ -626,9 +626,9 @@ Class ArticleController extends Controller{
 		$article = DB::table('article')
 				->update(array("status"=>1));
 		if($article){
-			return back()->with('success','上架成功!');
+			echo $date['success'] = '下架成功！';
 		}else{
-			return back()->with('error','下架失败!');
+			echo $date['fail'] = '下架失败！';
 		}
 	}
 
@@ -637,9 +637,9 @@ Class ArticleController extends Controller{
 		$article = DB::table('article')
 				->update(array("status"=>0));
 		if($article){
-			return back()->with('success','上架成功!');
+			echo $date['success'] = '上架成功！';
 		}else{
-			return back()->with('error','上架失败!');
+			echo $date['fail'] = '上架失败！';
 		}
 	}
 
