@@ -39,6 +39,8 @@ Route::get('admin/confirm','Admin\ArticleController@confirm');
 Route::any('admin/shenhe','Admin\ArticleController@shenhe');
 Route::any('admin/article/preview','Admin\ArticleController@preview');
 Route::any('admin/article/rule','Admin\ArticleController@rule');
+Route::any('admin/article/undercarriage_all','Admin\ArticleController@undercarriage_all');
+Route::any('admin/article/topcarriage_all','Admin\ArticleController@topcarriage_all');
 Route::any('admin/article/article_recover','Admin\ArticleController@article_recover');
 Route::any('admin/article/confirm_release','Admin\ArticleController@confirm_release');
 Route::any('admin/article/detail','Admin\ArticleController@detail');

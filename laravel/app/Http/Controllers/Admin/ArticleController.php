@@ -621,6 +621,28 @@ Class ArticleController extends Controller{
 		}
 	}
 
+	//文章全部下架接口
+	public function undercarriage_all(){
+		$article = DB::table('article')
+				->update(array("status"=>1));
+		if($article){
+			return redirect('admin/article');
+		}else{
+			return back()->with('error','下架失败!');
+		}
+	}
+
+	//文章全部上架接口
+	public function topcarriage_all(){
+		$article = DB::table('article')
+				->update(array("status"=>0));
+		if($article){
+			return redirect('admin/article');
+		}else{
+			return back()->with('error','上架失败!');
+		}
+	}
+
 }
 
 
