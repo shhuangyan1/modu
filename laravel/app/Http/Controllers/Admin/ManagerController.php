@@ -68,9 +68,7 @@ class ManagerController extends Controller
                 echo '数据添加失败!';
             }
         }else{
-            //return back()->with('error','');
-            echo '用户名已存在!';
-
+            echo '<script>alert("用户名已存在!");window.location.href="/admin/manager/create";</script>';
         }
 
     }
