@@ -500,18 +500,27 @@ window.MD = {
      * 获取全部菜单项
      */
     getMenusJson: function(callback){
-        $.getJSON( MD.url+"admin/menus.json", function (data) {
-            callback(data)
+        MD.ajax_get({url: 'admin/manager/showgrant'}, function (res) {
+            var data = {parent: [], child: []}
+            $.each(res, function (i, v) {
+                if(v.pid == 0){
+                    data.parent.push(v);
+                }else{
+                    data.child.push(v)
+                }
+            })
+            // 将原始数据分组
+            callback(data);
         })
     },
 
 
     /**
      * 实现用户菜单的动态显示
+     * all 全部数据
      */
     showMenu: function (all,menu) {
-        // menu = [9,10,11,16,18]
-        // var all = MD.menus;
+
         var result = [], rmenu = []
         // 获取可展示菜单
         $.each(menu, function (i, v) {
@@ -525,17 +534,10 @@ window.MD = {
 
         // 父级与子级整合
         $.each(all.parent, function (j, k) {
-            var p = {id: k.id,pname: k.name,child: []}
+            var p = {id: k.id,pname: k.name,child: [], cls: k.cls}
             $.each(rmenu, function (i, v) {
                 if(v.pid == k.id){
                     p.child.push(v);
-                }
-            })
-
-            // 父级图标
-            $.each(all.fa, function (x, y) {
-                if(k.id == y.forid){
-                    p.fa = y.cls;
                 }
             })
 
@@ -549,6 +551,7 @@ window.MD = {
      * 通过最终result数组，输出菜单
      */
     show_menu_list: function (result) {
+        // console.log(result)
         var def = '<li>\n' +
             '                <ul class="sub_menu">\n' +
             '                    <li class="on menu_index"><a href="'+MD.url+"admin/info"+'" target="main"><i class="fa fa-fw fa-home"></i>首页</a></li>\n' +
@@ -557,7 +560,7 @@ window.MD = {
         var m_html = ""
         $.each(result, function (i, v) {
             var p_menu ='<li>\n' +
-                        '    <h3><i class="'+ v.fa +'"></i>'+ v.pname +'</h3>\n' +
+                        '    <h3><i class="'+ v.cls +'"></i>'+ v.pname +'</h3>\n' +
                         '<ul class="sub_menu">\n';
 
             var c_menu = '';

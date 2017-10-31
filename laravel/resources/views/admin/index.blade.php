@@ -129,18 +129,18 @@
 
 <script>
     // 权限实际获取接口
-    var getList = function (all) {
-        MD.ajax_get({url: "admin/activity/activity_detail?id=19&openid=&_=1509334277080"}, function (res) {
-            var menu = [9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29];
-            setTimeout(function () {
-                MD.showMenu(all,menu);
-            },1000)
+    var getList = function () {
+        MD.ajax_get({url: "admin/index/get_grant"}, function (res) {
+            var menu = res[0].auth_id.split(",");
+            //
+            MD.getMenusJson(function (data) {
+                MD.showMenu(data, menu);
+            })
         })
     }
+    getList();
 
-    MD.getMenusJson(function (data) {
-        getList(data)
-    })
+
 </script>
 </body>
 </html>

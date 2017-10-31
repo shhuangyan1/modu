@@ -36,6 +36,17 @@
             width: 270px;
             margin-bottom: 15px;
         }
+        table.list_tab tr td input[type='text']{
+            width: 300px;
+        }
+        table.list_tab tr td input.name{
+            width: 90%;
+        }
+        .list_tab .no-edit td input{
+            border: none;
+            background: transparent;
+            box-shadow: none;
+        }
     </style>
 </head>
 <body>
@@ -87,6 +98,16 @@
     </section>-->
 
 </div>
+<script type="text/template" id="add-cpage-tmp">
+    <tr>
+        <td class="tc"><input type="text" class="name" name="name" value="" placeholder="如：发布文章"></td>
+        <td class="tc"><input type="text" name="url" value="" placeholder="如：admin/article/create"></td>
+        <td class="tc">
+            <a class="c_confirm">确定</a>
+            <a class="c_cancel">取消</a>
+        </td>
+    </tr>
+</script>
 <script>
    /* $(function () {
         MD.getMenusJson(function (data) {
