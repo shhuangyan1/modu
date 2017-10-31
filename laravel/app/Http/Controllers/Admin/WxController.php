@@ -470,6 +470,7 @@ class WxController extends Controller
             ->where(array('username'=>session('user')->username,'admin_pwd'=>$password))
             ->get();
         if(!$user){
+            $date['fail']='fail';
             $date['msg'] = "密码错误！";
             echo json_encode($date);
         }
@@ -478,6 +479,7 @@ class WxController extends Controller
             ->where("username",session('user')->username)
             ->update(array('admin_pwd'=>$password));
         if($admin){
+            $date['success']='success';
             $date['msg'] = "修改成功！";
             echo json_encode($date);
         }
