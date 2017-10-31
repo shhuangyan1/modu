@@ -95,5 +95,20 @@ class UserController extends Controller{
         echo json_encode($date);
 
     }
+    //会员数据分析接口
+    public function pieces(){
+        $total = DB::table('user')->count();
+        $date=date("Y-m-d",time());
+        $timestart = strtotime($date);
+        $timeend = strtotime($date) + 86400;
+        $increase = DB::table("user")
+            ->where("time","<",$timeend)
+            ->where("time",">",$timestart)
+            ->count();
+        $data['total'] = $total;
+        $data['increase'] = $increase;
+        echo json_encode($data);
+
+    }
 
 }

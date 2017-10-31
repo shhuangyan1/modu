@@ -78,6 +78,7 @@ Route::any("admin/wx/original_article","Admin\WxController@original_article");
 Route::any("admin/wx/update_message","Admin\WxController@update_message");
 
 Route::any("admin/user/date","Admin\UserController@date");
+Route::any("admin/user/pieces","Admin\UserController@pieces");
 Route::any("admin/user/fill","Admin\UserController@fill");
 Route::any("admin/user/user_piechart","Admin\UserController@user_piechart");
 Route::any("admin/user/area_barchart","Admin\UserController@area_barchart");
