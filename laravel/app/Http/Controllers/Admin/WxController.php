@@ -470,13 +470,16 @@ class WxController extends Controller
             ->where(array('username'=>session('user')->username,'admin_pwd'=>$password))
             ->get();
         if(!$user){
-            return back()->with('msg','密码错误！');
+            $date['msg'] = "密码错误！";
+            echo json_encode($date);
         }
         $password = md5($input['new_password']);
         $admin = DB::table("admin")
-            ->insert(array('username'=>session('user')->username,'admin_pwd'=>$password));
+            ->where("username",session('user')->username)
+            ->update(array('admin_pwd'=>$password));
         if($admin){
-            return back()->with('msg','修改成功！');
+            $date['msg'] = "修改成功！";
+            echo json_encode($date);
         }
     }
 
