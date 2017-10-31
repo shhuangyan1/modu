@@ -65,11 +65,11 @@ class ManagerController extends Controller
             if($admin){
                 return redirect('admin/manager');
             }else{
-                echo '<script>alert("数据添加失败!")</script>';
+                echo '数据添加失败!';
             }
         }else{
-            //return back()->with('error','用户名已存在!');
-            echo '<script>alert("用户名已存在!")</script>';
+            //return back()->with('error','');
+            echo '用户名已存在!';
 
         }
 
