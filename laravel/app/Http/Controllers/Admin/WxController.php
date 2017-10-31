@@ -472,7 +472,7 @@ class WxController extends Controller
         if(!$user){
             $date['fail']='fail';
             $date['msg'] = "密码错误！";
-            echo json_encode($date);
+            echo json_encode($date);die;
         }
         $password = md5($input['new_password']);
         $admin = DB::table("admin")
