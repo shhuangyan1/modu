@@ -430,15 +430,57 @@ class WxController extends Controller
         $join_activity = DB::table("join_activity")
             ->where("openid",$openid)
             ->count();
-        $article_comment = DB::table("article_comment")
+        $article_comment = DB::table("collect")
             ->where("openid",$openid)
             ->count();
-        $date['articlenum'] = $article_comment;
+        $date['collect'] = $article_comment;
         $date['actnum'] = $join_activity;
         echo json_encode($date);
     }
 
+    //个人中心系统消息更新
+    public function update_message(){
+
+        if(empty($_GET['current'])){
+            $id = DB::select("select max(id) from message");
+            $id = get_object_vars($id[0]);
+           $info = DB::table("message")
+               ->where("id",$id)
+               ->get();
+
+
+        }else{
+            $info = DB::table("message")
+                ->where("id",">",$_GET['current'])
+                ->get();
+
+        }
+        foreach($info as $v){
+            $v->time = date("Y-m-d H:i",$v->time);
+        }
+
+        echo json_encode($info);
+    }
+
+    //管理员信息修改
+    public function pwd_modify(Request $request){
+        $input = $request->input();
+        $password = md5($input['old_password']);
+        $user=DB::table('admin')
+            ->where(array('username'=>session('user')->username,'admin_pwd'=>$password))
+            ->get();
+        if(!$user){
+            return back()->with('msg','密码错误！');
+        }
+        $password = md5($input['new_password']);
+        $admin = DB::table("admin")
+            ->insert(array('username'=>session('user')->username,'admin_pwd'=>$password));
+        if($admin){
+            return back()->with('msg','修改成功！');
+        }
+    }
+
+
 
 }
-
 
