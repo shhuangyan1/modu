@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>管理员列表</title>
+    <title>账户列表</title>
     <link rel="stylesheet" href="{{asset('admin/style/css/ch-ui.admin.css')}}">
     <link rel="stylesheet" href="{{asset('admin/style/font/css/font-awesome.min.css')}}">
     <link rel="stylesheet" href="{{asset('lirary/jedate/skin/default.css')}}">
@@ -16,7 +16,7 @@
 <!--面包屑导航 开始-->
 <div class="crumb_warp">
     <!--<i class="fa fa-bell"></i> 欢迎使用登陆网站后台，建站的首选工具。-->
-    <i class="fa fa-home"></i> <a href="#">首页</a> &raquo; <a href="#">权限管理</a> &raquo; 管理员列表
+    <i class="fa fa-home"></i> <a href="#">首页</a> &raquo; <a href="#">权限管理</a> &raquo; 账户列表
 </div>
 <!--面包屑导航 结束-->
 <div class="search_wrap">
@@ -36,7 +36,7 @@
         <table class="list_tab">
             <thead>
             <tr>
-                <th>管理员名称</th>
+                <th>账户登录名</th>
                 <th>权限列表</th>
                 <th>操作</th>
             </tr>
@@ -64,7 +64,7 @@
                cell:"jbx",
                title:"提示",
                padding:"25px 10px",
-               content:'<div class="jeBox-iconbox jeicon1">确定要删除该管理员账号吗？</div>',
+               content:'<div class="jeBox-iconbox jeicon1">确定要删除该账号吗？</div>',
                maskLock : true ,
                btnAlign:"center",
                button:[

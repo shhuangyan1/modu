@@ -102,8 +102,8 @@
                     <li><input type="checkbox" name="checbox" mdtext="发布文章"></li>
                 </ul>-->
             </div>
+            <input type="hidden" id="authority" name="auth_id" value="">
         </section>
-        <input type="checkbox" id="ch" name="chewcbox" mdtext="发布文章">
         <section class="no-border">
             <input class="button confirm" type="submit" value="确认添加">
         </section>

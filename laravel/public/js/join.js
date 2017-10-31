@@ -31,7 +31,7 @@ $(function () {
     var format_position = function (val) {
         var menu;
         if(val == 3){
-            menu = [9,10,11,14,15,16,17,18,19,21,26,27]
+            menu = [9,10,11,14,15,18,19,21,27]
         }
         if(val == 2){
             menu = [9,10,11,12,14,15,16,17,18,19,20,21,22,23,24,26,27]
@@ -50,9 +50,8 @@ $(function () {
         $.each(inputs, function (i, v) {
             $.each(arr, function (_, k) {
                 if(parseInt(v.value) == k){
-                    $(v).attr("checked",true)
+                    $(v).click()
                     $(v).parent().addClass("on")
-                    console.log(v)
                 }
             })
         })
@@ -86,6 +85,7 @@ $(function () {
             clear_checked();
             // 再选中
             format_position($(this).next('input').val());
+
         })
 
 
@@ -97,26 +97,39 @@ $(function () {
 
 })
 function newManager() {
-    var check_info = function () {
-        var inputs = $(".info input");
-        var inputs_bl = true;
-        inputs.each(function (i, v) {
-            if(v.value == ""){
-                inputs_bl = false;
-                $(v).showTips(this.placeholder)
-            }
-        })
-        return inputs_bl
-    }
-
-    var check_pwd = function () {
-        var pws_bl = true;
-        if($(".admin_pwd").val() != $(".admin_pwd_cf").val()){
-
-            $(".admin_pwd_cf").showTips("两次密码不一致");
-            pws_bl = false
-        }
-        return pws_bl
-    }
+    authority_();
     return check_info() && check_pwd()
+}
+
+var check_info = function () {
+    var inputs = $(".info input");
+    var inputs_bl = true;
+    inputs.each(function (i, v) {
+        if(v.value == ""){
+            inputs_bl = false;
+            $(v).showTips(this.placeholder)
+        }
+    })
+    return inputs_bl
+}
+var check_pwd = function () {
+    var pws_bl = true;
+    if($(".admin_pwd").val() != $(".admin_pwd_cf").val()){
+
+        $(".admin_pwd_cf").showTips("两次密码不一致");
+        pws_bl = false
+    }
+    return pws_bl
+}
+
+// 选中权限id拼接
+var authority_ = function () {
+    var checked = $("#auth").find(":checked")
+    var ids = "";
+    $.each(checked, function (_, v) {
+        ids += v.value + ","
+    })
+
+    ids = ids.substring(0,ids.length-1)
+    $("#authority").val(ids)
 }

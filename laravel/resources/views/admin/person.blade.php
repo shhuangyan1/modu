@@ -26,7 +26,7 @@
             <div class="sec-title">数据统计</div>
             <div class="person-num">
                 <span>累计发文（原创）：</span>
-                <span class="art_num">56</span>
+                <span class="art_num">0</span>
             </div>
         </section>
         <section>

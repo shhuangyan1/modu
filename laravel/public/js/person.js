@@ -1,8 +1,17 @@
 $(function () {
 
+    (function () {
+        MD.ajax_get({
+            url: 'admin/wx/original_article',
+            dataType: 'text'
+        }, function (res) {
+            $(".art_num").text(res)
+        })
+    })()
+
     $(".submit-btn").on("click", function () {
         var c_new = check_newPwd();
-        if(c_new){
+        if(c_new && check_new_old()){
             check_origion();
         }
 
@@ -26,10 +35,10 @@ $(function () {
                 return;
             }
             if(res.success){
-                jeBox.msg("密码修改成功，请用新密码登录", {icon: 2, time: 1.5})
-                /*setTimeout(function () {
+                jeBox.msg("密码修改成功，请用新密码登录", {icon: 2, time: 2})
+                setTimeout(function () {
                     window.parent.location.href = MD.url + "admin/login"
-                }, 1500)*/
+                }, 1900)
             }
         })
     }
@@ -50,6 +59,15 @@ $(function () {
         return true;
     }
 
+    // 新旧密码不能一样
+    var check_new_old = function () {
+        var pwd = $("#password").val().trim()
+        var npwd = $("#newPwd").val().trim()
+        if(pwd == npwd){
+            $("#newPwd").showTips("新密码不能与原密码相同")
+            return false;
+        }
+    }
 
 
 })
