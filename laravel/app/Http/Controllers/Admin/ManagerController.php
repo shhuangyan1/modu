@@ -128,4 +128,19 @@ class ManagerController extends Controller
             echo json_encode($date);
         }
     }
+
+    //权限管理添加子页面接口
+    public function add_cmenus(Request $request){
+        $input = $request->input();
+        $grant = DB::table("grant")->insert($input);
+        if($grant){
+            $date['success'] = 'success';
+            $date['msg'] = '数据添加成功！';
+            echo json_encode($date);
+        }else{
+            $date['fail'] = 'fail';
+            $date['msg'] = '数据添加失败！';
+            echo json_encode($date);
+        }
+    }
 }
