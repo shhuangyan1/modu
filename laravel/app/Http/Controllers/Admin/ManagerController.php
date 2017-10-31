@@ -153,9 +153,11 @@ class ManagerController extends Controller
 
     //权限管理菜单编辑接口
     public function editmenus(){
+        $id = $_GET['id'];
         $map['name']=$_GET['name'];
         $map['url'] = $_GET['url'];
         $grant = DB::table("grant")
+            ->where("id",$id)
             ->update($map);
         if($grant){
             $date['success'] = 'success';
