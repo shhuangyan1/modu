@@ -56,12 +56,23 @@ class ManagerController extends Controller
         //存储表单提交过来的信息
         $input = $request -> except('authority');
         $input['admin_pwd'] = md5($input['admin_pwd']);
-        $admin = DB::table("admin")->insert($input);
-        if($admin){
-            return redirect('admin/manager');
+        $info = DB::table("admin")
+            ->where("username",$input['username'])
+            ->first();
+        if(!$info){
+            $admin = DB::table("admin")->insert($input);
+
+            if($admin){
+                return redirect('admin/manager');
+            }else{
+                echo '<script>alert("数据添加失败!")</script>';
+            }
         }else{
-            return back()->with('error','数据添加失败!');
+            //return back()->with('error','用户名已存在!');
+            echo '<script>alert("用户名已存在!")</script>';
+
         }
+
     }
 
     /**

@@ -52,6 +52,7 @@ Route::any('admin/activity/act_id','Admin\ActivityController@act_id');
 Route::any('admin/activity/act_ids','Admin\ActivityController@act_ids');
 Route::get('admin/index/modify','Admin\IndexController@modify');
 Route::get('admin/index/nums','Admin\IndexController@nums');
+Route::get('admin/index/get_grant','Admin\IndexController@get_grant');
 Route::get('admin/index/totalviews','Admin\IndexController@totalviews');
 Route::get('admin/category/off_category','Admin\CategoryController@off_category');
 Route::get('admin/category/recover_category','Admin\CategoryController@recover_category');

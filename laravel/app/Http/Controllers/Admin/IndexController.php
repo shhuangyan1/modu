@@ -15,6 +15,15 @@ Class IndexController extends Controller{
 	public function modify(){
 		return view('admin.person');
 	}
+
+	public function get_grant(){
+		$username=session('user')->username;
+		$admin = DB::table("admin")
+				->select("auth_id")
+				->where("username",$username)
+				->get();
+		echo json_encode($admin);
+	}
 	//掌上魔都整体情况接口
 	public function nums(){
 		$articlenums = DB::table("article")
