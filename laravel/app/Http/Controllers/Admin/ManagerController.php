@@ -47,7 +47,7 @@ class ManagerController extends Controller
     public function store(Request $request)
     {
         //存储表单提交过来的信息
-        $input = $request -> input();
+        $input = $request -> except('authority');
         $input['admin_pwd'] = md5($input['admin_pwd']);
         $admin = DB::table("admin")->insert($input);
         if($admin){
@@ -112,5 +112,20 @@ class ManagerController extends Controller
     public function menus(){
 
         return view('admin.manager.menus');
+    }
+
+    //权限管理添加新的父级菜单项
+    public function add_pmenus(Request $request){
+        $input = $request->input();
+        $grant = DB::table("grant")->insert($input);
+        if($grant){
+            $date['success'] = 'success';
+            $date['msg'] = '数据添加成功！';
+            echo json_encode($date);
+        }else{
+            $date['fail'] = 'fail';
+            $date['msg'] = '数据添加失败！';
+            echo json_encode($date);
+        }
     }
 }
