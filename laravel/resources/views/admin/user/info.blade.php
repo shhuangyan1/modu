@@ -37,11 +37,11 @@
             <div class="block-box">
                 <div class="block">
                     <p class="block_t">累计会员数量</p>
-                    <p class="block_num">252</p>
+                    <p class="block_num all-num">0</p>
                 </div>
                 <div class="block">
                     <p class="block_t">今日新增会员</p>
-                    <p class="block_num">36</p>
+                    <p class="block_num add-num">0</p>
                 </div>
             </div>
         </section>

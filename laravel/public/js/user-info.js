@@ -210,6 +210,13 @@ $(function () {
     // 页面初始化设置
     var init = function () {
 
+        // 统计数字
+        MD.ajax_get({url: 'admin/user/pieces'}, function (res) {
+            $(".add-num").text(res.increase);
+            $(".all-num").text(res.total);
+        })
+
+
         $("#range").jeDate({
             isValue: true,
             format: "YYYY-MM-DD",
