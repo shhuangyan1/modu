@@ -143,4 +143,11 @@ class ManagerController extends Controller
             echo json_encode($date);
         }
     }
+
+    //加载全部grant信息接口
+    public function showgrant(){
+        $grant = DB::table("grant")
+            ->get();
+        echo json_encode($grant);
+    }
 }

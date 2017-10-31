@@ -88,6 +88,7 @@ Route::any("admin/message/system_msg","Admin\MessageController@system_msg");
 Route::any("admin/manager/menus","Admin\ManagerController@menus");
 Route::any("admin/manager/add_pmenus","Admin\ManagerController@add_pmenus");
 Route::any("admin/manager/add_cmenus","Admin\ManagerController@add_cmenus");
+Route::any("admin/manager/showgrant","Admin\ManagerController@showgrant");
 
 Route::group(['middleware' => ['web','admin.login'],'prefix'=>'admin','namespace'=>'Admin'], function () {
 
