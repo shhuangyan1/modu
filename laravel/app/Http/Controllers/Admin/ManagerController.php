@@ -152,10 +152,9 @@ class ManagerController extends Controller
     }
 
     //权限管理菜单编辑接口
-    public function editmenus(Request $request){
-        $input = $request->input();
-        $map['name']=$input['name'];
-        $map['url'] = $input['url'];
+    public function editmenus(){
+        $map['name']=$_GET['name'];
+        $map['url'] = $_GET['url'];
         $grant = DB::table("url")
             ->update($map);
         if($grant){
