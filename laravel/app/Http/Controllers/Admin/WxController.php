@@ -485,6 +485,14 @@ class WxController extends Controller
         }
     }
 
+    //管理员原创文章数目统计
+    public function original_article(){
+        $article = DB::table("article")
+            ->where('author',session('user')->username)
+            ->count();
+        echo json_encode($article);
+    }
+
 
 
 }
