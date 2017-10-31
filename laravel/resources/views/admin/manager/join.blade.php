@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>添加管理员</title>
+    <title>添加账户</title>
     <link rel="stylesheet" href="{{asset('admin/style/css/ch-ui.admin.css')}}">
     <link rel="stylesheet" href="{{asset('admin/style/font/css/font-awesome.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/mdForm.css')}}">
@@ -54,7 +54,7 @@
         .operation label i{
             margin-right: 5px;
         }
-        .operation label input{
+        .operation input{
             display: none;
         }
     </style>
@@ -63,7 +63,7 @@
 <!--面包屑导航 开始-->
 <div class="crumb_warp">
     <!--<i class="fa fa-bell"></i> 欢迎使用登陆网站后台，建站的首选工具。-->
-    <i class="fa fa-home"></i> <a href="#">首页</a> &raquo; <a href="#">权限管理</a> &raquo; 添加管理员
+    <i class="fa fa-home"></i> <a href="#">首页</a> &raquo; <a href="#">权限管理</a> &raquo; 添加账户
 </div>
 <!--面包屑导航 结束-->
 
@@ -80,18 +80,21 @@
         <section class="no-border">
             <div class="operation">
                 <span>管理员权限设置：</span>
-                <label class="on">
+                <label class="on" for="level3">
                     <span><i class="fa fa-user"></i>文案编辑</span>
-                    <input type="radio" name="level" checked value="3">
                 </label>
-                <label>
+                <input type="radio" id="level3" name="level" checked value="3">
+
+                <label for="level2">
                     <span><i class="fa fa-user"></i>项目经理</span>
-                    <input type="radio" name="level" value="2">
                 </label>
-                <label class="hide">
+                <input type="radio" id="level2" name="level" value="2">
+
+                <label class="hide" for="level1">
                     <span><i class="fa fa-user"></i>超级管理员</span>
-                    <input type="radio" name="level" value="1">
                 </label>
+                <input type="radio" id="level1" name="level" value="1">
+
             </div>
             <div class="auth" id="auth">
                 <!--<ul>
@@ -100,7 +103,7 @@
                 </ul>-->
             </div>
         </section>
-
+        <input type="checkbox" id="ch" name="chewcbox" mdtext="发布文章">
         <section class="no-border">
             <input class="button confirm" type="submit" value="确认添加">
         </section>

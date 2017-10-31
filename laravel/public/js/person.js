@@ -18,8 +18,8 @@ $(function () {
             return;
         }
         MD.ajax_post({
-            url: "",
-            data: {"username": $("#username").val(), "password": pwd, "new_password": $("#newPwd").val()}
+            url: "admin/wx/pwd_modify",
+            data: {"old_password": pwd, "new_password": $("#newPwd").val()}
         }, function (res) {
             if(res.fail){
                 that.showTips("原始密码错误");
@@ -27,9 +27,9 @@ $(function () {
             }
             if(res.success){
                 jeBox.msg("密码修改成功，请用新密码登录", {icon: 2, time: 1.5})
-                setTimeout(function () {
+                /*setTimeout(function () {
                     window.parent.location.href = MD.url + "admin/login"
-                }, 1500)
+                }, 1500)*/
             }
         })
     }

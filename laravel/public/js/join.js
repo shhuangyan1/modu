@@ -5,8 +5,7 @@ $(function () {
             var result = MD.menu_result(all)
 
             show_choose(result);
-            format_position(3)
-            // MD.Form("#auth",{type:"checkbox"})
+            format_position(3);  // 页面加载完成，初始化默认选项
         })
     }
 
@@ -28,6 +27,7 @@ $(function () {
         MD.Form("#auth",{type:"checkbox"})
     }
 
+    // 格式化职位选择
     var format_position = function (val) {
         var menu;
         if(val == 3){
@@ -43,15 +43,28 @@ $(function () {
     }
 
     // arr 目标子菜单的id
+    // 选中权限选项
     var checked_authority = function (arr) {
+
         var inputs = $("#auth").find("input")
         $.each(inputs, function (i, v) {
             $.each(arr, function (_, k) {
                 if(parseInt(v.value) == k){
                     $(v).attr("checked",true)
+                    $(v).parent().addClass("on")
                     console.log(v)
                 }
             })
+        })
+    }
+
+    // 清除全部选项
+    var clear_checked = function () {
+        var inputs = $("#auth").find("input")
+        $.each(inputs, function (i, v) {
+            // 清除选项
+            $(v).attr("checked",false)
+            $(v).parent().removeClass("on")
         })
     }
 
@@ -63,11 +76,16 @@ $(function () {
         });
 
         // 点击切换权限
-        $(".operation label").on("click", function () {
+        $(".operation label").on("click", function (e) {
+            // e.stopPropagation();
+            // e.bubbles = false;
             $(this).addClass("on")
             $(this).siblings().removeClass("on");
 
-            format_position($(this).find('input').val())
+            // 先清除
+            clear_checked();
+            // 再选中
+            format_position($(this).next('input').val());
         })
 
 

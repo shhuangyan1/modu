@@ -118,6 +118,16 @@ window.MD = {
                     $(v).wrap(wrapDom.removeClass("on")).after(afterDom);
                 }
 
+                /*$(v).on("change", function () {
+                    if(opts.type == "checkbox"){
+                        $(this).parent().toggleClass("on")
+                    }
+
+                    if(opts.type == "radio"){
+                        $(this).parent().addClass("on")
+                        $(this).parent().siblings().removeClass("on")
+                    }
+                })*/
                 if(opts.type == "checkbox"){
                     $(v).on("click",function () {
                         $(this).parent().toggleClass("on")

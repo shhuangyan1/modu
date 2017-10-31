@@ -29,8 +29,8 @@
     { "id": 21, "name": "活动消息", "pid": 5, "url": "admin/message"},
     { "id": 22, "name": "用户反馈", "pid": 5, "url": "admin/message/back"},
 
-    { "id": 23, "name": "添加管理员", "pid": 6, "url": "admin/manager/create"},
-    { "id": 24, "name": "管理员列表", "pid": 6, "url": "admin/manager"},
+    { "id": 23, "name": "添加账户", "pid": 6, "url": "admin/manager/create"},
+    { "id": 24, "name": "账户列表", "pid": 6, "url": "admin/manager"},
     { "id": 25, "name": "菜单列表", "pid": 6, "url": "admin/manager/menus"},
 
     { "id": 26, "name": "会员数据分析", "pid": 7, "url": "admin/user/date"},

@@ -35,12 +35,12 @@
             <div class="step-box">
                 <!--<div class="step_title">修改密码</div>-->
                 <div class="step_cont">
-                    <div class="step_wrap">
+                   <!-- <div class="step_wrap">
                         <label>
                             <span>登录名:</span>
                             <input type="text" id="username" name="username" value="bra" readonly>
                         </label>
-                    </div>
+                    </div>-->
                     <div class="step_wrap">
                         <label>
                             <span>原始密码:</span>
