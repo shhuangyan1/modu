@@ -5,11 +5,13 @@
     <title>菜单页列表</title>
     <link rel="stylesheet" href="{{asset('admin/style/css/ch-ui.admin.css')}}">
     <link rel="stylesheet" href="{{asset('admin/style/font/css/font-awesome.min.css')}}">
-    <!--<link rel="stylesheet" href="{{asset('lirary/jedate/skin/default.css')}}">-->
+    <link rel="stylesheet" href="{{asset('lirary/jedate/skin/default.css')}}">
 
     <script src="{{asset('lirary/uploadify/jquery1.11.3.min.js')}}" type="text/javascript"></script>
     <script type="text/javascript" src="{{asset('js/util.js')}}"></script>
-    <!--<script src="{{asset('lirary/jedate/jquery.jebox.js')}}" ></script>-->
+    <script type="text/javascript" src="{{asset('js/menus.js')}}"></script>
+
+    <script src="{{asset('lirary/jedate/jquery.jebox.js')}}" ></script>
 
     <style>
         .search_wrap{
@@ -27,6 +29,13 @@
         .result_wrap>section{
             margin-bottom: 30px;
         }
+        .add_pform{
+            margin-top: 15px;
+        }
+        .add_pform input{
+            width: 270px;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
@@ -37,11 +46,26 @@
 </div>
 <!--面包屑导航 结束-->
 <div class="search_wrap">
-    <button class="button primary"><i class="fa fa-plus"></i>添加新的父级菜单项</button>
+    <button class="button primary" id="add_parent"><i class="fa fa-plus"></i>添加新的父级菜单项</button>
+    <div class="add_pform hide">
+        <label>
+            <span>父级菜单项名称：</span>
+            <input type="text" name="name">
+        </label>
+        <label>
+            <span>菜单项Icon：</span>
+            <input type="text" name="cls" placeholder="http://www.yeahzan.com/fa/facss.html">
+        </label>
+        <div>
+            <button class="button add_pbtn">确认添加</button>
+            <button class="button add_cancel">取消</button>
+        </div>
+
+    </div>
 </div>
 <!--结果页快捷搜索框 结束-->
 <div class="result_wrap">
-    <section>
+    <!--<section>
         <div class="table_opt">
             <span class="p_name">文章管理</span>
             <button class="button">新建子页面</button>
@@ -60,11 +84,11 @@
                 </td>
             </tr>
         </table>
-    </section>
+    </section>-->
 
 </div>
 <script>
-    $(function () {
+   /* $(function () {
         MD.getMenusJson(function (data) {
            var res =  MD.menu_result(data);
 //           console.log(res)
@@ -94,7 +118,7 @@
             $(".result_wrap").html(all);
            resize_index();
         })
-    })
+    })*/
 
 </script>
 </body>
