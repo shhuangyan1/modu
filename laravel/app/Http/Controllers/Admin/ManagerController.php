@@ -17,6 +17,12 @@ class ManagerController extends Controller
      */
     public function index(Request $request)
     {
+        return view('admin.manager.list',compact('data'));
+
+
+    }
+
+    public function grantlist(Request $request){
         $manage = $request->get('username');
         $data = Manager::where(function($query)use( $manage){
             if( $manage){
@@ -24,10 +30,11 @@ class ManagerController extends Controller
             }
         })->orderby('id','desc')->paginate(10);
 
-      // dd($data);
-        return view('admin.manager.list',compact('data'));
-    }
 
+        //dd($data);
+
+        echo json_encode($data);
+    }
     /**
      * Show the form for creating a new resource.
      *

@@ -42,15 +42,15 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($data as $v)
+
             <tr>
-                <td>{{$v->username}}</td>
+                <td></td>
                 <td>
-                    {{$v->auth_id}}
+
                 </td>
-                <td class="tc"><a data-id="{{$v->id}}" class="delete">删除</a></td>
+                <td class="tc"><a data-id="" class="delete">删除</a></td>
             </tr>
-            @endforeach
+
             </tbody>
         </table>
     </section>
