@@ -155,7 +155,7 @@ class ManagerController extends Controller
     public function editmenus(){
         $map['name']=$_GET['name'];
         $map['url'] = $_GET['url'];
-        $grant = DB::table("url")
+        $grant = DB::table("grant")
             ->update($map);
         if($grant){
             $date['success'] = 'success';
