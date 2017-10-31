@@ -150,4 +150,22 @@ class ManagerController extends Controller
             ->get();
         echo json_encode($grant);
     }
+
+    //权限管理菜单编辑接口
+    public function editmenus(Request $request){
+        $input = $request->input();
+        $map['name']=$input['name'];
+        $map['url'] = $input['url'];
+        $grant = DB::table("url")
+            ->update($map);
+        if($grant){
+            $date['success'] = 'success';
+            $date['msg'] = '数据修改成功！';
+            echo json_encode($date);
+        }else{
+            $date['fail'] = 'fail';
+            $date['msg'] = '数据修改失败！';
+            echo json_encode($date);
+        }
+    }
 }
