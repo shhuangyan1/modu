@@ -17,6 +17,9 @@
             border: 1px solid #ccc;
             margin: 0 5px 5px 0;
         }
+        .nowrap{
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body>
@@ -81,11 +84,12 @@
            MD.getMenusJson(function (res) {
                $.each(list, function (_, v) {
                    var ids = v.auth_id.split(",");
-                   var spans = get_id_name(res.child, ids)
+                   var spans = get_id_name(res.child, ids);
+                   var level = get_level(v.level)
                    trs += '<tr>\n' +
-                       '                <td>'+ v.username +'</td>'+
+                       '                <td class="nowrap">'+ v.username +'<p>【'+ level +'】</p>'+'</td>'+
                        '                <td>'+ spans +'</td>\n' +
-                       '                <td class="tc"><a data-id="'+ v.id +'" class="delete">删除</a></td>\n' +
+                       '                <td class="tc nowrap"><a data-id="'+ v.id +'" class="delete">删除</a></td>\n' +
                        '            </tr>'
                })
 
@@ -105,6 +109,17 @@
                 })
            });
            return aut_name;
+       }
+       var get_level = function (level) {
+           if(level == 1){
+               return "超级管理员"
+           }
+           if(level == 2){
+               return "项目经理"
+           }
+           if(level == 3){
+               return "文案编辑"
+           }
        }
 
        $(document).on("click",".delete",function () {
