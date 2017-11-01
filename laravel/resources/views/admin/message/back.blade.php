@@ -30,7 +30,7 @@
             @foreach($data as $v)
             <tr>
                 <td class="tc">{{$v->content}}</td>
-                <td class="tc"></td>
+                <td class="tc">{{$v->nickName}}</td>
                 <td class="tc">{{date("Y-m-d H:i:s",$v->time)}}</td>
             </tr>
             @endforeach

@@ -26,7 +26,8 @@ class MessageController extends Controller{
     public function show()
     {
         $data = DB::table("back")
-            ->orderby('id','desc')
+            ->join("user","user.openid","=","back.openid")
+            ->orderby('back.id','desc')
             ->paginate(5);
         return view('admin.message.back',compact('data'));
     }
