@@ -49,6 +49,7 @@ Route::any('admin/activity/act_commentreply','Admin\ActivityController@act_comme
 Route::any('admin/activity/act_infogather','Admin\ActivityController@act_infogather');
 Route::any('admin/activity/info','Admin\ActivityController@info');
 Route::any('admin/activity/act_id','Admin\ActivityController@act_id');
+Route::any("admin/activity/curlGet","Admin\ActivityController@curlGet");
 Route::any('admin/activity/act_ids','Admin\ActivityController@act_ids');
 Route::get('admin/index/modify','Admin\IndexController@modify');
 Route::get('admin/index/nums','Admin\IndexController@nums');
@@ -59,6 +60,7 @@ Route::get('admin/category/recover_category','Admin\CategoryController@recover_c
 Route::get('admin/index/article_piechart','Admin\IndexController@article_piechart');
 
 Route::any("admin/wx/getopenid","Admin\WxController@getopenid");
+Route::any("admin/wx/get_accesstoken","Admin\WxController@get_accesstoken");
 Route::any("admin/wx/collect","Admin\WxController@collect");
 Route::any("admin/wx/showcollect","Admin\WxController@showcollect");
 Route::any("admin/wx/getuserinfo","Admin\WxController@getuserinfo");

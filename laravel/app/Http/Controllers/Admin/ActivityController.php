@@ -15,6 +15,8 @@ class ActivityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public $appId = 'wx93ff713a8e32c6be';
+    public $appSecret = 'ddd2af2ceb83528ec190650762367f79';
     public function index(Request $request)
     {
         $select = $request->get('select');
@@ -141,6 +143,22 @@ class ActivityController extends Controller
         echo json_encode($arr);
     }
 
+    public static function curlGet($url,$data){
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; MSIE 5.01; Windows NT 5.0)');
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_AUTOREFERER, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $temp = curl_exec($ch);
+        return $temp;
+    }
+
+
     //收集活动报名用户信息接口
     public function act_infogather(Request $request){
         $input = $request ->input();
@@ -166,6 +184,36 @@ class ActivityController extends Controller
         $join_activity = DB::table("join_activity")
             ->insert($data);
         if($join_activity){
+            $activity = DB::table("activity")
+                ->where("id",$data['act_id'])
+                ->first();
+            $url1 = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$this->appId&secret=$this->appSecret";
+            $res = file_get_contents($url1);
+            $res = json_decode($res);
+            $access_token = $res->access_token;
+            //dump($access_token);die;
+            $url = "https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=$access_token";
+            $data_arr = array("data"=>
+                array(
+                "keyword1"=>array('value'=>$activity->title),
+                "keyword2"=>array('value'=>$input['name']),
+                "keyword3"=>array('value'=>date("Y-m-d H:i",$activity->time)),
+                "keyword4"=>array('value'=>$activity->address),
+            ),
+                "touser"           => $data['openid'],
+                //用户的 openID，可用过 wx.getUserInfo 获取
+                "template_id"      => "7sCtVqm7LEEp8vEouTBZhp1Zm9k_joreASO2M0ZMaVw",
+                //小程序后台申请到的模板编号
+                "page"             => "",
+                //点击模板消息后跳转到的页面，可以传递参数
+                "form_id"          => $input['formid']
+            );
+
+
+            $datass = json_encode($data_arr, true);
+            //dump($datass);
+            $ress = ActivityController::curlGet($url,$datass);
+
             $date['success']="success";
             $date['msg']="恭喜你报名成功！";
             echo json_encode($date) ;
