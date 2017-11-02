@@ -192,6 +192,7 @@ $(function () {
     bind_event();
     MD.scrollTop();
 })
+
 var check_type = function() {
     var types = $(".type input"),
         type = false;
@@ -229,9 +230,9 @@ var check_html = function() {
 var check_img = function() {
     var type = $("input[name=compose]:checked").val();
     // 3单图，1大图，2多图
-    if((type == 3 && !$("#single-tmp .compose-left label").hasClass("on")) ||
-        (type == 1 && !$("#banner-tmp .compose-left label").hasClass("on")) ||
-        (type == 2 && !$("#multi-tmp .compose-left label").hasClass("on"))
+    if((type == 3 && !($("#single-tmp .compose-left label").hasClass("on"))) ||
+        (type == 1 && !($("#banner-tmp .compose-left label").hasClass("on"))) ||
+        (type == 2 && !($("#multi-tmp .compose-left label").hasClass("on")))
     ){
         jeBox.msg("请上传文章封面", {icon: 1,time:1});
         return false;

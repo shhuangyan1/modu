@@ -58,6 +58,11 @@
         }
     }
 
+    // 上传图片预览
+    $.fn.upload_preview = function (callback , config) {
+        MD.upload_preview(this, callback, config)
+    }
+
 })(jQuery)
 
 /**
@@ -592,7 +597,9 @@ window.MD = {
             result.push(p);
         })
         return result;
-    }
+    },
+
+
 
 }
 

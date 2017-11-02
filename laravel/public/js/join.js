@@ -52,7 +52,8 @@ $(function () {
         $.each(inputs, function (i, v) {
             $.each(arr, function (_, k) {
                 if(parseInt(v.value) == k){
-                    $(v).click()
+                    // $(v).click()
+                    $(v).prop("checked", true)
                     $(v).parent().addClass("on")
                 }
             })
@@ -64,7 +65,7 @@ $(function () {
         var inputs = $("#auth").find("input")
         $.each(inputs, function (i, v) {
             // 清除选项
-            $(v).attr("checked",false)
+            $(v).prop("checked",false)
             $(v).parent().removeClass("on")
         })
     }
@@ -135,3 +136,4 @@ var authority_ = function () {
     ids = ids.substring(0,ids.length-1)
     $("#authority").val(ids)
 }
+

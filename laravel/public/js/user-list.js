@@ -44,19 +44,23 @@ $(function () {
 
     // 点击查询
     $(".search").on("click", function () {
+        current_page = 1;
         var para = MD.getValue(".search_tab")
         if(para.nickname == ""){
-            return;
+            para = MD.merger(para,{current: 1, pagesize: 40})
+            $(".loadmore").removeClass("hide")
+        }else{
+            $(".loadmore").addClass("hide")
         }
         MD.ajax_post({
             url: 'admin/user/fill',
             data: para
         },function (res) {
-            if(res.length>0){
-                jeBox.msg("",{icon: 2, time: 1})
+            if(res.length>0 && para.nickname != ""){
+                jeBox.msg("查询到"+res.length+"位相关用户" ,{icon: 2, time: 1})
             }
             if(res.length == 0 ){
-                jeBox.msg("未查询到数据",{icon: 1, time: 1})
+                jeBox.msg("未查询到相关用户",{icon: 1, time: 1})
             }
             $(".result_content").html("")
             show_user(res)

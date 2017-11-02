@@ -160,7 +160,7 @@
      * 点击切换阅读模式
      */
     $(document).on("click", '.wechat', function () {
-        $(".result_content").css({width: '414px'});
+        $(".result_content").css({width: '414px', margin: 'auto'});
 
         //图片处理
         var imgs = $('.content').find('img')

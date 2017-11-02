@@ -8,7 +8,7 @@ $(function () {
             trigger: 'axis'
         },
         legend: {
-            data:['全站文章增长走势']
+            // data:['当日文章阅读量']
         },
         grid: {
             left: '3%',
@@ -31,7 +31,7 @@ $(function () {
         },
         series: [
             {
-                name:'全站文章增长走势',
+                name:'当日文章阅读量',
                 type:'line',
                 stack: '',
                 data: []
@@ -97,7 +97,8 @@ $(function () {
                     y.push(list[i].views - list[i-1].views)
                 }
             }
-
+            x.shift(0);
+            y.shift(0)
             article_option.xAxis.data = x;
             article_option.series[0].data = y;
             // console.log(article_option)
