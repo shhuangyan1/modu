@@ -408,7 +408,7 @@ class ActivityController extends Controller
                 ->where($map)
                 ->select("view")
                 ->first();
-            $view = $view->view +1;
+            $view = $view->view +9;
             $activity = DB::table("activity")
                 ->where($map)
                 ->update(array("view"=>$view));

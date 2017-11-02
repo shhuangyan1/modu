@@ -44,6 +44,17 @@ Class IndexController extends Controller{
 	//首页文章阅读量走势图接口
 	public function totalviews(){
 
+		$map['date'] = date("Y-m-d",time());
+		$articel_total_nums = DB::table("article_total_nums")
+				->where("date",$map['date'])
+				->first();
+		if($articel_total_nums){
+			$map['views'] = DB::table("article")
+					->count(view);
+			$info = DB::table("article_total_nums")
+					->insert($map);
+		}
+
 		$articel_total_nums = DB::table("article_total_nums")
 				->get();
 		foreach($articel_total_nums as $v){
