@@ -17,7 +17,7 @@
 	<div class="top_box">
     <div class="top_box_inner clear">
 		<div class="top_left">
-			<div class="logo">掌上魔都</div>
+			<div class="logo"><img src="../modu_logo2.png"></div>
 			<ul>
 				<!--<li><a href="{{url('admin/info')}}"  target="main" class="active">首页</a></li>-->
 				<!--<li><a href="#">管理页</a></li>-->
