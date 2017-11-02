@@ -170,6 +170,18 @@ class ActivityController extends Controller
         $is_resign = DB::table("join_activity")
             ->where($data)
             ->first();
+        $limits = DB::table("activity")
+            ->where("id",$data['act_id'])
+            ->first();
+        $limits = $limits->limits;
+        $count = DB::table("join_activity")
+            ->where("act_id",$data['act_id'])
+            ->count();
+        if($count >= $limits){
+            $date['fail']="fail";
+            $date['msg']="报名人数已满";
+            echo json_encode($date) ;die;
+        }
         if($is_resign){
             $date['fail']="fail";
             $date['msg']="请不要重复报名！";
