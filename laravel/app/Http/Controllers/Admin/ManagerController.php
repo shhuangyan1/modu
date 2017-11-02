@@ -163,7 +163,7 @@ class ManagerController extends Controller
     //加载全部grant信息接口
     public function showgrant(){
         $grant = DB::table("grant")
-            ->orderby("id",asc)
+            ->orderby("id","asc")
             ->get();
         echo json_encode($grant);
     }
