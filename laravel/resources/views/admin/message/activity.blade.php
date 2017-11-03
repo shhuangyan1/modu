@@ -123,7 +123,7 @@
 
         <div class='answer clear'>
             <div class='com-left'>
-                <img class='user-head' src="https://tvax3.sinaimg.cn/crop.0.0.400.400.180/006VhaXvly8fiehmglbm2j30b40b4jse.jpg">
+                <img class='user-head' src="../logo.png">
             </div>
             <div class='com-right'>
                 <div class='com-name'>掌上魔都</div>

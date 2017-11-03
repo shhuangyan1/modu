@@ -166,6 +166,9 @@ Class ArticleController extends Controller{
 	public function detail(){
     		return view("admin/article/detail");
     }
+    public function wx_detail(){
+        	return view("admin/article/wx_detail");
+    }
 	public function edit($id){
 		$category = (new Category)->tree();
 		$data=Article::find($id);
