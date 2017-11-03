@@ -56,6 +56,7 @@ Class IndexController extends Controller{
 		}
 
 		$articel_total_nums = DB::table("article_total_nums")
+				->orderby("id","asc")
 				->get();
 
 		echo json_encode($articel_total_nums);
