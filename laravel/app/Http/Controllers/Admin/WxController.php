@@ -243,7 +243,7 @@ class WxController extends Controller
         $map['top_id']=$_GET['top_id'];
         if(empty($_GET['current'])){
             $topic = DB::table("topic_comment")
-                ->select("comment","time","userinfo","id")
+                ->select("comment","time","userinfo","id","thumb")
                 ->where($map)
                 ->limit(8)
                 ->orderby("id","desc")
@@ -253,12 +253,12 @@ class WxController extends Controller
                 $arr = explode(",",$v->userinfo);
                 $v->avatarUrl = $arr[0];
                 $v->nickName = $arr[1];
-                $v->thumb=0;
+
             }
         }else{
             $current = $_GET['current'];
             $topic = DB::table("topic_comment")
-                ->select("comment","time","userinfo","id")
+                ->select("comment","time","userinfo","id","thumb")
                 ->where($map)
                 ->where("id","<",$current)
                 ->limit(8)
@@ -269,7 +269,7 @@ class WxController extends Controller
                 $arr = explode(",",$v->userinfo);
                 $v->avatarUrl = $arr[0];
                 $v->nickName = $arr[1];
-                $v->thumb=0;
+
             }
         }
         echo json_encode($topic);
@@ -340,11 +340,12 @@ class WxController extends Controller
                 ->select("thumb")
                 ->where("id",$id)
                 ->first();
-            $topic->thumb = $topic->thumb + 1;
+            $topic = get_object_vars($topic);
+            $thumb = $topic['thumb'] + 1;
             $topiccomment = DB::table("topic_comment")
                 ->where("id",$id)
-                ->update("thumb",$topic->thumb);
-            echo json_encode($topic->thumb);
+                ->update(array("thumb"=>$thumb));
+            echo json_encode($thumb);
         }
     }
 

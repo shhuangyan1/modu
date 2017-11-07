@@ -210,6 +210,7 @@ class TopicController extends Controller
     }
 
     public function topic_detail(){
+        $openid = $_GET['openid'];
         $map['id'] = $_GET['id'];
         $view = DB::table("topic")
             ->where($map)
@@ -219,14 +220,27 @@ class TopicController extends Controller
         $topic = DB::table("topic")
             ->where($map)
             ->update(array("view"=>$view));
+        $collect = DB::table("collect")
+            ->where(array("resourceid"=>$map['id'],"type"=>2,"openid"=>$openid))
+            ->first();
         $detail = DB::table("topic")
             ->select("id","image","title","content","view","time")
             ->where($map)
             ->limit(5)
             ->get();
-        foreach($detail as $v){
-            $v->join=0;
+        if($collect){
+            foreach($detail as $v){
+                $v->join=0;
+                $v->collect=1;
+                $v->collectid=$collect->id;
+            }
+        }else{
+            foreach($detail as $v){
+                $v->join=0;
+                $v->collect = 0;
+            }
         }
+
         echo json_encode($detail,JSON_UNESCAPED_UNICODE);
     }
 }
