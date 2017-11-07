@@ -12,7 +12,7 @@
         body {background:#fff;color: #333;font-size:14px;font-family: "Microsoft Yahei",'Simsun',"Lucida Grande",Verdana,Lucida,Helvetica,Arial,sans-serif;}
         p{text-align:center;}
         .result_wrap{width: 90%;margin: auto;}
-        .title{font-size: 2rem;margin: 1rem 0 2rem;line-height: normal;text-align: left;}
+        .title{font-size: 1.6rem;margin: 1rem 0 1rem;line-height: normal;text-align: left;}
         .info{font-size: 0.9rem;color: #999;margin-bottom: 2rem;}
         .info_text{margin-right: 1rem;}
         /*问答*/
@@ -24,8 +24,11 @@
         .det-top{position: relative;}
         .thumb{position: absolute;right: 0.5rem;top: 0;font-size: 0.9rem;color: #666;}
         .com-cont{font-size: 1rem;margin: 0.8rem 0 0;color: #666;}
-        #comments{border-top: 1px solid #e6e6e7;padding: 1.5rem 0 3rem;}
+        #comments{padding: 1.5rem 0 3rem;}
         .question{margin-bottom: 1rem;}
+        .banner-title{font-size: 1rem;color: #5892f1;border-left: 4px solid #5892f1;height: 1rem;line-height: 1rem;border-top: 1px solid #e6e6e7;
+            font-weight: bold; margin: 2rem 0;padding-left:0.8rem;}
+        .banner-out{}
     </style>
 </head>
 <body>
@@ -33,6 +36,7 @@
     <div class="result_wrap">
         <div class="result_content">
             <div id="article"></div>
+            <div class="banner-out"><div class="banner-title">热门评论</div></div>
             <div id="comments"></div>
         </div>
     </div>
@@ -75,7 +79,7 @@
                 "                        <div class='det-top'>\n" +
                 "                            <div class='com-name'>"+ v.nickName +"</div>\n" +
                 "                            <div class='com-time'>"+ v.time +"</div>\n" +
-                "                            <div class='thumb'><i class='fa fa-thumbs-o-up'></i>"+ v.thumb +"</div>\n" +
+                "                            <div class='thumb'><i class='thumbs'></i>"+ v.thumb +"</div>\n" +
                 "                        </div>\n" +
                 "                        <div class='com-cont'>"+ v.comment +"</div>\n" +
                 "                    </div>\n" +
