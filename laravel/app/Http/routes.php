@@ -44,6 +44,7 @@ Route::any('admin/article/topcarriage_all','Admin\ArticleController@topcarriage_
 Route::any('admin/article/article_recover','Admin\ArticleController@article_recover');
 Route::any('admin/article/confirm_release','Admin\ArticleController@confirm_release');
 Route::any('admin/article/detail','Admin\ArticleController@detail');
+Route::any('admin/article/wx_detail','Admin\ArticleController@wx_detail');
 Route::any('admin/activity/joinactivity','Admin\ActivityController@joinactivity');
 Route::any('admin/activity/act_commentreply','Admin\ActivityController@act_commentreply');
 Route::any('admin/activity/act_infogather','Admin\ActivityController@act_infogather');

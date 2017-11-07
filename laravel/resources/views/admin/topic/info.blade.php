@@ -58,6 +58,51 @@
         }
 
     </style>
+    <style>
+        .comments-box{
+            margin-left: 20px;
+            width: 400px;
+            float: left;
+            border: 1px solid #ccc;
+            padding: 15px;
+        }
+        .top-left{
+            float: left;
+        }
+        .com-top{
+            position: relative;
+        }
+        .top-right{
+            float: left;
+            margin-left: 10px;
+        }
+        .com-name{
+            font-size: 16px;
+        }
+        .com-thumb{
+            position: absolute;
+            right: 0;
+            top: 5px;
+            font-size: 12px;
+            color: #666;
+        }
+        .user-head{
+            width: 45px;
+            height: 45px;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+        }
+        .com-btm{
+            margin-left: 50px;
+            font-size: 16px;
+        }
+        .comment-item{
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #e6e6e6;
+        }
+    </style>
 </head>
 <body>
 <!--面包屑导航 开始-->
@@ -87,7 +132,8 @@
         <div class="main-box clear">
             <div class="preview-box">
             </div>
-
+            <!---->
+            <div class="comments-box"></div>
         </div>
     </div>
 </div>
@@ -102,8 +148,25 @@
         </section>
         <section class="sec">
             <p class="act-info">浏览量：<span data-content="view"></span></p>
-            <p class="act-info">评论数：<span ></span></p>
+            <p class="act-info">评论数：<span data-content="join"></span></p>
         </section>
+    </div>
+</script>
+<script type="text/html" id="comment-tmp">
+    <div class='comment-item'>
+        <div class='com-top clear'>
+            <div class="top-left">
+                <img class='user-head' data-src="avatarUrl">
+            </div>
+            <div class="top-right">
+                <div class='com-name' data-content="nickName"></div>
+                <div class="com-time" data-content="time"></div>
+                <div class="com-thumb">点赞：<span data-content="thumb"></span></div>
+            </div>
+        </div>
+        <div class='com-btm'>
+            <div class='com-cont' data-content="comment"></div>
+        </div>
     </div>
 </script>
 
@@ -129,8 +192,20 @@
     })
 
     var show_commonts = function () {
-
+        MD.ajax_get({
+            url: 'admin/wx/topic_commentlist',
+            data: {"top_id": id, "current": ""}
+        }, function (res) {
+            if(res.length <= 0){
+                $(".comments-box").html("<p>暂无更多评论……</p>")
+                return;
+            }
+            var $div = $("<div></div>")
+            $div.loadTemplate($("#comment-tmp"),res);
+            $(".comments-box").html("").append($div)
+        })
     }
+    show_commonts();
 </script>
 </body>
 </html>

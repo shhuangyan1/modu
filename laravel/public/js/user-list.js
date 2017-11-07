@@ -72,7 +72,6 @@ $(function () {
     var show_user = function (list) {
         list = list || [];
         var result_content = $("<div></div>")
-
         $.each(list, function (i, v) {
             if(v.avatarUrl != ""){
                 var box = '<div class="user-box user-box-'+ v.id +'" data-id="'+ v.id +'"></div>'
