@@ -65,7 +65,7 @@
                     <a href="{{url('admin/activity/info')}}?id={{$v->id}}">{{$v->title}}</a>
                 </td>
                 <td class="tc">{{$v->limits}}</td>
-                <td class="tc">{{date("Y-m-d H:i",$v->time)}}</td>
+                <td class="tc">{{$v->addtime}}</td>
                 <td class="tc">
                     @if($v->status==0)
                     <a class="cancel-a" data-id="{{$v->id}}" href="javascript:;">结束活动</a>

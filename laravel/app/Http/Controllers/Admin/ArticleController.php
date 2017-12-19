@@ -17,12 +17,12 @@ Class ArticleController extends Controller{
 		$title=$request->get('title');
 		$cat_id=$request->get('cat_id');
 		$data = Article::where(function($query)use($title,$cat_id){
-				if($title){
-					$query -> where('title', 'like', '%'.$title.'%');
-				}
-				if($cat_id){
-					$query ->where('cat_id', $cat_id);
-				}
+			if($title){
+				$query -> where('title', 'like', '%'.$title.'%');
+			}
+			if($cat_id){
+				$query ->where('cat_id', $cat_id);
+			}
 		})->where('article.status','0')->join('category','article.cat_id','=','category.id')->select('article.*','category.cat_name')->orderby('article.id','desc')->paginate(20);
 
 		//dd($data);

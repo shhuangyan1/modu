@@ -366,7 +366,7 @@ class ActivityController extends Controller
         $map['status'] = 0;
         $time = time();
         $activity = DB::table("activity")
-            ->select("id","title","description","time","address","view","image","key")
+            ->select("id","title","description","time","addtime","address","view","image","key")
             ->where($map)
             ->where("time","<",$time)
             ->orderBy('id','desc')
@@ -377,7 +377,7 @@ class ActivityController extends Controller
                 ->where("act_id",$v->id)
                 ->count();
             $v->join=$join;
-            $v->time=date("Y-m-d H:i",$v->time);
+            $v->time=$v->addtime;
         }
         echo json_encode($activity,JSON_UNESCAPED_UNICODE);
     }
@@ -385,7 +385,7 @@ class ActivityController extends Controller
         if(empty($_GET['id'])){
             $_GET['id']='';
             $activity = DB::table("activity")
-                ->select("id","title","time","view","image")
+                ->select("id","title","time","addtime","view","image")
                 ->where("status","=",1)
                 ->limit(8)
                 ->orderby("id","desc")
@@ -396,7 +396,7 @@ class ActivityController extends Controller
             $current = $current - 8;
             $map['status']=1;
             $activity = DB::table("activity")
-                ->select("id","title","time","view","image")
+                ->select("id","title","time","addtime","view","image")
                 ->where($map)
                 ->where("id","<",$current)
                 ->limit(8)
@@ -408,7 +408,7 @@ class ActivityController extends Controller
                 ->where("act_id",$v->id)
                 ->count();
             $v->join=$join;
-            $v->time=date("Y-m-d H:i",$v->time);
+            $v->time=$v->addtime;
         }
         echo json_encode($activity,JSON_UNESCAPED_UNICODE);
     }
