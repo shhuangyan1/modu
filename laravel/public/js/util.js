@@ -375,12 +375,29 @@ window.MD = {
                 wp.parent().html($(v).html())
             });
         }
-        console.log(current_rule.url)
+        // console.log(current_rule.url)
         if(current_rule.url == 'http://sh.bendibao.com'){
+            // 解决上海本地宝日期和来源文字
             var am = $doc.find(current_rule.author);
             am.text(am.text().split("：")[1]);
             var time = $doc.find(current_rule.date);
             time.text(time.text().split("：")[1]);
+        }
+
+        if(current_rule.url == 'http://hot.online.sh.cn'){
+
+            var am = $doc.find(current_rule.from);
+            var inf = am.text().trim().split(" ");
+            console.log(inf);
+            inf = inf.filter(function (v) {
+                return v.length > 0;
+            })
+            console.log(inf);
+            am.text(inf[3].split("：")[1]);
+            $doc.find("body").append($("<div id='time'>"+ inf[1]+" "+inf[2] +"</div>"));
+
+            var write = $doc.find(current_rule.author);
+            write.text(write.text().trim().split("：")[1]);
         }
 
 
