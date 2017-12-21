@@ -134,7 +134,7 @@ $(function () {
                     var san_2 = jeBox.loading(1,"等待目标页面加载完成…");
 
                     // 返回图片数据，并展示
-                    MD.rule_image = res.image;
+                    MD.rule_image = res.image || [];
                     MD.cover_num = MD.rule_image.length;
                     show_images(MD.rule_image);
 

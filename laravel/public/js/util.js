@@ -375,6 +375,13 @@ window.MD = {
                 wp.parent().html($(v).html())
             });
         }
+        console.log(current_rule.url)
+        if(current_rule.url == 'http://sh.bendibao.com'){
+            var am = $doc.find(current_rule.author);
+            am.text(am.text().split("：")[1]);
+            var time = $doc.find(current_rule.date);
+            time.text(time.text().split("：")[1]);
+        }
 
 
         // 每个解析规则下，都执行
