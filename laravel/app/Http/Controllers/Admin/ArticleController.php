@@ -517,7 +517,7 @@ Class ArticleController extends Controller{
 
 //echo $html;
 			/*$pattern = "/<[img|IMG].*?data-src=[\'|\"](.*?(?:[\.gif|\.jpg|\.png|\.jpeg]))[\'|\"].*?[\/]?>/";*/
-			$pattern = "/<[img|IMG].*?data-src=[\'|\"](.*?(?:[\.gif|\.jpg|\.png|\.jpeg|\.0]))[\'|\"].*?[\/]?>/";
+			$pattern = "/<[img|IMG].*?data-src=[\'|\"](.*?(?:[\.gif|\.jpg|\.png|\.jpeg|\.0|\/]))[\'|\"].*?[\/]?>/";
 			preg_match_all($pattern, $html, $match);
 			$count = sizeof($match[1]);
 			//var_dump($match[1]);die;
