@@ -60,6 +60,18 @@ Route::get('admin/category/off_category','Admin\CategoryController@off_category'
 Route::get('admin/category/recover_category','Admin\CategoryController@recover_category');
 Route::get('admin/index/article_piechart','Admin\IndexController@article_piechart');
 
+
+Route::any("admin/pingguo/index","Admin\PingguoController@index");
+Route::any("admin/pingguo/hehe","Admin\PingguoController@hehe");
+Route::any("admin/pingguo/apple_box","Admin\PingguoController@apple_box");
+Route::any("admin/pingguo/water","Admin\PingguoController@water");
+Route::any("admin/pingguo/helpindex","Admin\PingguoController@helpIndex");
+Route::any("admin/pingguo/filladdress","Admin\PingguoController@fillAddress");
+Route::any("admin/pingguo/showaddr","Admin\PingguoController@showAddr");
+Route::any("admin/pingguo/showwaterlist","Admin\PingguoController@showwaterLIst");
+
+
+
 Route::any("admin/wx/getopenid","Admin\WxController@getopenid");
 Route::any("admin/wx/get_accesstoken","Admin\WxController@get_accesstoken");
 Route::any("admin/wx/collect","Admin\WxController@collect");
