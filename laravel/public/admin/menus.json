@@ -11,7 +11,7 @@
   ],
   "child": [
     { "id": 9, "name": "发布文章", "pid": 1, "url": "admin/article/create"},
-    { "id": 10, "name": "智能发布文章", "pid": 1, "url": "admin/article/ai_publish"},
+    { "id": 10, "name": "", "pid": 1, "url": "admin/article/ai_publish"},
     { "id": 11, "name": "文章列表", "pid": 1, "url": "admin/article"},
     { "id": 12, "name": "删除确认", "pid": 1, "url": "admin/confirm"},
     { "id": 13, "name": "解析规则管理", "pid": 1, "url": "admin/article/rule"},

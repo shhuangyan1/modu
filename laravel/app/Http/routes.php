@@ -81,6 +81,11 @@ Route::any("admin/wx/pwd_modify","Admin\WxController@pwd_modify");
 Route::any("admin/wx/original_article","Admin\WxController@original_article");
 Route::any("admin/wx/update_message","Admin\WxController@update_message");
 
+
+Route::any("admin/temact/waterlist","Admin\TemactController@waterlist");
+Route::any("admin/temact/addresslist","Admin\TemactController@addresslist");
+
+
 Route::any("admin/user/date","Admin\UserController@date");
 Route::any("admin/user/pieces","Admin\UserController@pieces");
 Route::any("admin/user/fill","Admin\UserController@fill");

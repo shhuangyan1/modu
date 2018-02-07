@@ -58,8 +58,7 @@
             <div class="echarts" id="user-add-line">
             </div>
         </section>
-
-        <section>
+         <section>
             <div class="result_title">
                 <h3>掌上魔都会员条件匹配对比分析</h3>
             </div>

@@ -338,13 +338,13 @@ window.MD = {
     //
     scrollTop: function () {
         var fix = $('<div class="fixed"></div>');
-        var arr = $('<div class="fixed-arr"><i class="fa fa-arrow-up"></i></div>')
+        var arr = $('<div class="fixed-arr"><i class="fa fa-arrow-up"></i></div>');
 
         arr.on('click',function () {
             $('html, body').animate({scrollTop: 0}, 500);
-        })
+        });
 
-        fix.append(arr)
+        fix.append(arr);
         $('body').append(fix)
     },
 
@@ -562,6 +562,7 @@ window.MD = {
         })
 
         // 父级与子级整合
+
         $.each(all.parent, function (j, k) {
             var p = {id: k.id,pname: k.name,child: [], cls: k.cls}
             $.each(rmenu, function (i, v) {
@@ -574,22 +575,23 @@ window.MD = {
                 result.push(p);
         })
 
+        console.log(result)
         MD.show_menu_list(result)
     },
     /**
      * 通过最终result数组，输出菜单
      */
     show_menu_list: function (result) {
-        // console.log(result)
+         //console.log(result)
         var def = '<li>\n' +
-            '                <ul class="sub_menu">\n' +
-            '                    <li class="on menu_index"><a href="'+MD.url+"admin/info"+'" target="main"><i class="fa fa-fw fa-home"></i>首页</a></li>\n' +
-            '                </ul>\n' +
-            '            </li>';
-        var m_html = ""
+            '<ul class="sub_menu">\n' +
+            '<li class="on menu_index"><a href="'+MD.url+"admin/info"+'" target="main"><i class="fa fa-fw fa-home"></i>首页</a></li>\n' +
+            '</ul>\n' +
+            '</li>';
+        var m_html = "";
         $.each(result, function (i, v) {
             var p_menu ='<li>\n' +
-                        '    <h3><i class="'+ v.cls +'"></i>'+ v.pname +'</h3>\n' +
+                        '<h3><i class="'+ v.cls +'"></i>'+ v.pname +'</h3>\n' +
                         '<ul class="sub_menu">\n';
 
             var c_menu = '';
@@ -610,16 +612,16 @@ window.MD = {
      * 父级与子级整合
      */
     menu_result: function (all) {
-        var result = []
+        var result = [];
         $.each(all.parent, function (j, k) {
             var p = {id: k.id,pname: k.name,child: []}
-            $.each(all.child, function (i, v) {
+            $.each(all.child, function (i,v){
                 if(v.pid == k.id){
                     p.child.push(v);
                 }
-            })
+            });
             result.push(p);
-        })
+        });
         return result;
     },
 

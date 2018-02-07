@@ -41,6 +41,8 @@
 	<!--左侧导航 开始-->
 	<div class="menu_box">
 		<ul class="menu_box_ul">
+
+
             <!--<li>
                 <ul class="sub_menu">
                     <li class="on menu_index"><a href="{{url('admin/info')}}" target="main"><i class="fa fa-fw fa-home"></i>首页</a></li>
@@ -128,19 +130,18 @@
 	<!--底部 结束-->
 
 <script>
+
     // 权限实际获取接口
-    var getList = function () {
-        MD.ajax_get({url: "admin/index/get_grant"}, function (res) {
+  var getList = function () {
+        MD.ajax_get({url:"admin/index/get_grant"}, function (res) {
             var menu = res[0].auth_id.split(",");
             //
             MD.getMenusJson(function (data) {
                 MD.showMenu(data, menu);
             })
         })
-    }
+    };
     getList();
-
-
 </script>
 </body>
 </html>

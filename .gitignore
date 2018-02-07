@@ -8,3 +8,5 @@
 /laravel/public/storage/activity/*
 /laravel/public/htmls
 /laravel/public/image
+laravel/public/phpMyAdmin/tmp/
+laravel/public/storage/topic/
