@@ -8,7 +8,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Http\Model\Topic;
+use App\Http\Model\Pingguo;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
@@ -111,12 +111,6 @@ class PingguoController extends Controller{
 
     }
 
-    public function hehe(){
-        $todaytime=strtotime("today");
-        $date = date("Y-m-d H:i:s",$todaytime);
-        dd($todaytime);
-    }
-
     //苹果树长大，填写地址领取苹果
     public function fillAddress(Request $request){
         $input = $request->input();
@@ -126,6 +120,8 @@ class PingguoController extends Controller{
             $date['msg'] = '您已经领取苹果，请不要重复领取！';
             $date['fail'] = 'fail';
         }else{
+            $count = DB::table("pingguo_address")->count();
+            $input['lastbox'] = 200 - $count;
             DB::table('pingguo_address')->insert($input);
             $date['msg'] = '地址填写成功';
             $date['success'] = 'success';
@@ -134,12 +130,54 @@ class PingguoController extends Controller{
 
     }
     public function showaddr(){
-        $info = DB::table("pingguo_address")->get();
-        echo json_encode($info);
+        $info = DB::table("pingguo_address")->paginate(25);
+
+        return view("admin.pingguo.address",compact('info'));
     }
 
-    public function showwaterList(){
-        $info = DB::table("record_water")->get();
-        echo json_encode($info);
+    public function waterlist(){
+
+    if(isset($_POST['water'])){
+
+    $map['water'] = $_POST['water'];
+    //dump($map['water']);
+    if($map['water'] == ""){
+    $info = DB::table("apple")->join('user', 'user.openid', '=', 'apple.openid')->orderby("water","desc")->paginate(25);
+    }else{
+    $info = DB::table("apple")->join('user', 'user.openid', '=', 'apple.openid')->where($map)->orderby("water","desc")->paginate(25);
     }
+
+
+
+             foreach($info as $v){
+             if($v->gender==1){
+                $v->gender="男";
+             }elseif($v->gender==2){
+                $v->gender="女";
+             }else{
+                $v->gender="未知";
+             }
+             }
+    }else{
+            $info = DB::table("apple")->join('user', 'user.openid', '=', 'apple.openid')->orderby("water","desc")->paginate(25);
+                     foreach($info as $v){
+                     if($v->gender==1){
+                        $v->gender="男";
+                     }elseif($v->gender==2){
+                        $v->gender="女";
+                     }else{
+                        $v->gender="未知";
+                     }
+                     }
+    }
+
+        return view('admin.pingguo.waterlist',compact('info'));
+        }
+
+    //浇水次数查询
+    	public function water_search(){
+    	$map['water'] = 5;//$_POST['water'];
+    	$info = DB::table("apple")->join('user', 'user.openid', '=', 'apple.openid')->where($map)->orderby("water","desc")->paginate(25);
+    	echo json_encode($info);
+    	}
 }

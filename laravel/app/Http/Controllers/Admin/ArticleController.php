@@ -646,19 +646,7 @@ Class ArticleController extends Controller{
 		}
 	}
 
+
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ?>

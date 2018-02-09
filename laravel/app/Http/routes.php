@@ -62,13 +62,16 @@ Route::get('admin/index/article_piechart','Admin\IndexController@article_piechar
 
 
 Route::any("admin/pingguo/index","Admin\PingguoController@index");
-Route::any("admin/pingguo/hehe","Admin\PingguoController@hehe");
 Route::any("admin/pingguo/apple_box","Admin\PingguoController@apple_box");
 Route::any("admin/pingguo/water","Admin\PingguoController@water");
 Route::any("admin/pingguo/helpindex","Admin\PingguoController@helpIndex");
 Route::any("admin/pingguo/filladdress","Admin\PingguoController@fillAddress");
 Route::any("admin/pingguo/showaddr","Admin\PingguoController@showAddr");
 Route::any("admin/pingguo/showwaterlist","Admin\PingguoController@showwaterLIst");
+Route::any("admin/pingguo/hehe","Admin\PingguoController@hehe");
+Route::any("admin/pingguo/addresslist","Admin\PingguoController@addresslist");
+Route::any("admin/pingguo/waterlist","Admin\PingguoController@waterlist");
+Route::any("admin/pingguo/watersearch","Admin\PingguoController@water_search");
 
 
 
@@ -93,9 +96,6 @@ Route::any("admin/wx/pwd_modify","Admin\WxController@pwd_modify");
 Route::any("admin/wx/original_article","Admin\WxController@original_article");
 Route::any("admin/wx/update_message","Admin\WxController@update_message");
 
-
-Route::any("admin/temact/waterlist","Admin\TemactController@waterlist");
-Route::any("admin/temact/addresslist","Admin\TemactController@addresslist");
 
 
 Route::any("admin/user/date","Admin\UserController@date");

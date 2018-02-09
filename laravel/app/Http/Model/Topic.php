@@ -10,5 +10,4 @@ class topic extends Model{
 	public $timestamps=false;
 	protected $guarded=[];
 
-
 }

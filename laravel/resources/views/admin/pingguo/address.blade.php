@@ -74,47 +74,27 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($info as $v)
                 <tr>
-                    <td class="tc">孙慧杰</td>
-                    <td class="tc">15987455448</td>
-                    <td class="tc">普陀区</td>
-                    <td class="tc">铜川路2188弄27单元202</td>
-                    <td class="tc">199</td>
+                    <td class="tc">{{$v->username}}</td>
+                    <td class="tc">{{$v->phone}}</td>
+                    <td class="tc">{{$v->area}}</td>
+                    <td class="tc">{{$v->address}}</td>
+                    <td class="tc">{{$v->lastbox}}</td>
                 </tr>
-                <tr>
-                    <td class="tc">孙慧杰</td>
-                    <td class="tc">15987455448</td>
-                    <td class="tc">普陀区</td>
-                    <td class="tc">铜川路2188弄27单元202</td>
-                    <td class="tc">199</td>
-                </tr>
-                <tr>
-                    <td class="tc">孙慧杰</td>
-                    <td class="tc">15987455448</td>
-                    <td class="tc">普陀区</td>
-                    <td class="tc">铜川路2188弄27单元202</td>
-                    <td class="tc">199</td>
-                </tr>
+                @endforeach
 
 
            </tbody>
 
             </table>
+            <div class="page_list">
+                {{$info->appends(Request::all())->render()}}
+            </div>
         </div>
     </div>
 </form>
 <!--搜索结果页面 列表 结束-->
-<script>
-    $(function () {
-        $.ajax({
-            url:'{url("admin/pingguo/showaddr")}',
-            dataType: json,
-            success: function (res) {
-                console.log(res);
-            }
 
-        })
-    })
-</script>
 </body>
 </html>

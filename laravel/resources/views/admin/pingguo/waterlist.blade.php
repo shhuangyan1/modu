@@ -55,7 +55,20 @@
         <i class="fa fa-home"></i> <a href="#">首页</a> &raquo; <a href="#">分类管理</a> &raquo; 分类列表
     </div>
     <!--面包屑导航 结束-->
+    <div class="search_wrap">
+        <form action="waterlist" method="post">
+            {{csrf_field()}}
+            <table class="search_tab">
+                <tr>
 
+                 </td>
+                    <th width="70">关键字：</th>
+                    <td><input type="text" name="water" placeholder="搜索浇水次数"></td>
+                    <td><input type="submit"  value="查询"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
     <!--搜索结果页面 列表 开始-->
     <form  method="post">
         <div class="result_wrap">
@@ -63,48 +76,20 @@
                 <table class="list_tab">
                     <tr>
                         <th>已浇水好友</th>
+                        <th>性别</th>
                         <th>已浇水次数</th>
-                        <th>操作</th>
                     </tr>
-
+                    @foreach($info as $v)
                     <tr>
-                        <td class="tc clearfix" style="text-align: center;"><div class="head clearfix"><img src="{{asset('image/hy.jpg')}}" alt=""></div><div class="tt">孙慧杰</div></td>
-                        <td class="tc">3</td>
-                        <td class="tc">
-                            <a href="">修改</a>
-                            <a class="delete" href="javascript:void(0);">删除</a>
-                            <a class="down" href="javascript:void(0);">下架</a>
-                        </td>
+                        <td class="tc clearfix" style="text-align: center;"><div class="head clearfix"><img src="{{$v->avatarUrl}}" alt=""></div><div class="tt">{{$v->nickName}}</div></td>
+                        <td class="tc">{{$v->gender}}</td>
+                        <td class="tc">{{$v->water}}</td>
                     </tr>
-                    <tr>
-                        <td class="tc">给我一颗大白菜</td>
-                        <td class="tc">6</td>
-                        <td class="tc">
-                            <a href="">修改</a>
-                            <a class="delete" href="javascript:void(0);">删除</a>
-                            <a class="down" href="javascript:void(0);">下架</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="tc">牛奶味的猫</td>
-                        <td class="tc">2</td>
-                        <td class="tc">
-                            <a href="">修改</a>
-                            <a class="delete" href="javascript:void(0);">删除</a>
-                            <a class="down" href="javascript:void(0);">下架</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="tc">墨石</td>
-                        <td class="tc">13</td>
-                        <td class="tc">
-                            <a href="">修改</a>
-                            <a class="delete" href="javascript:void(0);">删除</a>
-                            <a class="down" href="javascript:void(0);">下架</a>
-                        </td>
-                    </tr>
+                    @endforeach
                 </table>
-
+                <div class="page_list">
+                    {{$info->appends(Request::all())->render()}}
+                </div>
             </div>
         </div>
 
